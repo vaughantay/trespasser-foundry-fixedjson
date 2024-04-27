@@ -1,0 +1,12 @@
+{
+	"TRESPASSER": {
+		"Ability": {
+			"Str": {"long": "Strength", "abbr": "STR"},
+			"Agi": {"long": "Agility", "abbr": "AGI"},
+			"Vig": {"long": "Vigor", "abbr": "VIG"},
+			"Knw": {"long": "Knowledge", "abbr": "KNW"},
+			"Cng": {"long": "Cunning", "abbr": "CNG"},
+			"Res": {"long": "Resolve", "abbr": "RES"}
+		}
+	}
+}
