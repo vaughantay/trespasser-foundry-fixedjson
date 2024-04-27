@@ -1,0 +1,34 @@
+{
+  "id": "trespasser",
+  "name": "trespasser",
+  "title": "Trespasser(Unofficial)",
+  "description": "An unoffical system for playing the playtest version of Trespasser RPG",
+  "authors": [
+    {
+      "name": "Max Schreifels",
+      "discord": "ShadowyXP"
+    }
+  ],
+  "version": "0.0.1",
+  "url": "https://github.com/ShadowyXP/trespasser-foundry",
+  "manifest": "",
+  "download": "",
+
+  "compatibility": {
+    "minimum": "11",
+    "verified": "11",
+    "maximum": "11"
+  },
+  "media": [],
+  "esmodules": ["module/trespasser.mjs"],
+  "styles": ["trespasser.css"],
+  "packs": [],
+  "languages": [
+    {
+      "lang": "en",
+      "name": "English (US)",
+      "path": "lang/en.json"
+    }
+  ],
+  "initiative": "1d20"
+}
