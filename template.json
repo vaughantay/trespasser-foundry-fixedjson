@@ -10,6 +10,42 @@
 {
   "Actor": {
     "types": ["adventurer", "peasant", "stronghold", "NPC"],
+		"templates": ["has-attributes"]: {
+			"has-attributes": {
+				"attributes":{
+					"strength":{
+						"score":10,
+						"mod":0,
+						"skilled":0
+					},
+					"agility": {
+						"score":10,
+						"mod":0,
+						"skilled":0
+					},
+					"vigor":{
+						"score":10,
+						"mod":0,
+						"skilled":0
+					},
+					"knowledge":{
+						"score":10,
+						"mod":0,
+						"skilled":0
+					},
+					"cunning":{
+						"score":10,
+						"mod":0,
+						"skilled":0
+					},
+					"resolve":{
+						"score":10,
+						"mod":0,
+						"skilled":0
+					}
+				}
+			}
+		},
 		"adventurer": {
 			"details":{
 				"name":"",
