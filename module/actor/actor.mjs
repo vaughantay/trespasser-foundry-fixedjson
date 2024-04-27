@@ -1,4 +1,4 @@
-export default class TrespasserActor extends Actor {
+export class TrespasserActor extends Actor {
 	prepareBaseData() {
 		super.prepareBaseData();
 	}

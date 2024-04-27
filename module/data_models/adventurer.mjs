@@ -1,4 +1,6 @@
-class AdventurerData extends CharacterBaseData {
+import { CharacterBaseData } from './character-base.mjs'
+
+export class AdventurerData extends CharacterBaseData {
 	static defineSchema() {
 
 		const fields = foundry.data.fields;
@@ -6,37 +8,42 @@ class AdventurerData extends CharacterBaseData {
 		//and make a parent class for base actors.
 		return {
 			//This does the characterBaseData
-			{...super.defineSchema()};
+			...super.defineSchema(),
 
 			//Attributes will be a schema with numbers inside.
 			//Buncha text fields.
 			text_details: new fields.SchemaField({
-				lineage: new fields.TextField({
+				lineage: new fields.StringField({
 					required: true,
-					initial: ''
+					initial: '',
+					blank: true
 				}),
-				class_name: new fields.TextField({
+				class_name: new fields.StringField({
 					required: true,
-					initial: ''
+					initial: '',
+					blank: true
 				}),
 				//Themes is a list, but we jsut want to separate by comma.
-				themes: new fields.TextField({
+				themes: new fields.StringField({
 					required: true,
-					initial: ''
+					initial: '',
+					blank: true
 				}),
-				profession: new fields.TextField({
+				profession: new fields.StringField({
 					required: true,
-					initial: ''
+					initial: '',
+					blank: true
 				}),
-				alignment: new fields.TextField({
+				alignment: new fields.StringField({
 					required: true,
-					initial: ''
+					initial: '',
+					blank: true
 				}),
-			})
+			}),
 			xp: new fields.NumberField({
 				initial: 0,
 				min: 0,
-				max: 40000,
+				max: 40000
 			}),
 			//Skills are yes or no.
 			skills: new fields.SchemaField({
@@ -135,11 +142,11 @@ class AdventurerData extends CharacterBaseData {
 		const skillBonus = this.skill_bonus;
 
 		return {
-			str: mods.str + skillBonus
-			agi: mods.agi + skillBonus 
-			vig: mods.vig + skillBonus
-			knw: mods.knw + skillBonus
-			cng: mods.cng + skillBonus
+			str: mods.str + skillBonus,
+			agi: mods.agi + skillBonus,
+			vig: mods.vig + skillBonus,
+			knw: mods.knw + skillBonus,
+			cng: mods.cng + skillBonus,
 			res: mods.res + skillBonus
 		};
 	}
@@ -149,6 +156,7 @@ class AdventurerData extends CharacterBaseData {
 	}
 
 	get initiative() {
+		console.log('test');
 		return this.skilled_mods.cng;
 	}
 	
