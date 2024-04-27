@@ -7,6 +7,11 @@
 			"Knw": {"long": "Knowledge", "abbr": "KNW"},
 			"Cng": {"long": "Cunning", "abbr": "CNG"},
 			"Res": {"long": "Resolve", "abbr": "RES"}
+		},
+
+
+		"CombatLabels": {
+			"initiative": "Initiative"
 		}
 	}
 }

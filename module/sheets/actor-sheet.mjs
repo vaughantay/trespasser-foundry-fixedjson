@@ -24,12 +24,12 @@ export class TrespasserActorSheet extends ActorSheet {
   }
 
   getData() {
-    const context = super.getData();
 
-    const actorData = context.data;
-
-    context.system = actorData.system;
-    context.flags = actorData.flags;
+		return {
+			actor: this.actor,
+			system: this.actor.system,
+			flags: this.actor.flagsflags
+		};
 
     return context;
   }
@@ -72,4 +72,9 @@ export class TrespasserActorSheet extends ActorSheet {
       });
     }
   }
+	
+	//Not working yet
+	_onItemCreate(html) {
+		return;
+	}
 }
