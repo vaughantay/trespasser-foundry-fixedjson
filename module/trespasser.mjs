@@ -29,7 +29,7 @@ Hooks.once('init', function () {
 	Items.unregisterSheet('core', ItemSheet);
 	Actors.registerSheet('trespasser', TrespasserItemSheet, {
 		makeDefault: true,
-		label: TRESPASSER.SheetLabels.Item,
+		label: 'TRESPASSER.SheetLabels.Item',
 	});
 
 });

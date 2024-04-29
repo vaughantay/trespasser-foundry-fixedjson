@@ -8,7 +8,7 @@ export class SpellData extends BaseItemData {
 
 		const fields = foundry.data.fields;
 		return {
-			...hasDetails(),
+			...super.hasDetails,
 			//There is a cumulative penalty to casting the more you cast something per day.
 			//Tracked per spell.
 			casting_penalty: new fields.NumberField({

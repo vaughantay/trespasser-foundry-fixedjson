@@ -11,11 +11,10 @@ export class BaseItemData extends foundry.abstract.TypeDataModel {
 	}
 
 	//If an object is going to have details, ill just have something for that.
-	_hasDetails() {
+	hasDetails() {
 		const fields = foundry.data.fields;
 		return {
-
-			details: new fields.StringField(
+			details: new fields.StringField({
 					required: true,
 					initial: '',
 					blank: true
