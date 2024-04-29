@@ -12,6 +12,10 @@
 
 		"CombatLabels": {
 			"initiative": "Initiative"
+		},
+
+		"ItemLabels": {
+			"castingPenalty": "Casting Penalty"
 		}
 	}
 }

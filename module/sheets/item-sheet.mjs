@@ -7,7 +7,7 @@ import {
 export class TrespasserItemSheet extends ItemSheet {
   static get defaultOptions() {
     return foundry.utils.mergeObject(super.defaultOptions, {
-      classes: ['boilerplate', 'sheet', 'item'],
+      classes: ['trespasser', 'sheet', 'item'],
       width: 520,
       height: 480,
       tabs: [
@@ -26,13 +26,16 @@ export class TrespasserItemSheet extends ItemSheet {
     return `${path}/item-${this.item.type}-sheet.hbs`;
   }
 
-  getData() {
-		return {
-			item: this.item,
-			system: this.item.system,
-			flags: this.item.flags,
-			effects: prepareActiveEffectCategories(this.item.effects)
-		};
+  async getData() {
+		
+		const context = super.getData();
+
+		//If details isnt null, we need to enrich them.
+		if(this.item.system.details !== null) {
+			context.enrichedDetails = await TextEditor.enrichHTML(this.item.system.details, {async: true});
+		}
+
+		return context;
   }
 
   activateListeners(html) {

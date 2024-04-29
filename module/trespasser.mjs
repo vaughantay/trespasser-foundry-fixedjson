@@ -11,6 +11,7 @@ Hooks.once('init', function () {
 
 	game.trespasser = {
 		TrespasserActor,
+		TrespasserItem,
 	};
 	
 	CONFIG.TRESPASSER = TRESPASSER;
@@ -27,9 +28,11 @@ Hooks.once('init', function () {
 	});
 	
 	Items.unregisterSheet('core', ItemSheet);
-	Actors.registerSheet('trespasser', TrespasserItemSheet, {
+	Items.registerSheet('trespasser', TrespasserItemSheet, {
 		makeDefault: true,
 		label: 'TRESPASSER.SheetLabels.Item',
 	});
+
+	loadHandlebarsPartials();
 
 });
