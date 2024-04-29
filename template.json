@@ -4,6 +4,7 @@
 		"adventurer": {}
   },
   "Item": {
-    "types": []
+    "types": ["spell"],
+		"spell": {}
   }
 }
