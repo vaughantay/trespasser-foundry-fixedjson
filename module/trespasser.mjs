@@ -4,6 +4,7 @@ import { TrespasserActorSheet } from './sheets/actor-sheet.mjs';
 import { TrespasserItem } from './item/item.mjs';
 import { TrespasserItemSheet } from './sheets/item-sheet.mjs';
 import { SpellData } from './data_models/items/spell.mjs';
+import { ArmorData } from './data_models/items/armor.mjs';
 import { AdventurerData } from './data_models/adventurer.mjs';
 import { loadHandlebarsPartials } from './helpers/preload.mjs'
 
@@ -20,6 +21,7 @@ Hooks.once('init', function () {
 	CONFIG.Actor.documentClass = TrespasserActor;
 
 	CONFIG.Item.dataModels.spell = SpellData;
+	CONFIG.Item.dataModels.armor = ArmorData;
 
 	Actors.unregisterSheet('core', ActorSheet);
 	Actors.registerSheet('trespasser', TrespasserActorSheet, {

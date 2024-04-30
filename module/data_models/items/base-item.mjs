@@ -21,4 +21,16 @@ export class BaseItemData extends foundry.abstract.TypeDataModel {
 			}),
 		}
 	}
+
+	static hasWeight() {
+		const fields = foundry.data.fields;
+		return {
+			weight: new fields.StringField({
+				required: true,
+				initial: 'L',
+				blank: false,
+				choices: ['L','M','H']
+			}),
+		}
+	}
 }

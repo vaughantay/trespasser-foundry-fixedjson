@@ -1,0 +1,43 @@
+.trespasser {
+	.img {
+    text-align: center;
+    min-width: 60px;
+
+    img {
+      max-width: 100%;
+      height: auto;
+      border: none;
+      border-radius: 50%;
+      padding: 0;
+      margin: 0;
+    }
+  } 
+
+	.description {
+    --editor-height: 60px;
+
+    flex: 1;
+    display: flex;
+    min-height: var(--editor-height);
+    border: 1px solid black;
+    border-radius: 0.5rem;
+    padding: 0.5rem;
+
+    .editor {
+      min-height: var(--editor-height);
+      width: 100%;
+
+      .editor-content {
+        min-height: var(--editor-height);
+      }
+
+      .tox.tox-tinymce {
+        min-height: var(--editor-height);
+      }
+    }
+
+    &.short {
+      --editor-height: 30;
+    }
+  }
+}

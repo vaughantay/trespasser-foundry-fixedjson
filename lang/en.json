@@ -15,7 +15,8 @@
 		},
 
 		"ItemLabels": {
-			"castingPenalty": "Casting Penalty"
+			"castingPenalty": "Casting Penalty",
+			"ac": "AC"
 		}
 	}
 }

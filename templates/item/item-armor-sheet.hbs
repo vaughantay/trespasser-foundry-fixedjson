@@ -4,8 +4,9 @@
       <div class="flexrow spaced">
         <div class="flex0 img"><img src="{{item.img}}" data-edit="img" title="{{item.name}}"/></div>
         <div class="flexcol spaced">
-          <input id="name" type="text" name="name" value="{{item.name}}" placeholder="{{localize "wildsea.name"}}" />
-					{{> 'systems/trespasser/templates/fields/number-field.hbs' label='TRESPASSER.ItemLabels.castingPenalty' field="document.system.casting_penalty" value=document.system.casting_penalty min=0 max=30}}
+          <input id="name" type="text" name="name" value="{{item.name}}" placeholder="{{localize "trespasser.name"}}" />
+					{{!-- Something is up with this, the values arent taking at all. --}}
+					{{> 'systems/trespasser/templates/fields/number-field.hbs' label='TRESPASSER.ItemLabels.ac' field="document.system.armor_class" value=document.system.armor_class}}
         </div>
       </div>
     </div>
