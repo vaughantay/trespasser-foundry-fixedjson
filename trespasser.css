@@ -59,3 +59,57 @@
 .trespasser .description.short {
   --editor-height: 30;
 }
+
+@font-face {
+  font-family: "Chomsky";
+  src: url(./less/fonts/Chomsky.woff);
+}
+@font-face {
+  font-family: "LibreBaskerville";
+  src: url(./less/fonts/LibreBaskerville/LibreBaskerville-Regular.ttf);
+}
+@font-face {
+  font-family: "LibreBaskerville";
+  src: url(./less/fonts/LibreBaskerville/LibreBaskerville-Italic.ttf);
+  font-style: italic;
+}
+@font-face {
+  font-family: "LibreBaskerville";
+  src: url(./less/fonts/LibreBaskerville/LibreBaskerville-Bold.ttf);
+  font-style: bold;
+}
+.trespasser {
+  font-family: "LibreBaskerville", serif;
+}
+.trespasser h1,
+.trespasser h2,
+.trespasser h3,
+.trespasser h4,
+.trespasser h5 {
+  font-family: "Chomsky", sans-serif;
+  border-bottom: none;
+  margin: 0 0 0.25rem;
+  padding: 0;
+  position: relative;
+}
+.trespasser h1 a.addItem,
+.trespasser h2 a.addItem,
+.trespasser h3 a.addItem,
+.trespasser h4 a.addItem,
+.trespasser h5 a.addItem {
+  position: absolute;
+  right: 0.5rem;
+  top: 0.25rem;
+  font-size: 1rem;
+}
+.trespasser h1 small,
+.trespasser h2 small,
+.trespasser h3 small,
+.trespasser h4 small,
+.trespasser h5 small {
+  font-size: 0.8em;
+  text-transform: initial;
+}
+.trespasser .window-header .window-title {
+  font-family: "LibreBaskerville", serif;
+}
