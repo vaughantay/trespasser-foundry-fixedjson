@@ -12,8 +12,12 @@
 					{{> 'systems/trespasser/templates/fields/select-field.hbs' label='' field='system.skill' options=Skills selected=document.system.skill includeEmpty=false localizeOptions=true}}
 					{{> 'systems/trespasser/templates/fields/text-field.hbs' label='' field='system.keywords' value=document.system.keywords}}
 					{{> 'systems/trespasser/templates/fields/text-field.hbs' label='TRESPASSER.ItemLabels.range' field='system.range' value=document.system.range}}
-					{{> 'systems/trespasser/templates/fields/text-field.hbs' label='TRESPASSER.ItemLabels.hit' field='system.hit' value=document.system.hit}}
-					{{> 'systems/trespasser/templates/fields/text-field.hbs' label='TRESPASSER.ItemLabels.solid_hit' field='system.solid_hit' value=document.system.solid_hit}}
+					<div class="description">
+						{{editor enrichedHit target="system.hit" button=true owner=owner editable=editable}}
+					</div>
+					<div class="description">
+						{{editor enrichedSolid target="system.solid_hit" button=true owner=owner editable=editable}}
+					</div>
         </div>
       </div>
     </div>

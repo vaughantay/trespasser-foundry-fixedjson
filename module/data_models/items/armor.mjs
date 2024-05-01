@@ -17,6 +17,16 @@ export class ArmorData extends BaseItemData {
 				required: true,
 				initial: 'd6',
 				choices: ['d6', 'd8', 'd10']
+			}),
+			equipped: new fields.BooleanField({
+				required: true,
+				initial: false
+			}),
+			loc: new fields.StringField({
+				required: true,
+				initial: 'head',
+				empty: false,
+				options: ['head', 'body', 'arms', 'legs', 'outer', 'shield']
 			})
 		};
 	}

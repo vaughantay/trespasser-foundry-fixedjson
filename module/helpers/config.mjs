@@ -21,3 +21,12 @@ TRESPASSER.Skills = {
 	"cng": "TRESPASSER.Ability.Cng.abbr",
 	"res": "TRESPASSER.Ability.Res.abbr"
 };
+
+TRESPASSER.ArmorSlots = {
+	"head": "TRESPASSER.ArmorSlots.head",
+	"body": "TRESPASSER.ArmorSlots.body",
+	"arms": "TRESPASSER.ArmorSlots.arms",
+	"legs": "TRESPASSER.ArmorSlots.legs",
+	"outer": "TRESPASSER.ArmorSlots.outer",
+	"shield": "TRESPASSER.ArmorSlots.shield"
+};

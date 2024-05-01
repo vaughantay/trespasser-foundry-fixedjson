@@ -20,7 +20,8 @@
 			"range": "Target",
 			"hit": "Hit",
 			"solid_hit": "Solid",
-			"support": "Support"
+			"support": "Support",
+			"armor-location": "Armor Location"
 		},
 
 		"ItemTypes": {
@@ -34,6 +35,15 @@
 			"basic": "Basic",
 			"special": "Special",
 			"mighty": "Mighty"
+		},
+
+		"ArmorSlots": {
+			"head": "Head",
+			"body": "Body",
+			"arms": "Arms",
+			"legs": "Legs",
+			"outer": "Outer",
+			"shield": "Shield"
 		}
 	}
 }
