@@ -1,5 +1,7 @@
 <div class="form-group flexrow">
-  <label class="flex1">{{localize label}}</label>
+	{{#if (ne label '')}}
+  	<label class="flex1">{{localize label}}</label>
+	{{/if}}
   <div class="form-fields flex3">
     <select name="{{field}}">
       {{#select value}}

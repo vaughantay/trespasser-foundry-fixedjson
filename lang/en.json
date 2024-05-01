@@ -9,14 +9,31 @@
 			"Res": {"long": "Resolve", "abbr": "RES"}
 		},
 
-
 		"CombatLabels": {
 			"initiative": "Initiative"
 		},
 
 		"ItemLabels": {
 			"castingPenalty": "Casting Penalty",
-			"ac": "AC"
+			"ac": "AC",
+			"item-type": "Item Type",
+			"range": "Target",
+			"hit": "Hit",
+			"solid_hit": "Solid",
+			"support": "Support"
+		},
+
+		"ItemTypes": {
+			"feature": "Feature",
+			"inventory-item": "Inventory Item",
+			"other-ability": "Other Ability",
+			"talent": "Talent"
+		},
+
+		"ActionTypes": {
+			"basic": "Basic",
+			"special": "Special",
+			"mighty": "Mighty"
 		}
 	}
 }
