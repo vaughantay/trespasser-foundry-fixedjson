@@ -28,10 +28,9 @@ export class TrespasserActorSheet extends ActorSheet {
 		return {
 			actor: this.actor,
 			system: this.actor.system,
-			flags: this.actor.flagsflags
+			flags: this.actor.flags
 		};
 
-    return context;
   }
 
   activateListeners(html) {
