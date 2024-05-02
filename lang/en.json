@@ -20,7 +20,12 @@
 			"range": "Target",
 			"hit": "Hit",
 			"solid_hit": "Solid",
-			"support": "Support"
+			"support": "Support",
+			"armor-location": "Armor Location",
+			"weight": "Weight",
+			"weapon-effect": "Weapon Effect",
+			"damage-dice": "Damage",
+			"keywords": "Keywords"
 		},
 
 		"ItemTypes": {
@@ -34,6 +39,28 @@
 			"basic": "Basic",
 			"special": "Special",
 			"mighty": "Mighty"
+		},
+
+		"ArmorSlots": {
+			"head": "Head",
+			"body": "Body",
+			"arms": "Arms",
+			"legs": "Legs",
+			"outer": "Outer",
+			"shield": "Shield"
+		},
+
+		"Weights": {
+			"l": "Light",
+			"m": "Medium",
+			"h": "Heavy"
+		},
+		
+		"DamageDice": {
+			"4": "D4",
+			"6": "D6",
+			"8": "D8",
+			"10": "D10"
 		}
 	}
 }

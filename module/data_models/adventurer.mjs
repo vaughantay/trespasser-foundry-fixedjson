@@ -101,24 +101,24 @@ export class AdventurerData extends CharacterBaseData {
 	get level() {
 		let level = 0
 
-		if (this.xp > 100) {
-			level = 1;
-		} else if (this.xp > 2000) {
-			level = 2;
-		} else if (this.xp > 4000) {
-			level = 3;
-		} else if (this.xp > 7000) {
-			level = 4;
-		} else if (this.xp > 10000) {
-			level = 5;
-		} else if (this.xp > 14000) {
-			level = 6;
-		} else if (this.xp > 18000) {
-			level = 7;
-		} else if (this.xp > 24000) {
-			level = 8;
-		} else if (this.xp > 30000) {
+		if (this.xp >= 30000) {
 			level = 9;
+		} else if (this.xp >= 24000) {
+			level = 8;
+		} else if (this.xp >= 18000) {
+			level = 7;
+		} else if (this.xp >= 14000) {
+			level = 6;
+		} else if (this.xp >= 10000) {
+			level = 5;
+		} else if (this.xp >= 7000) {
+			level = 4;
+		} else if (this.xp >= 4000) {
+			level = 3;
+		} else if (this.xp >= 2000) {
+			level = 2;
+		} else if (this.xp >= 1000) {
+			level = 1;
 		}
 
 		return level;

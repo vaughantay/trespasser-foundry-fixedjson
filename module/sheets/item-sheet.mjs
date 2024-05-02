@@ -37,6 +37,16 @@ export class TrespasserItemSheet extends ItemSheet {
 			context.enrichedDetails = await TextEditor.enrichHTML(this.item.system.details, {async: true});
 		}
 
+		if(this.item.type == 'armor') {
+			context.ArmorSlots = CONFIG.TRESPASSER.ArmorSlots;
+			context.Weight = CONFIG.TRESPASSER.Weights;
+		}
+
+		if(this.item.type == 'weapon') {
+			context.Weight = CONFIG.TRESPASSER.Weights;
+			context.Damage = CONFIG.TRESPASSER.DamageDiceSelections;
+		}
+
 		if(this.item.type == 'simple_item') {
 			context.ItemTypes = CONFIG.TRESPASSER.SimpleItemTypes;
 		}
@@ -44,6 +54,8 @@ export class TrespasserItemSheet extends ItemSheet {
 		if(this.item.type == 'action') {
 			context.ActionTypes = CONFIG.TRESPASSER.ActionTypes;
 			context.Skills = CONFIG.TRESPASSER.Skills;
+			context.enrichedHit = await TextEditor.enrichHTML(this.item.system.hit, {async: true});
+			context.enrichedSolid = await TextEditor.enrichHTML(this.item.system.solid_hit, {async: true});
 		}
 
 		return context;

@@ -5,17 +5,15 @@
         <div class="flex0 img"><img src="{{item.img}}" data-edit="img" title="{{item.name}}"/></div>
         <div class="flexcol spaced">
           <input id="name" type="text" name="name" value="{{item.name}}" placeholder="{{localize "trespasser.name"}}" />
-					{{!-- Something is up with this, the values arent taking at all. --}}
-					{{> 'systems/trespasser/templates/fields/number-field.hbs' label='TRESPASSER.ItemLabels.ac' field="document.system.armor_class" value=document.system.armor_class}}
-
-					{{> 'systems/trespasser/templates/fields/select-field.hbs' label='TRESPASSER.ItemLabels.armor-location' field='system.loc' options=ArmorSlots selected=document.system.loc includeEmpty=false localizeOptions=true}}
 					{{> 'systems/trespasser/templates/fields/select-field.hbs' label='TRESPASSER.ItemLabels.weight' field='system.weight' options=Weight selected=document.system.weight includeEmpty=false localizeOptions=true}}
+					{{> 'systems/trespasser/templates/fields/select-field.hbs' label='TRESPASSER.ItemLabels.damage-dice' field='system.damage' options=Damage selected=document.system.damage includeEmpty=true localizeOptions=true}}
+					{{> 'systems/trespasser/templates/fields/text-field.hbs' label='TRESPASSER.ItemLabels.keywords' field='system.keywords' value=document.system.keywords}}
         </div>
       </div>
     </div>
 
     <div id="body">
-      <h3 class="corners mid">Details</h3>
+			<h3 class="corners mid">{{localize 'TRESPASSER.ItemLabels.weapon-effect'}}</h3>
 			<div class="description" data-group="primary" data-tab="description">
 				{{editor enrichedDetails target="system.details" button=true owner=owner editable=editable}}
 			</div>

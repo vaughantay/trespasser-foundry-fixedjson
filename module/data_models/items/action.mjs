@@ -38,12 +38,12 @@ export class ActionData extends BaseItemData {
 				initial: '',
 				empty: true
 			}),
-			hit: new fields.StringField({
+			hit: new fields.HTMLField({
 				required: true,
 				initial: '',
 				empty: true
 			}),
-			solid_hit: new fields.StringField({
+			solid_hit: new fields.HTMLField({
 				required: true,
 				initial: '',
 				empty: true
