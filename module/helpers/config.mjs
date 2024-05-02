@@ -30,3 +30,16 @@ TRESPASSER.ArmorSlots = {
 	"outer": "TRESPASSER.ArmorSlots.outer",
 	"shield": "TRESPASSER.ArmorSlots.shield"
 };
+
+TRESPASSER.Weights = {
+	"L": "TRESPASSER.Weights.l",
+	"M": "TRESPASSER.Weights.m",
+	"H": "TRESPASSER.Weights.h"
+};
+
+TRESPASSER.DamageDiceSelections = {
+	"4": "TRESPASSER.DamageDice.4",
+	"6": "TRESPASSER.DamageDice.6",
+	"8": "TRESPASSER.DamageDice.8",
+	"10": "TRESPASSER.DamageDice.10"
+};

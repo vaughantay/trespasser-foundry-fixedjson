@@ -4,10 +4,12 @@
 		"adventurer": {}
   },
   "Item": {
-    "types": ["spell", "armor", "simple_item", "action"],
+    "types": ["spell", "armor", "simple_item", "action", "weapon"],
 		"spell": {},
 		"armor": {},
 		"base_item": {},
-		"action": {}
+		"action": {},
+		"weapon": {}
   }
+
 }

@@ -39,6 +39,12 @@ export class TrespasserItemSheet extends ItemSheet {
 
 		if(this.item.type == 'armor') {
 			context.ArmorSlots = CONFIG.TRESPASSER.ArmorSlots;
+			context.Weight = CONFIG.TRESPASSER.Weights;
+		}
+
+		if(this.item.type == 'weapon') {
+			context.Weight = CONFIG.TRESPASSER.Weights;
+			context.Damage = CONFIG.TRESPASSER.DamageDiceSelections;
 		}
 
 		if(this.item.type == 'simple_item') {

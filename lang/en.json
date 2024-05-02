@@ -21,7 +21,11 @@
 			"hit": "Hit",
 			"solid_hit": "Solid",
 			"support": "Support",
-			"armor-location": "Armor Location"
+			"armor-location": "Armor Location",
+			"weight": "Weight",
+			"weapon-effect": "Weapon Effect",
+			"damage-dice": "Damage",
+			"keywords": "Keywords"
 		},
 
 		"ItemTypes": {
@@ -44,6 +48,19 @@
 			"legs": "Legs",
 			"outer": "Outer",
 			"shield": "Shield"
+		},
+
+		"Weights": {
+			"l": "Light",
+			"m": "Medium",
+			"h": "Heavy"
+		},
+		
+		"DamageDice": {
+			"4": "D4",
+			"6": "D6",
+			"8": "D8",
+			"10": "D10"
 		}
 	}
 }
