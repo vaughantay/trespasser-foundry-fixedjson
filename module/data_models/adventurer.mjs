@@ -99,7 +99,7 @@ export class AdventurerData extends CharacterBaseData {
 	}
 	//Returns level based on xp
 	get level() {
-		let level = 0
+		let level = 0;
 
 		if (this.xp >= 30000) {
 			level = 9;
@@ -117,7 +117,7 @@ export class AdventurerData extends CharacterBaseData {
 			level = 3;
 		} else if (this.xp >= 2000) {
 			level = 2;
-		} else if (this.xp >= 1000) {
+		} else if (this.xp >= 100) {
 			level = 1;
 		}
 
