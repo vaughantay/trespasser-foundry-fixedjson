@@ -1,0 +1,29 @@
+<form class="{{cssClass}}" autocomplete="off">
+  <div class="flexcol spaced">
+    <div id="header" class="flexrow spaced">
+      <div class="flexrow spaced">
+        <div class="flex0 img"><img src="{{item.img}}" data-edit="img" title="{{item.name}}"/></div>
+        <div class="flexcol spaced">
+          <input id="name" type="text" name="name" value="{{item.name}}" placeholder="{{localize "trespasser.name"}}" />
+					<div class="right">
+						{{> 'systems/trespasser/templates/fields/select-field.hbs' label='' field='system.tier' options=ActionTypes selected=document.system.tier includeEmpty=false localizeOptions=true}}
+					</div>
+					{{> 'systems/trespasser/templates/fields/bool-field.hbs' label='TRESPASSER.ItemLabels.support' field='system.is_support' isChecked=document.system.is_support}}
+					{{> 'systems/trespasser/templates/fields/select-field.hbs' label='' field='system.skill' options=Skills selected=document.system.skill includeEmpty=false localizeOptions=true}}
+					{{> 'systems/trespasser/templates/fields/text-field.hbs' label='' field='system.keywords' value=document.system.keywords}}
+					{{> 'systems/trespasser/templates/fields/text-field.hbs' label='TRESPASSER.ItemLabels.range' field='system.range' value=document.system.range}}
+					<div class="description">
+						{{editor enrichedHit target="system.hit" button=true owner=owner editable=editable}}
+					</div>
+					<div class="description">
+						{{editor enrichedSolid target="system.solid_hit" button=true owner=owner editable=editable}}
+					</div>
+        </div>
+      </div>
+    </div>
+
+    <div id="body">
+    </div>
+  </div>
+</form>
+

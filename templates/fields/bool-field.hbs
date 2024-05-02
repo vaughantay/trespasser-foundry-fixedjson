@@ -1,0 +1,6 @@
+<div class="form-group flexrow">
+	{{#if (ne label '')}}
+  	<label class="flex1">{{localize label}}</label>
+	{{/if}}
+	<input type="Checkbox" name="{{field}}" {{checked isChecked}}/>
+</div>

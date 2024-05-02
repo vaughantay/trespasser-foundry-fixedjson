@@ -1,0 +1,8 @@
+<div class="form-group flexrow">
+	{{#if (ne label '')}}
+  	<label class="flex1">{{localize label}}</label>
+	{{/if}}
+  <div class="form-fields flex3">
+    <input type="text" name="{{field}}" value="{{value}}" placeholder="{{#if placeholder}}{{placeholder}}{{else}}{{localize label}}{{/if}}" data-dtype="Number" />
+  </div>
+</div>

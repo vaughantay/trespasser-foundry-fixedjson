@@ -1,0 +1,61 @@
+.window-app {
+	.window-content {
+		background: @white;
+	}
+}
+
+.trespasser {
+
+	#name {
+		.title-font();
+		padding: 0.05rem 0.4rem 0;
+		height: 60px;
+		font-size: 40px;
+	}
+
+	label {
+		.label-font();
+		font-size: 18px;
+		font-weight: 750px;
+	}
+
+	.img {
+    text-align: center;
+    min-width: 60px;
+
+    img {
+      max-width: 100%;
+      height: auto;
+      padding: 0;
+      margin: 0;
+    }
+  } 
+
+	.description {
+    --editor-height: 60px;
+
+    flex: 1;
+    display: flex;
+    min-height: var(--editor-height);
+    border: 1px solid black;
+    border-radius: 0.5rem;
+    padding: 0.5rem;
+
+    .editor {
+      min-height: var(--editor-height);
+      width: 100%;
+
+      .editor-content {
+        min-height: var(--editor-height);
+      }
+
+      .tox.tox-tinymce {
+        min-height: var(--editor-height);
+      }
+    }
+
+    &.short {
+      --editor-height: 30;
+    }
+  }
+}

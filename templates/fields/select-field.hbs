@@ -1,0 +1,16 @@
+<div class="form-group flexrow">
+	{{#if (ne label '')}}
+  	<label class="flex1">{{localize label}}</label>
+	{{/if}}
+  <div class="form-fields flex3">
+    <select name="{{field}}">
+      {{#select value}}
+        {{#if includeEmpty}}
+          <option value="">&mdash;</option>
+        {{/if}}
+				{{selectOptions options selected=selected localize=localizeOptions}}
+      {{/select}}
+    </select>
+  </div>
+</div>
+
