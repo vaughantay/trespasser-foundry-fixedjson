@@ -159,7 +159,7 @@ export class AdventurerData extends CharacterBaseData {
 		console.log('test');
 		return this.skilled_mods.cng;
 	}
-	
+
 	//Base because this gets modified by armor, which will be items.
 	//Should be able to handle it in a sheet no problem.
 	get base_armor_class() {
@@ -167,15 +167,16 @@ export class AdventurerData extends CharacterBaseData {
 	}
 
 	get potency_dice() {
-		let potency = 6;
+		let potency = 12;
 
-		if (this.level >= 3) {
-			potency = 8;
-		} else if (this.level >= 6) {
+		if (this.level >= 6) {
 			potency = 10;
-		} else if (this.level == 9) {
-			potency = 12;
+		} else if (this.level >= 3) {
+			potency = 8;
+		} else{
+			potency = 6	;
 		}
+		return potency;
 	}
 
 	//4 + level / 2. It seems to round down, can work with this for now.

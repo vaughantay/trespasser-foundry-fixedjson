@@ -4,14 +4,24 @@ import { TrespasserActorSheet } from './sheets/actor-sheet.mjs';
 import { AdventurerData } from './data_models/adventurer.mjs';
 import { loadHandlebarsPartials } from './helpers/preload.mjs'
 
+async function preloadHandlebarTemplates(){
+	const templatePaths = [
+		"systems/trespasser/templates/actor/adventurer/skills-tab.hbs",
+		"systems/trespasser/templates/actor/adventurer/equip-tab.hbs",
+		"systems/trespasser/templates/actor/adventurer/combat-tab.hbs"
+	];
+	return loadTemplates(templatePaths);
+};
+
+
 Hooks.once('init', function () {
 
 	game.trespasser = {
 		TrespasserActor,
 	};
-	
+
 	CONFIG.TRESPASSER = TRESPASSER;
-	
+
 	CONFIG.Actor.dataModels.adventurer = AdventurerData;
 
 	CONFIG.Actor.documentClass = TrespasserActor;
@@ -22,5 +32,5 @@ Hooks.once('init', function () {
 		label: 'TRESPASSER.SheetLabels.Actor',
 	});
 
-
+	preloadHandlebarTemplates();
 });

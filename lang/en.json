@@ -9,9 +9,64 @@
 			"Res": {"long": "Resolve", "abbr": "RES"}
 		},
 
+		"Skills":{
+			"acrobatics":"Acrobatics",
+			"athletics":"Athletics",
+			"folklore":"Folklore",
+			"letters":"Letters",
+			"mystery":"Mystery",
+			"nature":"Nature",
+			"perception":"Perception",
+			"speech":"Speech",
+			"stealth":"Stealth",
+			"tinkering":"Tinkering"
+		},
 
 		"CombatLabels": {
-			"initiative": "Initiative"
+			"initiative": "Initiative",
+			"hitpoints":"Hit Points",
+			"totalhp":"Total HP",
+			"recovery":"Recovery Dice",
+			"effort":"Effort",
+			"skillbonus":"Skill Bonus",
+			"potency":"Potency Die",
+			"initiative":"Initiative",
+			"speed":"Speed",
+			"armorclass":"Armor Class",
+			"reactions":"Reactions"
+		},
+
+		"DetailsLabels":{
+			"class":"Class",
+			"experience":"XP",
+			"level":"Level",
+			"playername":"Name",
+			"themes":"Themes",
+			"lineage":"Lineage",
+			"profession":"Profession",
+			"alignment":"Alignment"
+		},
+
+		"MenuLabels":{
+			"combatpage":"Combat",
+			"skillspage":"Skills",
+			"equippage":"Equipment"
+		},
+		"EquipLabels":{
+			"weapon":"Weapon",
+			"armor":"Armor",
+			"head":"Head",
+			"body":"Body",
+			"arms":"Arms",
+			"legs":"Legs",
+			"outer":"Outer",
+			"shield":"Shield",
+			"damage":"DMG",
+			"keywordsandrange":"Keywords & Range",
+			"weaponeffect":"Weapon Effect",
+			"weight":"WGT",
+			"armorclass":"AC",
+			"die":"Die"
 		}
 	}
 }
