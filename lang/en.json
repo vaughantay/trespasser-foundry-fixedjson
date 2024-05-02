@@ -70,10 +70,6 @@
 			"die":"Die"
     },
       
-		"CombatLabels": {
-			"initiative": "Initiative"
-		},
-
 		"ItemLabels": {
 			"castingPenalty": "Casting Penalty",
 			"ac": "AC",
