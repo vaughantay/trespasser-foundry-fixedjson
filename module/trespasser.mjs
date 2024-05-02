@@ -17,9 +17,9 @@ Hooks.once('init', function () {
 		TrespasserActor,
 		TrespasserItem,
 	};
-	
+
 	CONFIG.TRESPASSER = TRESPASSER;
-	
+
 	CONFIG.Actor.dataModels.adventurer = AdventurerData;
 	CONFIG.Actor.documentClass = TrespasserActor;
 

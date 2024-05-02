@@ -7,8 +7,8 @@ export class TrespasserActorSheet extends ActorSheet {
 	static get defaultOptions() {
 		return foundry.utils.mergeObject(super.defaultOptions, {
 			classes: ['trespasser', 'sheet', 'actor'],
-			width: 600,
-			height: 600,
+			width: 850,
+			height: 550,
 			tabs: [
 				{
 					navSelector: '.sheet-tabs',
@@ -71,7 +71,7 @@ export class TrespasserActorSheet extends ActorSheet {
       });
     }
   }
-	
+
 	//Not working yet
 	_onItemCreate(html) {
 		return;

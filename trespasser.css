@@ -99,6 +99,44 @@
 }
 .trespasser {
   font-family: "LibreBaskerville", serif;
+  background-color: #f8f9fa;
+}
+.trespasser .section {
+  padding: 10px;
+  margin: 0.25rem;
+  border-bottom-style: groove;
+  border-right-style: groove;
+  border-radius: 4px;
+  border-width: 2px;
+  background-color: #f8f9fa;
+  align-items: center;
+}
+.trespasser .box {
+
+  padding: 2px;
+}
+.trespasser input, .trespasser .fakeinput, .trespasser .button{
+  border-style: none;
+  text-align:center;
+  border-radius: 1px;
+  background-color: #DEDEDE;
+  height: 24px;
+  align-self:  center;
+  padding: 2px;
+  margin: 2px;
+  margin-left: 2px;
+  align-self: center;
+  align-items: center;
+}
+.trespasser .fakeinput{
+  background-color: #DDDDD7;
+}
+.trespasser .topbar input{
+  text-align: left;
+}
+.trespasser .button{
+  border-style: outset;
+  border-width: 1px;
 }
 .trespasser h1,
 .trespasser h2 {
