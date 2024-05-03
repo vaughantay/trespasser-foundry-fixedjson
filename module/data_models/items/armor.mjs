@@ -27,7 +27,13 @@ export class ArmorData extends BaseItemData {
 				initial: 'head',
 				empty: false,
 				options: ['head', 'body', 'arms', 'legs', 'outer', 'shield']
-			})
+			}),
+			armor_die: new fields.StringField({
+				required: false,
+				initial: 'd6',
+				options: ['d6', 'd8', 'd10'],
+				blank: true
+			}),
 		};
 	}
 }

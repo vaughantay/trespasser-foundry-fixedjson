@@ -82,7 +82,8 @@
 			"weight": "Weight",
 			"weapon-effect": "Weapon Effect",
 			"damage-dice": "Damage",
-			"keywords": "Keywords"
+			"keywords": "Keywords",
+			"armor-die": "Armor Die"
 		},
 
 		"ItemTypes": {
