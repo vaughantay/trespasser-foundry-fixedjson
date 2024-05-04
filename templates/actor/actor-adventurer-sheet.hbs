@@ -1,19 +1,22 @@
-<form class="trespasser flex-container" autocomplete="off">
+<form class="trespasser adventurer" autocomplete="off">
 	<div class="flexrow spaced section">
 		<div class="topbar">
 			<div class="flexrow">
-				<h4 class="flex4">{{localize 'TRESPASSER.DetailsLabels.playername'}}</h4>
-				<h4 class="flex2">{{localize 'TRESPASSER.DetailsLabels.lineage'}}</h4>
-				<h4 class="flex2">{{localize 'TRESPASSER.DetailsLabels.class'}}</h4>
-				<h4 class="flex1">{{localize 'TRESPASSER.DetailsLabels.level'}}</h4>
-				<h4 class="flex2">{{localize 'TRESPASSER.DetailsLabels.experience'}}</h4>
+				<h1 class="title">Trespasser</h1>
+				<span class="flex1"><h5>Level</h5>
+				<p class="fakeinput">{{system.level}}</p></span>
+				<span class="flex2"><h5>XP</h5>
+				<input name="system.xp" type="number" value="{{system.xp}}" data-dtype="number"/></span>
 			</div>
 			<div class="flexrow">
-				<input class="flex4" name="name" type="text" value="{{actor.name}}" placeholder="Name"/>
+				<h4 class="flex3">{{localize 'TRESPASSER.DetailsLabels.playername'}}</h4>
+				<h4 class="flex2">{{localize 'TRESPASSER.DetailsLabels.lineage'}}</h4>
+				<h4 class="flex2">{{localize 'TRESPASSER.DetailsLabels.class'}}</h4>
+			</div>
+			<div class="flexrow">
+				<input class="flex3" name="name" type="text" value="{{actor.name}}" placeholder="Name"/>
 				<input class="flex2" name="system.text_details.lineage" type="text" value="{{system.text_details.lineage}}" placeholder="Lineage" data-dtype="text"/>
 				<input class="flex2" name="system.text_details.class_name" type="text" value="{{system.text_details.class_name}}" placeholder="Class" data-dtype="text"/>
-				<p class="flex1 fakeinput">{{system.level}}</p>
-				<input class="flex2" name="system.xp" type="number" value="{{system.xp}}" data-dtype="number"/>
 			</div>
 			<div class="flexrow">
 				<h4>{{localize 'TRESPASSER.DetailsLabels.themes'}}</h4>
@@ -32,8 +35,8 @@
 			<div class="flexrow box">
 				<div class="flexcol">
 					<div class="flexrow">
-						<h4 class="flex2">{{localize 'TRESPASSER.CombatLabels.hitpoints'}}</h4>
-						<h4 class="flex2">{{localize 'TRESPASSER.CombatLabels.totalhp'}}</h4>
+						<h5 class="flex2">{{localize 'TRESPASSER.CombatLabels.hitpoints'}}</h5>
+						<h5 class="flex2">{{localize 'TRESPASSER.CombatLabels.totalhp'}}</h5>
 					</div>
 					<div class="flexrow">
 						<input name="system.combat.hit_points.value" type="text" value="{{system.combat.hit_points.value}}" data-dtype="Number"/>
@@ -44,7 +47,7 @@
 			<div class="flexrow box">
 				<div class="flexcol">
 					<div class="flexrow">
-						<h4>{{localize 'TRESPASSER.CombatLabels.recovery'}}</h4>
+						<h5>{{localize 'TRESPASSER.CombatLabels.recovery'}}</h5>
 					</div>
 					<div class="flexrow">
 						<input class="flex2" name="" type="text" value="5" data-dtype="Number"/>
@@ -58,7 +61,7 @@
 			<div class="flexrow box">
 				<div class="flexcol">
 					<div class="flexrow">
-						<h4>{{localize 'TRESPASSER.CombatLabels.effort'}}</h4>
+						<h5>{{localize 'TRESPASSER.CombatLabels.effort'}}</h5>
 					</div>
 					<div class="flexrow">
 						<input class="flex2" name="system.effort" type="text" value="{{system.effort}}" data-dtype="Number"/>
@@ -71,31 +74,31 @@
 			</div>
 			<div class="flexrow spaced">
 				<div class="flex2 box">
-					<h4>{{localize 'TRESPASSER.CombatLabels.skillbonus'}}</h4>
+					<h5>{{localize 'TRESPASSER.CombatLabels.skillbonus'}}</h5>
 					<p class="fakeinput">{{system.skill_bonus}}</p>
 				</div>
 				<div class="flex2 box">
-					<h4>{{localize 'TRESPASSER.CombatLabels.potency'}}</h4>
+					<h5>{{localize 'TRESPASSER.CombatLabels.potency'}}</h5>
 					<p class="fakeinput">d{{system.potency_dice}}</p>
 				</div>
 			</div>
 			<div class="flexrow spaced">
 				<div class="flex2 box">
-					<h4>{{localize 'TRESPASSER.CombatLabels.initiative'}}</h4>
+					<h5>{{localize 'TRESPASSER.CombatLabels.initiative'}}</h5>
 					<p class="fakeinput">{{system.initiative}}</p>
 				</div>
 				<div class="flex2 box">
-					<h4>{{localize 'TRESPASSER.CombatLabels.speed'}}</h4>
+					<h5>{{localize 'TRESPASSER.CombatLabels.speed'}}</h5>
 					<input name="system.combat.speed" type="text" value="{{system.combat.speed}}" data-dtype="Number"/>
 				</div>
 			</div>
 			<div class="flexrow spaced">
 				<div class="flex2 box">
-					<h4>{{localize 'TRESPASSER.CombatLabels.armorclass'}}</h4>
+					<h5>{{localize 'TRESPASSER.CombatLabels.armorclass'}}</h5>
 					<p class="fakeinput">{{system.base_armor_class}}</p>
 				</div>
 				<div class="flex2 box">
-					<h4>{{localize 'TRESPASSER.CombatLabels.reactions'}}</h4>
+					<h5>{{localize 'TRESPASSER.CombatLabels.reactions'}}</h5>
 					<p class="fakeinput">{{system.reactions}}</p>
 				</div>
 			</div>
@@ -111,6 +114,7 @@
           <a data-tab="skillspage">{{localize "TRESPASSER.MenuLabels.skillspage"}}</a>
           <a data-tab="combatpage">{{localize "TRESPASSER.MenuLabels.combatpage"}}</a>
           <a data-tab="equippage">{{localize "TRESPASSER.MenuLabels.equippage"}}</a>
+					<a data-tab="spellpage">{{localize "TRESPASSER.MenuLabels.spells"}}</a>
         </nav>
       </section>
       <section class="sheet-body">
@@ -122,6 +126,9 @@
         </div>
         <div class="tab-equip tab" data-group="primary" data-tab="equippage">
           {{> "systems/trespasser/templates/actor/adventurer/equip-tab.hbs"}}
+        </div>
+				<div class="tab-spells tab" data-group="primary" data-tab="spellpage">
+          {{> "systems/trespasser/templates/actor/adventurer/spells-tab.hbs"}}
         </div>
       </section>
 	</div>

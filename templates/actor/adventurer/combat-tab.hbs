@@ -1,1 +1,68 @@
-3
+  <div class="flexcol spaced">
+    <div class="flexrow">
+      <div class="section">
+        <div class="flexrow">
+          <h2>{{localize "TRESPASSER.MenuLabels.general"}}</h2>
+        </div>
+        <div class="flex-container">
+          {{#each context.features as |feature id|}}
+          {{> "systems/trespasser/templates/actor/adventurer/items/list-simple.hbs" feature}}
+          {{/each}}
+          {{#each context.talents as |talent id|}}
+          {{> "systems/trespasser/templates/actor/adventurer/items/list-simple.hbs" talent}}
+          {{/each}}
+          {{#each context.otherAbilities as |ability id|}}
+          {{> "systems/trespasser/templates/actor/adventurer/items/list-simple.hbs" ability}}
+          {{/each}}
+        </div>
+      </div>
+    </div>
+    <div class="flexrow">
+      <div class="section">
+        <div class="flexrow">
+          <h2>{{localize "TRESPASSER.MenuLabels.actions"}}</h2>
+        </div>
+        <div class="flex-container">
+          <div class="action basic">
+            <div class="flexrow">
+              <h3 class="flex3">Attack</h3>
+              <h4 class="flex1">Basic</h4>
+            </div>
+            <div class="table small">
+              <h5>STR ATTACK - MELEE / UNARMED</h5>
+              <p><b>TARGET:</b> 1 Creature</p>
+              <p><b>HIT:</b> WD + STR damage</p>
+              <p><b>SOLID:</b> Weapon Effect</p>
+            </div>
+          </div>
+          <div class="action basic">
+            <div class="flexrow">
+              <h3 class="flex3">Shoot</h3>
+              <h4 class="flex1">Basic</h4>
+            </div>
+            <div class="table small">
+              <h5>AGI ATTACK - RANGED</h5>
+              <p><b>TARGET:</b> 1 Creature</p>
+              <p><b>HIT:</b> WD + AGI damage</p>
+              <p><b>SOLID:</b> Weapon Effect</p>
+            </div>
+          </div>
+          <div class="action basic">
+            <div class="flexrow">
+              <h3 class="flex3">Rally</h3>
+              <h4 class="flex1">Basic</h4>
+            </div>
+            <div class="table small">
+              <h5>RES SUPPORT</h5>
+              <p><b>TARGET:</b> Self</p>
+              <p><b>HIT:</b> Gain <b>2 Effort</b> or make <b>Recovery 2</b></p>
+              <p><b>SOLID:</b> You can do both</p>
+            </div>
+          </div>
+          {{#each context.actions as |action id|}}
+          {{> "systems/trespasser/templates/actor/adventurer/items/list-action.hbs" action}}
+          {{/each}}
+        </div>
+      </div>
+    </div>
+  </div>

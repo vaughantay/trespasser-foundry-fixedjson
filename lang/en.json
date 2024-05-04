@@ -50,11 +50,15 @@
 		"MenuLabels":{
 			"combatpage":"Combat",
 			"skillspage":"Skills",
-			"equippage":"Equipment"
+			"equippage":"Equipment",
+			"actions":"Actions",
+			"general":"Features, Talents, Abilities",
+			"spells":"Spells"
 		},
-    
+
 		"EquipLabels":{
 			"weapon":"Weapon",
+			"weapons":"Weapons",
 			"armor":"Armor",
 			"head":"Head",
 			"body":"Body",
@@ -69,7 +73,7 @@
 			"armorclass":"AC",
 			"die":"Die"
     },
-      
+
 		"ItemLabels": {
 			"castingPenalty": "Casting Penalty",
 			"ac": "AC",
@@ -113,7 +117,7 @@
 			"m": "Medium",
 			"h": "Heavy"
 		},
-		
+
 		"DamageDice": {
 			"4": "D4",
 			"6": "D6",

@@ -1,10 +1,13 @@
 <div class="flexrow spaced">
   <div class="section">
     <div class="flexrow">
-      <h4 class="flex3">{{localize 'TRESPASSER.EquipLabels.weapon'}}</h4>
-      <h4 class="flex1">{{localize 'TRESPASSER.EquipLabels.damage'}}</h4>
-      <h4 class="flex3">{{localize 'TRESPASSER.EquipLabels.keywordsandrange'}}</h4>
-      <h4 class="flex3">{{localize 'TRESPASSER.EquipLabels.weaponeffect'}}</h4>
+      <h2>{{localize 'TRESPASSER.EquipLabels.weapons'}}</h2>
+    </div>
+    <div class="flexrow">
+      <h5 class="flex3">{{localize 'TRESPASSER.EquipLabels.weapon'}}</h5>
+      <h5 class="flex1">{{localize 'TRESPASSER.EquipLabels.damage'}}</h5>
+      <h5 class="flex3">{{localize 'TRESPASSER.EquipLabels.keywordsandrange'}}</h5>
+      <h5 class="flex3">{{localize 'TRESPASSER.EquipLabels.weaponeffect'}}</h5>
     </div>
     <div class="flexrow">
       <p class="fakeinput flex3"></p>
@@ -13,10 +16,10 @@
       <p class="fakeinput flex3"></p>
     </div>
     <div class="flexrow">
-      <h4 class="flex3">{{localize 'TRESPASSER.EquipLabels.weapon'}}</h4>
-      <h4 class="flex1">{{localize 'TRESPASSER.EquipLabels.damage'}}</h4>
-      <h4 class="flex3">{{localize 'TRESPASSER.EquipLabels.keywordsandrange'}}</h4>
-      <h4 class="flex3">{{localize 'TRESPASSER.EquipLabels.weaponeffect'}}</h4>
+      <h5 class="flex3">{{localize 'TRESPASSER.EquipLabels.weapon'}}</h5>
+      <h5 class="flex1">{{localize 'TRESPASSER.EquipLabels.damage'}}</h5>
+      <h5 class="flex3">{{localize 'TRESPASSER.EquipLabels.keywordsandrange'}}</h5>
+      <h5 class="flex3">{{localize 'TRESPASSER.EquipLabels.weaponeffect'}}</h5>
     </div>
     <div class="flexrow">
       <p class="fakeinput flex3"></p>
@@ -30,11 +33,14 @@
   <div class="flexcol spaced">
     <div class="section">
       <div class="flexrow">
-        <h4 class="flex2"></h4>
-        <h4 class="flex4">{{localize 'TRESPASSER.EquipLabels.armor'}}</h4>
-        <h4 class="flex1">{{localize 'TRESPASSER.EquipLabels.weight'}}</h4>
-        <h4 class="flex1">{{localize 'TRESPASSER.EquipLabels.armorclass'}}</h4>
-        <h4 class="flex2">{{localize 'TRESPASSER.EquipLabels.die'}}</h4>
+        <h2>{{localize 'TRESPASSER.EquipLabels.armor'}}</h2>
+      </div>
+      <div class="flexrow">
+        <h5 class="flex2"></h5>
+        <h5 class="flex4">{{localize 'TRESPASSER.EquipLabels.armor'}}</h5>
+        <h5 class="flex2">{{localize 'TRESPASSER.EquipLabels.weight'}}</h5>
+        <h5 class="flex1">{{localize 'TRESPASSER.EquipLabels.armorclass'}}</h5>
+        <h5 class="flex2">{{localize 'TRESPASSER.EquipLabels.die'}}</h5>
       </div>
       <div class="flexrow">
         <p class="flex2">{{localize 'TRESPASSER.EquipLabels.head'}}</p>
@@ -85,8 +91,10 @@
       <div class="flexrow">
         <h2>Inventory</h2>
       </div>
-      {{> "systems/trespasser/templates/actor/adventurer/inventory-slot.hbs"}}
+      {{#each context.inventory as |item id|}}
+      {{> "systems/trespasser/templates/actor/adventurer/items/inventory-slot.hbs" item}}
       <!-- Inventory Here -->
+      {{/each}}
     </div>
   </div>
 </div>
