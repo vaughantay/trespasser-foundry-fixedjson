@@ -43,3 +43,9 @@ TRESPASSER.DamageDiceSelections = {
 	"8": "TRESPASSER.DamageDice.8",
 	"10": "TRESPASSER.DamageDice.10"
 };
+
+TRESPASSER.ArmorDiceSelections = {
+	"6": "TRESPASSER.DamageDice.6",
+	"8": "TRESPASSER.DamageDice.8",
+	"10": "TRESPASSER.DamageDice.10"
+};
