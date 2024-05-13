@@ -114,7 +114,9 @@
           <a data-tab="skillspage">{{localize "TRESPASSER.MenuLabels.skillspage"}}</a>
           <a data-tab="combatpage">{{localize "TRESPASSER.MenuLabels.combatpage"}}</a>
           <a data-tab="equippage">{{localize "TRESPASSER.MenuLabels.equippage"}}</a>
+					{{#if context.spells.length}}
 					<a data-tab="spellpage">{{localize "TRESPASSER.MenuLabels.spells"}}</a>
+					{{/if}}
         </nav>
       </section>
       <section class="sheet-body">

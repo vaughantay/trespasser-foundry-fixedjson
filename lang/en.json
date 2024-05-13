@@ -53,7 +53,8 @@
 			"equippage":"Equipment",
 			"actions":"Actions",
 			"general":"Features, Talents, Abilities",
-			"spells":"Spells"
+			"spells":"Spells",
+			"delete":"Delete"
 		},
 
 		"EquipLabels":{
@@ -87,7 +88,8 @@
 			"weapon-effect": "Weapon Effect",
 			"damage-dice": "Damage",
 			"keywords": "Keywords",
-			"armor-die": "Armor Die"
+			"armor-die": "Armor Die",
+			"twohanded": "Two Handed"
 		},
 
 		"ItemTypes": {

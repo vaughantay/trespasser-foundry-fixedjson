@@ -16,6 +16,9 @@
 .flex4 {
   flex: 4;
 }
+.flex5{
+  flex:5;
+}
 .flex {
   display: flex !important;
 }

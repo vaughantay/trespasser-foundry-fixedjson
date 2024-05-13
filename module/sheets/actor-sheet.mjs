@@ -59,9 +59,17 @@ export class TrespasserActorSheet extends ActorSheet {
 			//Return the weapons in either hand.
 			if (item.type == 'weapon') {
 				const weapon = item.system;
+				console.log(weapon.two_handed);
+			/*	if (weapon.twohanded) {
+					if (weapon.equipped_left || weapon.equipped_right){
+						equippedWeapons.right = item;
+						equippedWeapons.left = equippedWeapons.right;
+					} else inventory.push(item);
+				}
+				else
+				This doesn't work yet dw about it */
 				if (weapon.equipped_left) {
-					//This will look like right: {itemdetails}, left: {itemdetails}. Very cool
-					equippedWeapons.left = item;
+					equippedWeapons.left=item;
 				} else if (weapon.equipped_right) {
 					equippedWeapons.right = item;
 				}
@@ -99,6 +107,7 @@ export class TrespasserActorSheet extends ActorSheet {
 
 
 		context.AC = calculatedAC;
+		context.equippedWeapons = equippedWeapons;
 		context.equippedArmor = equippedArmor;
 		context.features = features;
 		context.otherAbilities = otherAbilities;
@@ -128,6 +137,31 @@ export class TrespasserActorSheet extends ActorSheet {
 
     if (!this.isEditable) return;
 
+		html.on('click', '.weapon-equip-L', (ev) => {
+      const li = $(ev.currentTarget).parents('.item');
+			const weaponL = $(".weaponL");
+			const current = this.actor.items.get(weaponL.data('itemId'));
+      const weap = this.actor.items.get(li.data('itemId'));
+			if (current) current.update({ 'system.equipped_left' :  false });
+			weap.update({ 'system.equipped_left' :  true });
+    });
+		html.on('click', '.weapon-equip-R', (ev) => {
+      const li = $(ev.currentTarget).parents('.item');
+			const weaponL = $(".weaponR");
+			const current = this.actor.items.get(weaponL.data('itemId'));
+      const weap = this.actor.items.get(li.data('itemId'));
+			if (current) current.update({ 'system.equipped_right' :  false });
+			weap.update({ 'system.equipped_right' :  true });
+    });
+
+		html.on('click', '.weapon-unequip', (ev) =>{
+			const item = this.actor.items.get($(ev.currentTarget).data('itemId'));
+			if (item) {
+				item.update({ 'system.equipped_right' :  false });
+				item.update({ 'system.equipped_left' :  false });
+			}
+		});
+
     html.on('click', '.item-create', this._onItemCreate.bind(this));
 
     html.on('click', '.item-delete', (ev) => {
@@ -139,7 +173,7 @@ export class TrespasserActorSheet extends ActorSheet {
 
     html.on('click', '.effect-control', (ev) => {
       const row = ev.currentTarget.closest('li');
-      const document =
+      //const document =
         row.dataset.parentId === this.actor.id
           ? this.actor
           : this.actor.items.get(row.dataset.parentId);
@@ -155,7 +189,6 @@ export class TrespasserActorSheet extends ActorSheet {
       });
     }
   }
-
 	//Not working yet
 	_onItemCreate(html) {
 		return;
