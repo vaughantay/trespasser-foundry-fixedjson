@@ -26,20 +26,22 @@ export class TrespasserActorSheet extends ActorSheet {
   }
 
   getData() {
-		
+
 		const context = {};
-		
+
 		//We will add to this based on which armor pieces are equipped.
 		let calculatedAC = this.actor.system.base_armor_class;
 		const equippedArmor = {};
 		const equippedWeapons = {};
+		const inventory = [];
 		const features = [];
 		const otherAbilities = [];
 		const talents = [];
 		const actions = [];
 		const spells = [];
 
-		for (const item in this.actor.items) {
+		let items = Object.values(Object.values(this.actor.items)[4]);
+		items.forEach((item, i) => {
 			if (item.type == 'armor') {
 				const armor = item.system;
 				//If equipped, add the ac to the calculated AC
@@ -47,20 +49,34 @@ export class TrespasserActorSheet extends ActorSheet {
 
 				//Now we get the equipped armor.
 				if (armor.equipped) {
-					//This will look like head: {ac, location, etc.} 
+					//This will look like head: {ac, location, etc.}
 					//If there is nothing equipped in a slot, the data will not populate, may need to change this.
 					equippedArmor[armor.loc] = item;
 				}
+				else{
+					inventory.push(item);
+				}
 			}
-			
+
 			//Return the weapons in either hand.
 			if (item.type == 'weapon') {
 				const weapon = item.system;
+				console.log(weapon.two_handed);
+			/*	if (weapon.twohanded) {
+					if (weapon.equipped_left || weapon.equipped_right){
+						equippedWeapons.right = item;
+						equippedWeapons.left = equippedWeapons.right;
+					} else inventory.push(item);
+				}
+				else
+				This doesn't work yet dw about it */
 				if (weapon.equipped_left) {
-					//This will look like right: {itemdetails}, left: {itemdetails}. Very cool
-					equippedWeapons.left = item;
+					equippedWeapons.left=item;
 				} else if (weapon.equipped_right) {
 					equippedWeapons.right = item;
+				}
+				else{
+					inventory.push(item);
 				}
 			}
 
@@ -69,13 +85,16 @@ export class TrespasserActorSheet extends ActorSheet {
 				if (simpleItem.type == 'feature') {
 					features.push(item);
 				}
-				
+
 				if (simpleItem.type == 'other-ability') {
 					otherAbilities.push(item);
 				}
 
 				if (simpleItem.type == 'talent') {
 					talents.push(item);
+				}
+				else{
+					inventory.push(item);
 				}
 			}
 
@@ -86,18 +105,20 @@ export class TrespasserActorSheet extends ActorSheet {
 			if(item.type == 'spell') {
 				spells.push(item);
 			}
-		}
+		});
+
 
 		context.AC = calculatedAC;
+		context.equippedWeapons = equippedWeapons;
 		context.equippedArmor = equippedArmor;
 		context.features = features;
 		context.otherAbilities = otherAbilities;
 		context.talents = talents;
 		context.actions = actions;
 		context.spells = spells;
+		context.inventory = inventory;
 
-		//Need to add logic to pass weapons into the inventory, and armor.
-
+		console.log(context);
 		return {
 			'context': context,
 			actor: this.actor,
@@ -118,6 +139,31 @@ export class TrespasserActorSheet extends ActorSheet {
 
     if (!this.isEditable) return;
 
+		html.on('click', '.weapon-equip-L', (ev) => {
+      const li = $(ev.currentTarget).parents('.item');
+			const weaponL = $(".weaponL");
+			const current = this.actor.items.get(weaponL.data('itemId'));
+      const weap = this.actor.items.get(li.data('itemId'));
+			if (current) current.update({ 'system.equipped_left' :  false });
+			weap.update({ 'system.equipped_left' :  true });
+    });
+		html.on('click', '.weapon-equip-R', (ev) => {
+      const li = $(ev.currentTarget).parents('.item');
+			const weaponL = $(".weaponR");
+			const current = this.actor.items.get(weaponL.data('itemId'));
+      const weap = this.actor.items.get(li.data('itemId'));
+			if (current) current.update({ 'system.equipped_right' :  false });
+			weap.update({ 'system.equipped_right' :  true });
+    });
+
+		html.on('click', '.weapon-unequip', (ev) =>{
+			const item = this.actor.items.get($(ev.currentTarget).data('itemId'));
+			if (item) {
+				item.update({ 'system.equipped_right' :  false });
+				item.update({ 'system.equipped_left' :  false });
+			}
+		});
+
     html.on('click', '.item-create', this._onItemCreate.bind(this));
 
     html.on('click', '.item-delete', (ev) => {
@@ -129,7 +175,7 @@ export class TrespasserActorSheet extends ActorSheet {
 
     html.on('click', '.effect-control', (ev) => {
       const row = ev.currentTarget.closest('li');
-      const document =
+      //const document =
         row.dataset.parentId === this.actor.id
           ? this.actor
           : this.actor.items.get(row.dataset.parentId);
@@ -147,7 +193,6 @@ export class TrespasserActorSheet extends ActorSheet {
       });
     }
   }
-
 	//Not working yet
 	_onItemCreate(html) {
 		return;

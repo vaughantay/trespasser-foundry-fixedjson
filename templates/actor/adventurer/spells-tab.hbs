@@ -1,0 +1,6 @@
+<h2>Spells</h2>
+<div class="flexcol spaced">
+  {{#each context.spells as |spell id|}}
+  {{> "systems/trespasser/templates/actor/adventurer/items/list-spell.hbs" spell}}
+  {{/each}}
+</div>

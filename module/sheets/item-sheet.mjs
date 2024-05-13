@@ -31,7 +31,7 @@ export class TrespasserItemSheet extends ItemSheet {
 		const context = super.getData();
 
 		console.log(context)
-			
+
 		//If details isnt null, we need to enrich them.
 		if(this.item.system.details !== null) {
 			context.enrichedDetails = await TextEditor.enrichHTML(this.item.system.details, {async: true});

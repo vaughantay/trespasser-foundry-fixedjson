@@ -1,0 +1,81 @@
+<div class="flexrow item inventory-slot" data-item-id='{{_id}}'>
+  {{#if (eq type 'weapon')}}
+  <p class="fakeinput flex3">{{name}}</p>
+  <div class="flexrow flex4 item-controls">
+    <a
+      class='item-control weapon-equip-L'
+      title='{{localize "DOCUMENT.Update" type='Item'}}'>
+      <p class="button flex1">
+        <i class='fas fa-hand-point-left'></i>
+      </p>
+    </a>
+    <a
+      class='item-control weapon-equip-R'
+      title='{{localize "DOCUMENT.Update" type='Item'}}'>
+      <p class="button flex1">
+        <i class='fas fa-hand-point-right'></i>
+      </p>
+    </a>
+    <a
+      class='item-control item-edit'
+      title='{{localize "DOCUMENT.Update" type='Item'}}'>
+      <p class="button flex1">
+        <i class='fas fa-edit'></i>
+      </p>
+    </a>
+    <a
+      class='item-control item-delete'
+      title='{{localize "TRESPASSER.MenuLabels.delete" type='Item'}}'>
+      <p class="button flex1">
+        <i class='fas fa-trash'></i>
+      </p>
+    </a>
+  </div>
+  {{/if}}
+  {{#if (eq type 'armor')}}
+  <p class="fakeinput flex4">{{name}}</p>
+  <div class="flexrow flex3 item-controls">
+    <a
+      class='item-control armor-equip'
+      title='{{localize "DOCUMENT.Update" type='Item'}}'>
+      <p class="button flex1">
+        <i class='fas fa-shield'></i>
+      </p>
+    </a>
+    <a
+      class='item-control item-edit'
+      title='{{localize "DOCUMENT.Update" type='Item'}}'>
+      <p class="button flex1">
+        <i class='fas fa-edit'></i>
+      </p>
+    </a>
+    <a
+      class='item-control item-delete'
+      title='{{localize "TRESPASSER.MenuLabels.delete" type='Item'}}'>
+      <p class="button flex1">
+        <i class='fas fa-trash'></i>
+      </p>
+    </a>
+  </div>
+  {{/if}}
+  {{#if (eq type 'simple_item')}}
+  <p class="fakeinput flex5">{{name}}</p>
+  <div class="flexrow flex2 item-controls">
+    <a
+      class='item-control item-edit'
+      title='{{localize "DOCUMENT.Update" type='Item'}}'>
+      <p class="button flex1">
+        <i class='fas fa-edit'></i>
+      </p>
+    </a>
+    <a
+      class='item-control item-delete'
+      title='{{localize "TRESPASSER.MenuLabels.delete" type='Item'}}'>
+      <p class="button flex1">
+        <i class='fas fa-trash'></i>
+      </p>
+    </a>
+  </div>
+  {{/if}}
+
+</div>

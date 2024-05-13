@@ -1,7 +1,7 @@
 import { BaseItemData } from './base-item.mjs'
 
 export class WeaponData extends BaseItemData {
-	
+
 	//This is a place to define templates, I'll make a few inherited methods which act as templates.
 	static defineSchema() {
 		const fields = foundry.data.fields;
@@ -14,6 +14,10 @@ export class WeaponData extends BaseItemData {
 				initial: false
 			}),
 			equipped_right: new fields.BooleanField({
+				required: true,
+				initial: false
+			}),
+			two_handed: new fields.BooleanField({
 				required: true,
 				initial: false
 			}),

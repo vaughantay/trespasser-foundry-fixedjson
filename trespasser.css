@@ -16,6 +16,9 @@
 .flex4 {
   flex: 4;
 }
+.flex5{
+  flex:5;
+}
 .flex {
   display: flex !important;
 }
@@ -48,6 +51,9 @@
   height: auto;
   padding: 0;
   margin: 0;
+}
+.title{
+  flex:6;
 }
 .trespasser .description {
   --editor-height: 60px;
@@ -102,14 +108,34 @@
   background-color: #f8f9fa;
 }
 .trespasser .section {
-  padding: 10px;
-  margin: 0.25rem;
+  padding: 10px 3px;
+  margin-left: 0.25em 0.1em;
   border-bottom-style: groove;
   border-right-style: groove;
   border-radius: 4px;
   border-width: 2px;
   background-color: #f8f9fa;
   align-items: center;
+}
+.expand{
+  display: none;
+}
+.action{
+  width: 31.5%;
+  margin:5px;
+  border-bottom-style: groove;
+  border-right-style: groove;
+  border-radius: 2px;
+  border-width: 2px;
+  background-color: #e9ecef;
+}
+.simple-card, .spell-card{
+  border-bottom-style: groove;
+  border-right-style: groove;
+  border-radius: 2px;
+  border-width: 2px;
+  background-color: #e9ecef;
+  		width: 100%;
 }
 .trespasser .box {
 
@@ -163,11 +189,23 @@
 .trespasser h5 {
   font-family: "VollkornSC", serif;
   border-bottom: none;
-  margin: 0 0 0.25rem;
+  margin: auto;
   padding: 0;
   position: relative;
   font-weight: 800;
   text-transform: uppercase;
+
+}
+.flex-container{
+  display: flex;
+  flex-flow: row wrap;
+}
+.table{
+  font-size: 0.8em;
+}
+.skills input{
+  width: 1.5em;
+  height: 1.5em;
 }
 .trespasser h3 a.addItem,
 .trespasser h4 a.addItem,

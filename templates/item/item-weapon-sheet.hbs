@@ -8,6 +8,7 @@
 					{{> 'systems/trespasser/templates/fields/select-field.hbs' label='TRESPASSER.ItemLabels.weight' field='system.weight' options=Weight selected=document.system.weight includeEmpty=false localizeOptions=true}}
 					{{> 'systems/trespasser/templates/fields/select-field.hbs' label='TRESPASSER.ItemLabels.damage-dice' field='system.damage' options=Damage selected=document.system.damage includeEmpty=true localizeOptions=true}}
 					{{> 'systems/trespasser/templates/fields/text-field.hbs' label='TRESPASSER.ItemLabels.keywords' field='system.keywords' value=document.system.keywords}}
+          {{> 'systems/trespasser/templates/fields/bool-field.hbs' label='TRESPASSER.ItemLabels.twohanded' field='system.two_handed' isChecked=document.system.two_handed}}
         </div>
       </div>
     </div>
@@ -20,4 +21,3 @@
     </div>
   </div>
 </form>
-
