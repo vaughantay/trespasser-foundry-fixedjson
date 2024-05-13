@@ -1,0 +1,5 @@
+<form class="trespasser">
+	{{> "systems/trespasser/templates/fields/select-field.hbs" field="ability" label="TRESPASSER.DialogLabels.ability" options=abilities localizeOptions=true value=selectedAbility}}
+	{{> "systems/trespasser/templates/fields/select-field.hbs" field="skill" label="TRESPASSER.DialogLabels.skill" options=skills localizeOptions=true value=selectedSkill}}
+	{{> "systems/trespasser/templates/fields/bool-field.hbs" field="skilled_override" label="TRESPASSER.DialogLabels.skill-override" value="false"}}
+</form>
