@@ -22,6 +22,11 @@
 			"tinkering":"Tinkering"
 		},
 
+		"DialogButtons": {
+			"submit": "Submit",
+			"cancel": "Cancel"
+		},
+
 		"CombatLabels": {
 			"initiative": "Initiative",
 			"hitpoints":"Hit Points",
@@ -45,6 +50,12 @@
 			"lineage":"Lineage",
 			"profession":"Profession",
 			"alignment":"Alignment"
+		},
+
+		"DialogLabels": {
+			"ability": "Ability",
+			"skill": "Skill",
+			"skill-override": "Skilled Override"
 		},
 
 		"MenuLabels":{

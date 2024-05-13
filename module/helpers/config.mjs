@@ -13,6 +13,7 @@ TRESPASSER.ActionTypes = {
 	"mty": "TRESPASSER.ActionTypes.mighty",
 };
 
+//This needs to be abilities but im not sure what it would break if changed...
 TRESPASSER.Skills = {
 	"agi": "TRESPASSER.Ability.Agi.abbr",
 	"str": "TRESPASSER.Ability.Str.abbr",
@@ -21,6 +22,28 @@ TRESPASSER.Skills = {
 	"cng": "TRESPASSER.Ability.Cng.abbr",
 	"res": "TRESPASSER.Ability.Res.abbr"
 };
+
+TRESPASSER.AbilitiesLong = {
+	"agi": "TRESPASSER.Ability.Agi.long",
+	"str": "TRESPASSER.Ability.Str.long",
+	"vig": "TRESPASSER.Ability.Vig.long",
+	"knw": "TRESPASSER.Ability.Knw.long",
+	"cng": "TRESPASSER.Ability.Cng.long",
+	"res": "TRESPASSER.Ability.Res.long"
+};
+
+TRESPASSER.PlayerSkills = {
+	"acrobatics": "TRESPASSER.Skills.acrobatics",
+	"athletics": "TRESPASSER.Skills.athletics",
+	"folklore": "TRESPASSER.Skills.folklore",
+	"letters": "TRESPASSER.Skills.letters",
+	"mystery": "TRESPASSER.Skills.mystery",
+	"nature": "TRESPASSER.Skills.nature",
+	"perception": "TRESPASSER.Skills.perception",
+	"speech": "TRESPASSER.Skills.speech",
+	"stealth": "TRESPASSER.Skills.stealth",
+	"tinkering": "TRESPASSER.Skills.tinkering"
+}
 
 TRESPASSER.ArmorSlots = {
 	"head": "TRESPASSER.ArmorSlots.head",

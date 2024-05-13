@@ -2,6 +2,8 @@ import {
 	onManageActiveEffect,
 	prepareActiveEffectCategories,
 } from '../helpers/effects.mjs'
+import { renderDialog } from '../helpers/dialog.mjs';
+import { TrespasserRoll } from '../roll/trespasser-roll.mjs';
 
 export class TrespasserActorSheet extends ActorSheet {
 	static get defaultOptions() {
@@ -134,6 +136,8 @@ export class TrespasserActorSheet extends ActorSheet {
       onManageActiveEffect(ev, document);
     });
 
+		html.on('click', '.roll', this._createRoll.bind(this));
+
     if (this.actor.isOwner) {
       let handler = (ev) => this._onDragStart(ev);
       html.find('li.item').each((i, li) => {
@@ -147,5 +151,51 @@ export class TrespasserActorSheet extends ActorSheet {
 	//Not working yet
 	_onItemCreate(html) {
 		return;
+	}
+
+	async _createRoll(event) {
+
+		const data = await renderDialog(
+			game.i18n.localize('TRESPASSER.Dialogs.roll'),
+			this._processRollDialog,
+			{
+				abilities: {...CONFIG.TRESPASSER.AbilitiesLong},
+				skills: {...CONFIG.TRESPASSER.PlayerSkills},
+				selectedAbility: "agi",
+				selectedSkill: "acrobatics"
+			},
+			'systems/trespasser/templates/dialogs/roll.hbs',
+		);
+
+		//If we override the skilled trait, we can just choose true, otherwise get the skill status of the skill selected.
+		const skilled = data.skilledOverride ? true : this.actor.system.skills[data.skill];
+
+		const skilled_bonus = skilled ? this.actor.system.skill_bonus : 0;
+		const ability_bonus = this.actor.system.ability_mods[data.ability];
+		
+		let roll = new Roll(
+			"d20 + @abilityBonus + @skilledBonus", 
+			{
+				abilityBonus: ability_bonus,
+				skilledBonus: skilled_bonus 
+			});
+
+		//Now we can create an updated roll chat card, and plug the data in here.
+		//Make that the content of the actual thing.
+
+		roll.toMessage({
+			speaker: ChatMessage.getSpeaker({ actor: this.actor }),
+			rollMode: game.settings.get('core', 'rollMode'),
+		});
+	}
+
+	_processRollDialog(html) {
+		const form = html[0].querySelector('form');
+
+		return {
+			ability: form.ability.value,
+			skill: form.skill.value,
+			skilledOverride: form.skilled_override.checked
+		};
 	}
 }
