@@ -194,6 +194,16 @@ export class TrespasserActorSheet extends ActorSheet {
     }
 
 		html.on('click', '.action-roll', this._createActionRoll.bind(this));
+
+		html.on('click', '.expand-header', (ev) => {
+			let li = $(ev.currentTarget.parentNode).find('.expand');
+			console.log(li);
+			if (li.is(':hidden')) {
+				li.slideDown();
+			} else {	
+				li.slideUp();
+			}
+		});
   }
 	//Not working yet
 	_onItemCreate(html) {
