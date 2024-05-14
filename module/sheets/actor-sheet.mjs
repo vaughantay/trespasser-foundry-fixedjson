@@ -192,6 +192,8 @@ export class TrespasserActorSheet extends ActorSheet {
         li.addEventListener('dragstart', handler, false);
       });
     }
+
+		html.on('click', '.action-roll', this._createActionRoll.bind(this));
   }
 	//Not working yet
 	_onItemCreate(html) {
@@ -242,5 +244,57 @@ export class TrespasserActorSheet extends ActorSheet {
 			skill: form.skill.value,
 			skilledOverride: form.skilled_override.checked
 		};
+	}
+	
+	async _createActionRoll(event) {
+		const li = $(event.currentTarget).parents('.action');
+		const skill = li.data('rollSkill');
+		const isSupport = li.data('support');
+		
+		const ability_bonus = this.actor.system.ability_mods[skill];
+
+		const roll = new Roll(
+			"d20 + @abilityBonus + @skilledBonus", 
+			{
+				abilityBonus: ability_bonus,
+				skilledBonus: this.actor.system.skill_bonus
+			});
+
+		await roll.evaluate();
+		let result = roll._total;
+
+		//If we are going with support. We just have DC 10.
+		let hasDC = false;
+		let succeedDC = false;
+		if(isSupport) {
+			if (result > 10) {
+				hasDC = true;
+				succeedDC = true;
+			}
+		} else {
+			//DC is going to be the opponent's AC.
+			let targets = game.user.targets;
+			if(targets.values().next().value?.actor !== null) {
+				if(result > targets.values().next().value?.actor.system.AC){
+					hasDC = true;
+					succeedDC = true;	
+				}
+			} else {
+				hasDC = false;
+			}
+		}
+
+		//Then we just decide what to display here.
+		//We need to get AC in the data model, because if we dont, we wont be able to determine success.
+		if (hasDC) {
+			if (succeedDC) {
+				console.log('Success');
+			}
+			else {
+				console.log('Fail');
+			}
+		} else {
+			console.log(result);
+		}
 	}
 }
