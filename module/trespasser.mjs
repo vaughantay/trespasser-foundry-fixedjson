@@ -10,6 +10,7 @@ import { WeaponData } from './data_models/items/weapon.mjs';
 import { SimpleItemData } from './data_models/items/simple-item.mjs';
 import { AdventurerData } from './data_models/adventurer.mjs';
 import { loadHandlebarsPartials } from './helpers/preload.mjs'
+import { TrespasserRoll } from './roll/trespasser-roll.mjs';
 
 Hooks.once('init', function () {
 
@@ -28,6 +29,8 @@ Hooks.once('init', function () {
 	CONFIG.Item.dataModels.simple_item = SimpleItemData;
 	CONFIG.Item.dataModels.action = ActionData;
 	CONFIG.Item.dataModels.weapon = WeaponData;
+
+	CONFIG.Dice.rolls.push(TrespasserRoll);
 
 	Actors.unregisterSheet('core', ActorSheet);
 	Actors.registerSheet('trespasser', TrespasserActorSheet, {

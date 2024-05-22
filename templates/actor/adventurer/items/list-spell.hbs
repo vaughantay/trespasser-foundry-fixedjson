@@ -1,6 +1,20 @@
-<div class="spell-card">
+<div class="spell-card item" data-item-id="{{_id}}">
   <div class="expand-header flexrow">
     <h3 class="flex3">{{name}}</h3> <h5 class="flex1">{{system.casting_penalty}}</h5>
+		<div class='item-controls'>
+			<a
+				class='item-control item-edit'
+				title='{{localize "DOCUMENT.Update" type='Item'}}'
+			>
+				<i class='fas fa-edit'></i>
+			</a>
+			<a
+				class='item-control item-delete'
+				title='{{localize "DOCUMENT.Delete" type='Item'}}'
+			>
+				<i class='fas fa-trash'></i>
+			</a>
+		</div>
   </div>
 	<div class="expand">{{{system.details}}}</div>
 </div>
