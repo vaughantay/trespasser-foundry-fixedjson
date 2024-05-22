@@ -22,6 +22,11 @@
 			"tinkering":"Tinkering"
 		},
 
+		"ChatCards": {
+			"overcome-dc-roll": "Succeed against DC: ",
+			"failure-dc-roll": "Failure against DC: "
+		},
+
 		"DialogButtons": {
 			"submit": "Submit",
 			"cancel": "Cancel"

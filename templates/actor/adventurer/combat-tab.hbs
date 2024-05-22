@@ -4,6 +4,17 @@
         <div class="flexrow">
           <h2>{{localize "TRESPASSER.MenuLabels.general"}}</h2>
         </div>
+				<div class='item-controls'>
+					<a
+						class='item-control item-create'
+						title='{{localize "DOCUMENT.Create" type='simple_item'}}'
+						data-type='simple_item'
+						data-item-type='feature'
+					>
+						<i class='fas fa-plus'></i>
+						{{localize 'DOCUMENT.New' type='Item'}}
+					</a>
+				</div>
         <div class="flex-container">
           {{#each context.features as |feature id|}}
           {{> "systems/trespasser/templates/actor/adventurer/items/list-simple.hbs" feature}}
@@ -22,6 +33,16 @@
         <div class="flexrow">
           <h2>{{localize "TRESPASSER.MenuLabels.actions"}}</h2>
         </div>
+				<div class='item-controls'>
+					<a
+						class='item-control item-create'
+						title='{{localize "DOCUMENT.Create" type='action'}}'
+						data-type='action'
+					>
+						<i class='fas fa-plus'></i>
+						{{localize 'DOCUMENT.New' type='action'}}
+					</a>
+				</div>
         <div class="flex-container">
           <div class="action basic" data-roll-skill="str" data-support="false">
             <div class="flexrow">
@@ -53,7 +74,7 @@
               <p><b>SOLID:</b> Weapon Effect</p>
             </div>
           </div>
-          <div class="action basic" data-roll-skill="res" data-support="false">
+          <div class="action basic" data-roll-skill="res" data-support="true">
             <div class="flexrow">
 							<a class="action-roll">
 								<i class="fa-solid fa-dice-d20"></i>

@@ -98,6 +98,37 @@
       <div class="flexrow">
         <h2>Inventory</h2>
       </div>
+			<div class='item-controls'>
+				<a
+					class='item-control item-create'
+					title='{{localize "DOCUMENT.Create" type='armor'}}'
+					data-type='armor'
+				>
+					<i class='fas fa-plus'></i>
+					{{localize 'DOCUMENT.New' type='armor'}}
+				</a>
+			</div>
+			<div class='item-controls'>
+				<a
+					class='item-control item-create'
+					title='{{localize "DOCUMENT.Create" type='weapon'}}'
+					data-type='weapon'
+				>
+					<i class='fas fa-plus'></i>
+					{{localize 'DOCUMENT.New' type='weapon'}}
+				</a>
+			</div>
+			<div class='item-controls'>
+				<a
+					class='item-control item-create'
+					title='{{localize "DOCUMENT.Create" type='simple_item'}}'
+					data-type='simple_item'
+					data-item-type='inventory-item'
+				>
+					<i class='fas fa-plus'></i>
+					{{localize 'DOCUMENT.New' type='equipment'}}
+				</a>
+			</div>
       {{#each context.inventory as |item id|}}
       {{> "systems/trespasser/templates/actor/adventurer/items/inventory-slot.hbs" item=item id=id}}
       <!-- Inventory Here -->

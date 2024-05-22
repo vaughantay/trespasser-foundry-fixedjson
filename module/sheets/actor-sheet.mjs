@@ -84,16 +84,11 @@ export class TrespasserActorSheet extends ActorSheet {
 				const simpleItem = item.system;
 				if (simpleItem.type == 'feature') {
 					features.push(item);
-				}
-
-				if (simpleItem.type == 'other-ability') {
+				} else if (simpleItem.type == 'other-ability') {
 					otherAbilities.push(item);
-				}
-
-				if (simpleItem.type == 'talent') {
+				} else if (simpleItem.type == 'talent') {
 					talents.push(item);
-				}
-				else{
+				} else {
 					inventory.push(item);
 				}
 			}
@@ -206,8 +201,34 @@ export class TrespasserActorSheet extends ActorSheet {
 		});
   }
 	//Not working yet
-	_onItemCreate(html) {
-		return;
+	async _onItemCreate(event) {
+		event.preventDefault();
+
+		const header = event.currentTarget;
+
+		const type = header.dataset.type;
+
+		const data = duplicate(header.dataset);
+
+		if (type == 'simple_item') {
+			data['type'] = `${header.dataset.itemType}`;
+		}
+
+		let name = `New ${type.capitalize()}`;
+
+		if (type == 'simple_item') {
+			name = `New ${game.i18n.localize(CONFIG.TRESPASSER.SimpleItemTypes[data.type])}`;
+		}
+
+		const itemData = {
+			name: name,
+			type: type,
+			system: data,
+		};
+
+		console.log(itemData);
+
+		return await Item.create(itemData, { parent: this.actor });
 	}
 
 	async _createRoll(event) {
@@ -230,7 +251,7 @@ export class TrespasserActorSheet extends ActorSheet {
 		const skilled_bonus = skilled ? this.actor.system.skill_bonus : 0;
 		const ability_bonus = this.actor.system.ability_mods[data.ability];
 		
-		let roll = new Roll(
+		let roll = new TrespasserRoll(
 			"d20 + @abilityBonus + @skilledBonus", 
 			{
 				abilityBonus: ability_bonus,
@@ -260,51 +281,32 @@ export class TrespasserActorSheet extends ActorSheet {
 		const li = $(event.currentTarget).parents('.action');
 		const skill = li.data('rollSkill');
 		const isSupport = li.data('support');
+
+		console.log(isSupport);
 		
+		let AC = undefined;
+
+		if(isSupport) {
+			AC = 10;
+		} else {
+			//If there are no targets, it will be undefined, so its all good.
+			AC = game.user.targets.values().next().value?.actor.system.AC;
+		}
+
 		const ability_bonus = this.actor.system.ability_mods[skill];
 
-		const roll = new Roll(
+		const roll = new TrespasserRoll(
 			"d20 + @abilityBonus + @skilledBonus", 
+			AC != undefined ? AC : -1,
 			{
 				abilityBonus: ability_bonus,
 				skilledBonus: this.actor.system.skill_bonus
-			});
+			}
+		);
 
-		await roll.evaluate();
-		let result = roll._total;
-
-		//If we are going with support. We just have DC 10.
-		let hasDC = false;
-		let succeedDC = false;
-		if(isSupport) {
-			if (result > 10) {
-				hasDC = true;
-				succeedDC = true;
-			}
-		} else {
-			//DC is going to be the opponent's AC.
-			let targets = game.user.targets;
-			if(targets.values().next().value?.actor !== null) {
-				if(result > targets.values().next().value?.actor.system.AC){
-					hasDC = true;
-					succeedDC = true;	
-				}
-			} else {
-				hasDC = false;
-			}
-		}
-
-		//Then we just decide what to display here.
-		//We need to get AC in the data model, because if we dont, we wont be able to determine success.
-		if (hasDC) {
-			if (succeedDC) {
-				console.log('Success');
-			}
-			else {
-				console.log('Fail');
-			}
-		} else {
-			console.log(result);
-		}
+		roll.toMessage({
+			speaker: ChatMessage.getSpeaker({ actor: this.actor }),
+			rollMode: game.settings.get('core', 'rollMode'),
+		});
 	}
 }
