@@ -9,7 +9,7 @@ export class TrespasserItemSheet extends ItemSheet {
     return foundry.utils.mergeObject(super.defaultOptions, {
       classes: ['trespasser', 'sheet', 'item'],
       width: 520,
-      height: 480,
+      height: 600,
       tabs: [
         {
           navSelector: '.sheet-tabs',

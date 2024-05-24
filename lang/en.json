@@ -90,17 +90,22 @@
 			"castingPenalty": "Casting Penalty",
 			"ac": "AC",
 			"item-type": "Item Type",
-			"range": "Target",
+			"target": "Target",
 			"hit": "Hit",
-			"solid_hit": "Solid",
+			"solid_hit": "Solid Hit",
 			"support": "Support",
+			"attack":"Attack",
 			"armor-location": "Armor Location",
 			"weight": "Weight",
 			"weapon-effect": "Weapon Effect",
 			"damage-dice": "Damage",
 			"keywords": "Keywords",
 			"armor-die": "Armor Die",
-			"twohanded": "Two Handed"
+			"twohanded": "Two Handed",
+			"hit-weapon": "Hit Weapon Dice",
+			"hit-potency":"Hit Potency Dice",
+			"solid-hit-weapon": "Solid Hit Weapon Dice",
+			"solid-hit-potency":"Solid Hit Potency Dice"
 		},
 
 		"ItemTypes": {
@@ -135,7 +140,8 @@
 			"4": "D4",
 			"6": "D6",
 			"8": "D8",
-			"10": "D10"
+			"10": "D10",
+			"12":"D12"
 		}
 	}
 }
