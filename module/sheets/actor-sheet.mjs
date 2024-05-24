@@ -60,7 +60,6 @@ export class TrespasserActorSheet extends ActorSheet {
 			//Return the weapons in either hand.
 			if (item.type == 'weapon') {
 				const weapon = item.system;
-				console.log(weapon.two_handed);
 			/*	if (weapon.twohanded) {
 					if (weapon.equipped_left || weapon.equipped_right){
 						equippedWeapons.right = item;
@@ -112,7 +111,6 @@ export class TrespasserActorSheet extends ActorSheet {
 		context.spells = spells;
 		context.inventory = inventory;
 
-		console.log(context);
 		return {
 			'context': context,
 			actor: this.actor,
@@ -205,7 +203,6 @@ export class TrespasserActorSheet extends ActorSheet {
 
 		html.on('click', '.expand-header', (ev) => {
 			let li = $(ev.currentTarget.parentNode).find('.expand');
-			console.log(li);
 			if (li.is(':hidden')) {
 				li.slideDown();
 			} else {	
@@ -239,7 +236,6 @@ export class TrespasserActorSheet extends ActorSheet {
 			system: data,
 		};
 
-		console.log(itemData);
 
 		return await Item.create(itemData, { parent: this.actor });
 	}
@@ -295,7 +291,6 @@ export class TrespasserActorSheet extends ActorSheet {
 		const skill = li.data('rollSkill');
 		const isSupport = li.data('support');
 
-		console.log(isSupport);
 		
 		let AC = undefined;
 
