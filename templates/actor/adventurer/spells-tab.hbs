@@ -1,4 +1,14 @@
 <h2>Spells</h2>
+<div class='item-controls'>
+	<a
+		class='item-control item-create'
+		title='{{localize "DOCUMENT.Create" type='spell'}}'
+		data-type='spell'
+	>
+		<i class='fas fa-plus'></i>
+		{{localize 'DOCUMENT.New' type='spell'}}
+	</a>
+</div>
 <div class="flexcol spaced">
   {{#each context.spells as |spell id|}}
   {{> "systems/trespasser/templates/actor/adventurer/items/list-spell.hbs" spell}}

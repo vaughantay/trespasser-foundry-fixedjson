@@ -156,7 +156,6 @@ export class AdventurerData extends CharacterBaseData {
 	}
 
 	get initiative() {
-		console.log('test');
 		return this.skilled_mods.cng;
 	}
 

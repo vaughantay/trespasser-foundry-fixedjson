@@ -45,8 +45,7 @@ export class TrespasserActorSheet extends ActorSheet {
 			if (item.type == 'armor') {
 				const armor = item.system;
 				//If equipped, add the ac to the calculated AC
-				calculatedAC = armor.equipped ? armor.ac : 0;
-
+				calculatedAC += armor.equipped ? armor.armor_class : 0;
 				//Now we get the equipped armor.
 				if (armor.equipped) {
 					//This will look like head: {ac, location, etc.}
@@ -83,16 +82,11 @@ export class TrespasserActorSheet extends ActorSheet {
 				const simpleItem = item.system;
 				if (simpleItem.type == 'feature') {
 					features.push(item);
-				}
-
-				if (simpleItem.type == 'other-ability') {
+				} else if (simpleItem.type == 'other-ability') {
 					otherAbilities.push(item);
-				}
-
-				if (simpleItem.type == 'talent') {
+				} else if (simpleItem.type == 'talent') {
 					talents.push(item);
-				}
-				else{
+				} else {
 					inventory.push(item);
 				}
 			}
@@ -117,7 +111,6 @@ export class TrespasserActorSheet extends ActorSheet {
 		context.spells = spells;
 		context.inventory = inventory;
 
-		console.log(context);
 		return {
 			'context': context,
 			actor: this.actor,
@@ -163,6 +156,20 @@ export class TrespasserActorSheet extends ActorSheet {
 			}
 		});
 
+		html.on('click', '.armor-equip', (ev) =>{
+			const item = this.actor.items.get($(ev.currentTarget).parents('.item').data('itemId'));
+			if (item) {
+				item.update({ 'system.equipped' :  true });
+			}
+		});
+
+		html.on('click', '.armor-unequip', (ev) =>{
+			const item = this.actor.items.get($(ev.currentTarget).data('itemId'));
+			if (item) {
+				item.update({ 'system.equipped' :  false });
+			}
+		});
+
     html.on('click', '.item-create', this._onItemCreate.bind(this));
 
     html.on('click', '.item-delete', (ev) => {
@@ -195,10 +202,44 @@ export class TrespasserActorSheet extends ActorSheet {
 		html.on('click', '.action-roll', this._createActionRoll.bind(this));
 		html.on('click', '.action-hit', this._createActionHit.bind(this));
 		html.on('click', '.action-solid', this._createActionSolid.bind(this));
+		html.on('click', '.expand-header', (ev) => {
+			let li = $(ev.currentTarget.parentNode).find('.expand');
+			if (li.is(':hidden')) {
+				li.slideDown();
+			} else {	
+				li.slideUp();
+			}
+		});
+
   }
 	//Not working yet
-	_onItemCreate(html) {
-		return;
+	async _onItemCreate(event) {
+		event.preventDefault();
+
+		const header = event.currentTarget;
+
+		const type = header.dataset.type;
+
+		const data = duplicate(header.dataset);
+
+		if (type == 'simple_item') {
+			data['type'] = `${header.dataset.itemType}`;
+		}
+
+		let name = `New ${type.capitalize()}`;
+
+		if (type == 'simple_item') {
+			name = `New ${game.i18n.localize(CONFIG.TRESPASSER.SimpleItemTypes[data.type])}`;
+		}
+
+		const itemData = {
+			name: name,
+			type: type,
+			system: data,
+		};
+
+
+		return await Item.create(itemData, { parent: this.actor });
 	}
 
 	async _createRoll(event) {
@@ -220,7 +261,6 @@ export class TrespasserActorSheet extends ActorSheet {
 
 		const skilled_bonus = skilled ? this.actor.system.skill_bonus : 0;
 		const ability_bonus = this.actor.system.ability_mods[data.ability];
-
 		let roll = new Roll(
 			"d20 + @abilityBonus + @skilledBonus",
 			{
@@ -270,10 +310,6 @@ export class TrespasserActorSheet extends ActorSheet {
 		if (this.actor.system.effort>=penalty) {
 
 		} else return;
-
-		await roll.evaluate();
-		let result = roll._total;
-
 		//If we are going with support. We just have DC 10.
 		let hasDC = false;
 		let succeedDC = false;
@@ -375,6 +411,13 @@ export class TrespasserActorSheet extends ActorSheet {
 				speaker: ChatMessage.getSpeaker({ actor: this.actor }),
 				rollMode: game.settings.get('core', 'rollMode'),
 			});
+  }
+	_onEquipArmor(event) {
+
+	}
+
+	_onUnequipArmor(event) {
+		
 	}
 
 }

@@ -2,6 +2,18 @@
   <div class="flexrow">
     <h4 class="flex3">{{name}}</h4>
     <h5 class="flex1 small">{{system.tier}}</h5>
+    <a
+			class='item-control item-edit flex0'
+			title='{{localize "DOCUMENT.Update" type='Item'}}'
+		>
+			<i class='fas fa-edit'></i>
+		</a>
+		<a
+			class='item-control item-delete flex0'
+			title='{{localize "DOCUMENT.Delete" type='Item'}}'
+		>
+			<i class='fas fa-trash'></i>
+		</a>
   </div>
   <div class="table small">
     {{#if system.is_support}}
