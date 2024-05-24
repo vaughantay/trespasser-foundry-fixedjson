@@ -1,7 +1,7 @@
 import { BaseItemData } from './base-item.mjs'
 
 export class ActionData extends BaseItemData {
-	
+
 	//This is a place to define templates, I'll make a few inherited methods which act as templates.
 	static defineSchema() {
 		const fields = foundry.data.fields;
@@ -16,9 +16,14 @@ export class ActionData extends BaseItemData {
 			//Actions can be either basic, special, or mighty.
 			tier: new fields.StringField({
 				required: true,
-				initial:'bse',
-				option: ['bse', 'spcl', 'mty'],
+				initial:'basic',
+				option: ['basic', 'special', 'mighty'],
 				empty: false
+			}),
+			effortPenalty: new fields.NumberField({
+				required: true,
+				initial: 0,
+				min: 0
 			}),
 			//All actions must have a skill and whether its attack or support.
 			//I just want to have a button to confirm whether its support, if false, its an attack
@@ -33,7 +38,7 @@ export class ActionData extends BaseItemData {
 				initial: '',
 				empty: true
 			}),
-			range: new fields.StringField({
+			target: new fields.StringField({
 				required: false,
 				initial: '',
 				empty: true
@@ -43,10 +48,30 @@ export class ActionData extends BaseItemData {
 				initial: '',
 				empty: true
 			}),
+			hit_weapon: new fields.NumberField({
+				required: false,
+				initial: 0,
+				min: 0
+			}),
+			hit_potency: new fields.NumberField({
+				required: false,
+				initial: 0,
+				min: 0
+			}),
 			solid_hit: new fields.HTMLField({
-				required: true,
+				required: false,
 				initial: '',
 				empty: true
+			}),
+			solid_hit_weapon: new fields.NumberField({
+				required: false,
+				initial: 0,
+				min: 0
+			}),
+			solid_hit_potency: new fields.NumberField({
+				required: false,
+				initial: 0,
+				min: 0
 			})
 		};
 	}

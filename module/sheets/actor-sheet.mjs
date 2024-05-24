@@ -200,7 +200,8 @@ export class TrespasserActorSheet extends ActorSheet {
     }
 
 		html.on('click', '.action-roll', this._createActionRoll.bind(this));
-
+		html.on('click', '.action-hit', this._createActionHit.bind(this));
+		html.on('click', '.action-solid', this._createActionSolid.bind(this));
 		html.on('click', '.expand-header', (ev) => {
 			let li = $(ev.currentTarget.parentNode).find('.expand');
 			if (li.is(':hidden')) {
@@ -209,6 +210,7 @@ export class TrespasserActorSheet extends ActorSheet {
 				li.slideUp();
 			}
 		});
+
   }
 	//Not working yet
 	async _onItemCreate(event) {
@@ -259,12 +261,11 @@ export class TrespasserActorSheet extends ActorSheet {
 
 		const skilled_bonus = skilled ? this.actor.system.skill_bonus : 0;
 		const ability_bonus = this.actor.system.ability_mods[data.ability];
-		
-		let roll = new TrespasserRoll(
-			"d20 + @abilityBonus + @skilledBonus", 
+		let roll = new Roll(
+			"d20 + @abilityBonus + @skilledBonus",
 			{
 				abilityBonus: ability_bonus,
-				skilledBonus: skilled_bonus 
+				skilledBonus: skilled_bonus
 			});
 
 		//Now we can create an updated roll chat card, and plug the data in here.
@@ -285,39 +286,132 @@ export class TrespasserActorSheet extends ActorSheet {
 			skilledOverride: form.skilled_override.checked
 		};
 	}
-	
+
 	async _createActionRoll(event) {
 		const li = $(event.currentTarget).parents('.action');
-		const skill = li.data('rollSkill');
-		const isSupport = li.data('support');
-
-		
-		let AC = undefined;
-
-		if(isSupport) {
-			AC = 10;
-		} else {
-			//If there are no targets, it will be undefined, so its all good.
-			AC = game.user.targets.values().next().value?.actor.system.AC;
-		}
-
-		const ability_bonus = this.actor.system.ability_mods[skill];
-
-		const roll = new TrespasserRoll(
-			"d20 + @abilityBonus + @skilledBonus", 
-			AC != undefined ? AC : -1,
+		const action = this.actor.items.get(li.data('itemId'));
+		const ability_bonus = this.actor.system.ability_mods[action.system.skill];
+		const penalty = 0;
+		let sFlavor = action.name;
+		const roll = new Roll(
+			"d20 + @abilityBonus + @skilledBonus",
 			{
 				abilityBonus: ability_bonus,
 				skilledBonus: this.actor.system.skill_bonus
-			}
-		);
+			});
+			console.log(action.system.tier);
+		if (action.system.tier == "special") {
+			penalty = 1;
+		}
+		else if (action.system.tier == "mighty") {
+			penalty = 2;
+		}
 
+		if (this.actor.system.effort>=penalty) {
+
+		} else return;
+		//If we are going with support. We just have DC 10.
+		let hasDC = false;
+		let succeedDC = false;
+		if(action.system.is_support) {
+			hasDC = true;
+			if (result > 10) {
+				succeedDC = true;
+			}
+		} else {
+			//DC is going to be the opponent's AC.
+			let targets = game.user.targets;
+			if(targets.values().next().value?.actor) {
+				hasDC = true;
+				if(result > targets.values().next().value?.actor._source.system.base_armor_class()){
+					succeedDC = true;
+				}
+			} else {
+				hasDC = false;
+			}
+		}
+
+
+		if (hasDC) {
+			if (succeedDC) {
+				sFlavor = sFlavor.concat(" : ", "Success");
+			}
+			else {
+				sFlavor = sFlavor.concat(" : ", "Failure");
+			}
+		}
 		roll.toMessage({
+			flavor:sFlavor,
 			speaker: ChatMessage.getSpeaker({ actor: this.actor }),
 			rollMode: game.settings.get('core', 'rollMode'),
 		});
 	}
 
+	async _createActionHit(event) {
+		const li = $(event.currentTarget).parents('.action');
+		const action = this.actor.items.get(li.data('itemId'));
+		const items = this.actor.items;
+		let weapon_dice = 4;
+		let weapon_effect = "";
+		items.forEach((item, i) => {
+				if (item.type == 'weapon') {
+					const weapon = item.system;
+					if (weapon.equipped_left || weapon.equipped_right) {
+						if (weapon.damage > weapon_dice) {weapon_dice = weapon.damage;}
+							weapon_effect = `${weapon_effect} | ${weapon.details}`;
+					}
+			}
+		});
+		const rollEval = `${action.system.hit_weapon}d${weapon_dice} + ${action.system.hit_potency}d${this.actor.system.potency_dice}`
+		const roll = new Roll(
+			rollEval,
+			{
+				weapon_amount: action.hit_weapon,
+				weapon_dice: weapon_dice,
+				potency_amount: action.hit_potency,
+				potency_dice: this.actor.system.potency_dice,
+			});
+			let sFlavor = `${action.name} | Hit`
+			roll.toMessage({
+				flavor:sFlavor,
+				speaker: ChatMessage.getSpeaker({ actor: this.actor }),
+				rollMode: game.settings.get('core', 'rollMode'),
+			});
+	}
+
+	async _createActionSolid(event) {
+		const li = $(event.currentTarget).parents('.action');
+		const action = this.actor.items.get(li.data('itemId'));
+		const items = this.actor.items;
+		let weapon_dice = 4;
+		let weapon_effect = "";
+		items.forEach((item, i) => {
+				if (item.type == 'weapon') {
+					const weapon = item.system;
+					if (weapon.equipped_left || weapon.equipped_right) {
+						if (weapon.damage > weapon_dice) {weapon_dice = weapon.damage;}
+							weapon_effect = `${weapon_effect} | ${weapon.details}`;
+					}
+			}
+		});
+		const weaponAmount = action.system.hit_weapon + action.system.solid_hit_weapon;
+		const potencyAmount = action.system.hit_potency + action.system.solid_hit_potency;
+		const rollEval = `${weaponAmount}d${weapon_dice} + ${potencyAmount}d${this.actor.system.potency_dice}`
+		const roll = new Roll(
+			rollEval,
+			{
+				weapon_amount: action.hit_weapon,
+				weapon_dice: weapon_dice,
+				potency_amount: action.hit_potency,
+				potency_dice: this.actor.system.potency_dice,
+			});
+			let sFlavor = `${action.name} | Hit`
+			roll.toMessage({
+				flavor:sFlavor,
+				speaker: ChatMessage.getSpeaker({ actor: this.actor }),
+				rollMode: game.settings.get('core', 'rollMode'),
+			});
+  }
 	_onEquipArmor(event) {
 
 	}
@@ -325,4 +419,5 @@ export class TrespasserActorSheet extends ActorSheet {
 	_onUnequipArmor(event) {
 		
 	}
+
 }

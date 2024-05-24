@@ -128,6 +128,13 @@
   border-radius: 2px;
   border-width: 2px;
   background-color: #e9ecef;
+  padding:5px;
+}
+.rollvalue{
+  margin: 2px;
+  padding: 1px;
+  background-color: #f8f9fa;
+  border-radius: 5px;
 }
 .simple-card, .spell-card{
   border-bottom-style: groove;

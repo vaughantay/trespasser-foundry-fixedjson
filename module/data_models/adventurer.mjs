@@ -183,7 +183,6 @@ export class AdventurerData extends CharacterBaseData {
 	get base_effort() {
 		return 4 + Math.floor(this.level / 2);
 	}
-
 	get inventory_max() {
 		return this.attributes.str;
 	}

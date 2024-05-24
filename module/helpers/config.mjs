@@ -8,9 +8,9 @@ TRESPASSER.SimpleItemTypes = {
 };
 
 TRESPASSER.ActionTypes = {
-	"bse": "TRESPASSER.ActionTypes.basic",
-	"spcl": "TRESPASSER.ActionTypes.special",
-	"mty": "TRESPASSER.ActionTypes.mighty",
+	"basic": "TRESPASSER.ActionTypes.basic",
+	"special": "TRESPASSER.ActionTypes.special",
+	"mighty": "TRESPASSER.ActionTypes.mighty",
 };
 
 //This needs to be abilities but im not sure what it would break if changed...
@@ -64,7 +64,8 @@ TRESPASSER.DamageDiceSelections = {
 	"4": "TRESPASSER.DamageDice.4",
 	"6": "TRESPASSER.DamageDice.6",
 	"8": "TRESPASSER.DamageDice.8",
-	"10": "TRESPASSER.DamageDice.10"
+	"10": "TRESPASSER.DamageDice.10",
+	"12": "TRESPASSER.DamageDice.12"
 };
 
 TRESPASSER.ArmorDiceSelections = {

@@ -23,8 +23,8 @@ export class WeaponData extends BaseItemData {
 			}),
 			damage: new fields.StringField({
 				required: false,
-				initial: 'd4',
-				options: ['d4', 'd6', 'd8', 'd10'],
+				initial: '4',
+				options: ['4', '6', '8', '10','12'],
 				blank: true
 			}),
 			keywords: new fields.StringField({

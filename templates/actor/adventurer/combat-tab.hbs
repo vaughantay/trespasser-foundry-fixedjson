@@ -90,7 +90,7 @@
             </div>
           </div>
           {{#each context.actions as |action id|}}
-          {{> "systems/trespasser/templates/actor/adventurer/items/list-action.hbs" action}}
+          {{> "systems/trespasser/templates/actor/adventurer/items/list-action.hbs" action=action id=id}}
           {{/each}}
         </div>
       </div>

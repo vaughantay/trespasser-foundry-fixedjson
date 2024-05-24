@@ -1,11 +1,8 @@
-<div class="action item" data-roll-skill="{{system.skill}}" data-item-id="{{_id}}" data-support="{{system.is_support}}">
-  <div class="flexrow item-controls">
-		<a class="action-roll">
-			<i class="fa-solid fa-dice-d20"></i>
-		</a>
-    <h3 class="flex3">{{name}}</h3>
-    <h4 class="flex1">{{system.tier}}</h4>
-		<a
+<div class="action" data-item-id='{{_id}}'>
+  <div class="flexrow">
+    <h4 class="flex3">{{name}}</h4>
+    <h5 class="flex1 small">{{system.tier}}</h5>
+    <a
 			class='item-control item-edit flex0'
 			title='{{localize "DOCUMENT.Update" type='Item'}}'
 		>
@@ -20,13 +17,43 @@
   </div>
   <div class="table small">
     {{#if system.is_support}}
-    <h5>{{system.skill}} Support - {{system.keywords}}</h5>
+    <h5>{{system.skill}} {{localize "TRESPASSER.ItemLabels.support"}} - {{system.keywords}}</h5>
     {{else}}
-    <h5>{{system.skill}} Attack - {{system.keywords}}</h5>
+    <h5>{{system.skill}} {{localize "TRESPASSER.ItemLabels.attack"}} - {{system.keywords}}</h5>
     {{/if}}
 
-    <p><b>TARGET:</b> {{system.range}}</p>
-    <p><b>HIT:</b> {{system.hit}}</p>
-    <b>SOLID:</b> {{system.solid_hit}}
+    <a class="action-roll flex-row">
+      <p><i class="fa-solid fa-dice-d20"></i><b> {{localize "TRESPASSER.ItemLabels.target"}}: </b> {{system.range}}</p>
+		</a>
+
+    <a class="action-hit flex-row">
+      <p>
+        <i class="fa-solid fa-dice-d20"></i>
+        <b> HIT: </b>
+        {{#if system.hit_weapon}}
+          <span class="rollvalue">{{system.hit_weapon}} <i class="fa-solid fa-sword"></i></span>
+        {{/if}}
+        {{#if system.hit_potency}}
+          <span class="rollvalue"> {{system.hit_potency}} <i class="fa-solid fa-dice-six"></i></span>
+        {{/if}}
+        <br>
+        {{{system.hit}}}
+      </p>
+    </a>
+
+    <a class="action-solid flex-row">
+      <p>
+        <i class="fa-solid fa-dice-d20"></i>
+        <b> SOLID: </b>
+        {{#if system.solid_hit_weapon}}
+          <span class="rollvalue"> {{system.solid_hit_weapon}} <i class="fa-solid fa-sword"></i></span>
+        {{/if}}
+        {{#if system.solid_hit_potency}}
+          <span class="rollvalue"> {{system.solid_hit_potency}} <i class="fa-solid fa-dice-six"></i></span>
+        {{/if}}
+        <br>
+        {{{system.solid_hit}}}
+      </p>
+    </a>
   </div>
 </div>
