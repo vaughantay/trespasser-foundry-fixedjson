@@ -43,54 +43,18 @@
         <h2>{{localize 'TRESPASSER.EquipLabels.armor'}}</h2>
       </div>
       <div class="flexrow">
-        <h5 class="flex2"></h5>
+        <h5 class="flex3"></h5>
         <h5 class="flex4">{{localize 'TRESPASSER.EquipLabels.armor'}}</h5>
         <h5 class="flex2">{{localize 'TRESPASSER.EquipLabels.weight'}}</h5>
         <h5 class="flex1">{{localize 'TRESPASSER.EquipLabels.armorclass'}}</h5>
         <h5 class="flex2">{{localize 'TRESPASSER.EquipLabels.die'}}</h5>
       </div>
-      <div class="flexrow">
-        <p class="flex2">{{localize 'TRESPASSER.EquipLabels.head'}}</p>
-        <p class="fakeinput flex4"></p>
-        <p class="fakeinput flex1"></p>
-        <p class="fakeinput flex1"></p>
-        <p class="fakeinput flex2"></p>
-      </div>
-      <div class="flexrow">
-        <p class="flex2">{{localize 'TRESPASSER.EquipLabels.body'}}</p>
-        <p class="fakeinput flex4"></p>
-        <p class="fakeinput flex1"></p>
-        <p class="fakeinput flex1"></p>
-        <p class="fakeinput flex2"></p>
-      </div>
-      <div class="flexrow">
-        <p class="flex2">{{localize 'TRESPASSER.EquipLabels.arms'}}</p>
-        <p class="fakeinput flex4"></p>
-        <p class="fakeinput flex1"></p>
-        <p class="fakeinput flex1"></p>
-        <p class="fakeinput flex2"></p>
-      </div>
-      <div class="flexrow">
-        <p class="flex2">{{localize 'TRESPASSER.EquipLabels.legs'}}</p>
-        <p class="fakeinput flex4"></p>
-        <p class="fakeinput flex1"></p>
-        <p class="fakeinput flex1"></p>
-        <p class="fakeinput flex2"></p>
-      </div>
-      <div class="flexrow">
-        <p class="flex2">{{localize 'TRESPASSER.EquipLabels.outer'}}</p>
-        <p class="fakeinput flex4"></p>
-        <p class="fakeinput flex1"></p>
-        <p class="fakeinput flex1"></p>
-        <p class="fakeinput flex2"></p>
-      </div>
-      <div class="flexrow">
-        <p class="flex2">{{localize 'TRESPASSER.EquipLabels.shield'}}</p>
-        <p class="fakeinput flex4"></p>
-        <p class="fakeinput flex1"></p>
-        <p class="fakeinput flex1"></p>
-        <p class="fakeinput flex2"></p>
-      </div>
+			{{> 'systems/trespasser/templates/actor/adventurer/items/armor-slot.hbs' context.equippedArmor.head location='head'}}
+			{{> 'systems/trespasser/templates/actor/adventurer/items/armor-slot.hbs' context.equippedArmor.body location='body'}}
+			{{> 'systems/trespasser/templates/actor/adventurer/items/armor-slot.hbs' context.equippedArmor.arms location='arms'}}
+			{{> 'systems/trespasser/templates/actor/adventurer/items/armor-slot.hbs' context.equippedArmor.legs location='legs'}}
+			{{> 'systems/trespasser/templates/actor/adventurer/items/armor-slot.hbs' context.equippedArmor.outer location='outer'}}
+			{{> 'systems/trespasser/templates/actor/adventurer/items/armor-slot.hbs' context.equippedArmor.shield location='shield'}}
     </div>
   </div>
   <div class="flexcol spaced " data-group='primary' data-tab='items'>

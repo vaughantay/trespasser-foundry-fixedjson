@@ -45,8 +45,7 @@ export class TrespasserActorSheet extends ActorSheet {
 			if (item.type == 'armor') {
 				const armor = item.system;
 				//If equipped, add the ac to the calculated AC
-				calculatedAC = armor.equipped ? armor.ac : 0;
-
+				calculatedAC += armor.equipped ? armor.armor_class : 0;
 				//Now we get the equipped armor.
 				if (armor.equipped) {
 					//This will look like head: {ac, location, etc.}
@@ -156,6 +155,20 @@ export class TrespasserActorSheet extends ActorSheet {
 			if (item) {
 				item.update({ 'system.equipped_right' :  false });
 				item.update({ 'system.equipped_left' :  false });
+			}
+		});
+
+		html.on('click', '.armor-equip', (ev) =>{
+			const item = this.actor.items.get($(ev.currentTarget).parents('.item').data('itemId'));
+			if (item) {
+				item.update({ 'system.equipped' :  true });
+			}
+		});
+
+		html.on('click', '.armor-unequip', (ev) =>{
+			const item = this.actor.items.get($(ev.currentTarget).data('itemId'));
+			if (item) {
+				item.update({ 'system.equipped' :  false });
 			}
 		});
 
@@ -308,5 +321,13 @@ export class TrespasserActorSheet extends ActorSheet {
 			speaker: ChatMessage.getSpeaker({ actor: this.actor }),
 			rollMode: game.settings.get('core', 'rollMode'),
 		});
+	}
+
+	_onEquipArmor(event) {
+
+	}
+
+	_onUnequipArmor(event) {
+		
 	}
 }
