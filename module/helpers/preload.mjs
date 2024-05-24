@@ -15,7 +15,8 @@ export const loadHandlebarsPartials = () => {
 		'systems/trespasser/templates/item/item-spell-sheet.hbs',
 		'systems/trespasser/templates/fields/number-field.hbs',
 		'systems/trespasser/templates/fields/select-field.hbs',
-		'systems/trespasser/templates/fields/bool-field.hbs'
+		'systems/trespasser/templates/fields/bool-field.hbs',
+		'systems/trespasser/templates/actor/adventurer/items/armor-slot.hbs'
   ]
 
   return loadTemplates(partials)

@@ -45,8 +45,7 @@ export class TrespasserActorSheet extends ActorSheet {
 			if (item.type == 'armor') {
 				const armor = item.system;
 				//If equipped, add the ac to the calculated AC
-				calculatedAC = armor.equipped ? armor.ac : 0;
-
+				calculatedAC += armor.equipped ? armor.armor_class : 0;
 				//Now we get the equipped armor.
 				if (armor.equipped) {
 					//This will look like head: {ac, location, etc.}
@@ -61,7 +60,6 @@ export class TrespasserActorSheet extends ActorSheet {
 			//Return the weapons in either hand.
 			if (item.type == 'weapon') {
 				const weapon = item.system;
-				console.log(weapon.two_handed);
 			/*	if (weapon.twohanded) {
 					if (weapon.equipped_left || weapon.equipped_right){
 						equippedWeapons.right = item;
@@ -113,7 +111,6 @@ export class TrespasserActorSheet extends ActorSheet {
 		context.spells = spells;
 		context.inventory = inventory;
 
-		console.log(context);
 		return {
 			'context': context,
 			actor: this.actor,
@@ -159,6 +156,20 @@ export class TrespasserActorSheet extends ActorSheet {
 			}
 		});
 
+		html.on('click', '.armor-equip', (ev) =>{
+			const item = this.actor.items.get($(ev.currentTarget).parents('.item').data('itemId'));
+			if (item) {
+				item.update({ 'system.equipped' :  true });
+			}
+		});
+
+		html.on('click', '.armor-unequip', (ev) =>{
+			const item = this.actor.items.get($(ev.currentTarget).data('itemId'));
+			if (item) {
+				item.update({ 'system.equipped' :  false });
+			}
+		});
+
     html.on('click', '.item-create', this._onItemCreate.bind(this));
 
     html.on('click', '.item-delete', (ev) => {
@@ -192,7 +203,6 @@ export class TrespasserActorSheet extends ActorSheet {
 
 		html.on('click', '.expand-header', (ev) => {
 			let li = $(ev.currentTarget.parentNode).find('.expand');
-			console.log(li);
 			if (li.is(':hidden')) {
 				li.slideDown();
 			} else {	
@@ -226,7 +236,6 @@ export class TrespasserActorSheet extends ActorSheet {
 			system: data,
 		};
 
-		console.log(itemData);
 
 		return await Item.create(itemData, { parent: this.actor });
 	}
@@ -282,7 +291,6 @@ export class TrespasserActorSheet extends ActorSheet {
 		const skill = li.data('rollSkill');
 		const isSupport = li.data('support');
 
-		console.log(isSupport);
 		
 		let AC = undefined;
 
@@ -308,5 +316,13 @@ export class TrespasserActorSheet extends ActorSheet {
 			speaker: ChatMessage.getSpeaker({ actor: this.actor }),
 			rollMode: game.settings.get('core', 'rollMode'),
 		});
+	}
+
+	_onEquipArmor(event) {
+
+	}
+
+	_onUnequipArmor(event) {
+		
 	}
 }
