@@ -220,7 +220,7 @@ export class TrespasserActorSheet extends ActorSheet {
 
 		const type = header.dataset.type;
 
-		const data = duplicate(header.dataset);
+		const data = {...header.dataset};
 
 		if (type == 'simple_item') {
 			data['type'] = `${header.dataset.itemType}`;
@@ -255,6 +255,11 @@ export class TrespasserActorSheet extends ActorSheet {
 			},
 			'systems/trespasser/templates/dialogs/roll.hbs',
 		);
+
+		//If cancelled button is clicked, just dont make a roll.
+		if(data.cancelled == true) {
+			return;
+		}
 
 		//If we override the skilled trait, we can just choose true, otherwise get the skill status of the skill selected.
 		const skilled = data.skilledOverride ? true : this.actor.system.skills[data.skill];
@@ -412,12 +417,4 @@ export class TrespasserActorSheet extends ActorSheet {
 				rollMode: game.settings.get('core', 'rollMode'),
 			});
   }
-	_onEquipArmor(event) {
-
-	}
-
-	_onUnequipArmor(event) {
-		
-	}
-
 }
