@@ -42,6 +42,9 @@
   font-size: 18px;
   font-weight: 750px;
 }
+.long{
+  height:100px;
+}
 .trespasser .img {
   text-align: center;
   min-width: 60px;
@@ -56,7 +59,7 @@
   flex:6;
 }
 .trespasser .description {
-  --editor-height: 60px;
+  --editor-height: 200px;
   flex: 1;
   display: flex;
   min-height: var(--editor-height);

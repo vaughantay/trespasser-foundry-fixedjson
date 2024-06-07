@@ -2,6 +2,15 @@
   <div class="expand-header flexrow">
     <h4 class="flex3">{{name}}</h4>
 		<div class='item-controls'>
+      {{#if system.has_action}}
+      <a
+				class='item-control item-use'
+				title='{{localize "DOCUMENT.TRESPASSER.ItemLabels.use" type='Item'}}'
+			>
+        {{system.base_effort}} + {{system.effort_penalty}}
+				<i class="fa-solid fa-sparkles"></i>
+			</a>
+      {{/if}}
 			<a
 				class='item-control item-edit'
 				title='{{localize "DOCUMENT.Update" type='Item'}}'

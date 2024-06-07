@@ -10,6 +10,9 @@
 					</div>
 					{{> 'systems/trespasser/templates/fields/bool-field.hbs' label='TRESPASSER.ItemLabels.support' field='system.is_support' isChecked=document.system.is_support}}
 					{{> 'systems/trespasser/templates/fields/select-field.hbs' label='' field='system.skill' options=Skills selected=document.system.skill includeEmpty=false localizeOptions=true}}
+
+          {{> 'systems/trespasser/templates/fields/bool-field.hbs' label='TRESPASSER.ItemLabels.bonus' field='system.uses_bonus' isChecked=document.system.uses_bonus}}
+
 					{{> 'systems/trespasser/templates/fields/text-field.hbs' label='TRESPASSER.ItemLabels.keywords' field='system.keywords' value=document.system.keywords}}
 					{{> 'systems/trespasser/templates/fields/text-field.hbs' label='TRESPASSER.ItemLabels.target' field='system.target' value=document.system.target}}
           <hr>
@@ -20,6 +23,10 @@
           {{> 'systems/trespasser/templates/fields/text-field.hbs' label='TRESPASSER.ItemLabels.solid_hit' field='system.solid_hit' value=document.system.solid_hit}}
           {{> 'systems/trespasser/templates/fields/number-field.hbs' label='TRESPASSER.ItemLabels.solid-hit-weapon' field="system.solid_hit_weapon" value=document.system.solid_hit_weapon min=0 max=30}}
           {{> 'systems/trespasser/templates/fields/number-field.hbs' label='TRESPASSER.ItemLabels.solid-hit-potency' field="system.solid_hit_potency" value=document.system.solid_hit_potency min=0 max=30}}
+          <h4>Extra</h4>
+          <div class="description long" data-group="primary" data-tab="description">
+    				{{editor enrichedDetails target="system.details" button=true owner=owner editable=editable}}
+    			</div>
         </div>
       </div>
     </div>

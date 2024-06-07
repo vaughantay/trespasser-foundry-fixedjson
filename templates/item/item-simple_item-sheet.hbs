@@ -15,7 +15,14 @@
 			<div class="description" data-group="primary" data-tab="description">
 				{{editor enrichedDetails target="system.details" button=true owner=owner editable=editable}}
 			</div>
+      {{#if (eq document.system.type 'inventory-item')}}
+        {{> 'systems/trespasser/templates/fields/number-field.hbs' label='TRESPASSER.ItemLabels.quantity' field="system.quantity" value=document.system.quantity min=0 max=30}}
+      {{else}}
+        {{> 'systems/trespasser/templates/fields/bool-field.hbs' label='TRESPASSER.ItemLabels.has-action' field='system.has_action' isChecked=document.system.has_action}}
+        {{#if document.system.has_action}}
+        {{> 'systems/trespasser/templates/fields/number-field.hbs' label='TRESPASSER.ItemLabels.base-effort' field="system.base_effort" value=document.system.base_effort min=0 max=30}}
+        {{/if}}
+      {{/if}}
     </div>
   </div>
 </form>
-

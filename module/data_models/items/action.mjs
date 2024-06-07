@@ -6,6 +6,7 @@ export class ActionData extends BaseItemData {
 	static defineSchema() {
 		const fields = foundry.data.fields;
 		return {
+			...super.hasDetails(),
 			//The skill that's rolled on.
 			skill: new fields.StringField({
 				required: true,
@@ -23,11 +24,16 @@ export class ActionData extends BaseItemData {
 			effortPenalty: new fields.NumberField({
 				required: true,
 				initial: 0,
-				min: 0
+				min: 0,
+				max:3
 			}),
 			//All actions must have a skill and whether its attack or support.
 			//I just want to have a button to confirm whether its support, if false, its an attack
 			is_support: new fields.BooleanField({
+				required: true,
+				initial: false
+			}),
+			uses_bonus: new fields.BooleanField({
 				required: true,
 				initial: false
 			}),

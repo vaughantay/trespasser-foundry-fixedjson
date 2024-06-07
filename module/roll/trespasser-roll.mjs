@@ -22,8 +22,8 @@ export class TrespasserRoll extends Roll {
 		return results;
 	}
 
-	async toMessage(messageData = {}, options = {}) {
-		
+	async toMessage(messageData = {}, options = {}, extraText = '') {
+
 		//We will override some message data to add content, and then pass it to super.
 		const renderedRoll = await super.render(messageData, options);
 
@@ -32,7 +32,6 @@ export class TrespasserRoll extends Roll {
 		if (this.success !== undefined) {
 			extraContent += await renderTemplate('systems/trespasser/templates/chat/against-dc.hbs', {success: this.success, DC: this.DC});
 		}
-		
 		messageData.content = renderedRoll + extraContent;
 
 		super.toMessage(messageData);
