@@ -110,7 +110,12 @@
 			"hit-weapon": "Hit Weapon Dice",
 			"hit-potency":"Hit Potency Dice",
 			"solid-hit-weapon": "Solid Hit Weapon Dice",
-			"solid-hit-potency":"Solid Hit Potency Dice"
+			"solid-hit-potency":"Solid Hit Potency Dice",
+			"has-action":"Has Action",
+			"base-effort":"Base Effort",
+			"use":"Use",
+			"quantity":"Quantity",
+			"bonus": "Uses Bonus"
 		},
 
 		"ItemTypes": {

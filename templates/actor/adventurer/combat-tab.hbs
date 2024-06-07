@@ -44,51 +44,6 @@
 					</a>
 				</div>
         <div class="flex-container">
-          <div class="action basic" data-roll-skill="str" data-support="false">
-            <div class="flexrow">
-							<a class="action-roll">
-								<i class="fa-solid fa-dice-d20"></i>
-							</a>
-              <h3 class="flex3">Attack</h3>
-              <h4 class="flex1">Basic</h4>
-            </div>
-            <div class="table small">
-              <h5>STR ATTACK - MELEE / UNARMED</h5>
-              <p><b>TARGET:</b> 1 Creature</p>
-              <p><b>HIT:</b> WD + STR damage</p>
-              <p><b>SOLID:</b> Weapon Effect</p>
-            </div>
-          </div>
-          <div class="action basic" data-roll-skill="agi" data-support="false">
-            <div class="flexrow">
-							<a class="action-roll">
-								<i class="fa-solid fa-dice-d20"></i>
-							</a>
-              <h3 class="flex3">Shoot</h3>
-              <h4 class="flex1">Basic</h4>
-            </div>
-            <div class="table small">
-              <h5>AGI ATTACK - RANGED</h5>
-              <p><b>TARGET:</b> 1 Creature</p>
-              <p><b>HIT:</b> WD + AGI damage</p>
-              <p><b>SOLID:</b> Weapon Effect</p>
-            </div>
-          </div>
-          <div class="action basic" data-roll-skill="res" data-support="true">
-            <div class="flexrow">
-							<a class="action-roll">
-								<i class="fa-solid fa-dice-d20"></i>
-							</a>
-              <h3 class="flex3">Rally</h3>
-              <h4 class="flex1">Basic</h4>
-            </div>
-            <div class="table small">
-              <h5>RES SUPPORT</h5>
-              <p><b>TARGET:</b> Self</p>
-              <p><b>HIT:</b> Gain <b>2 Effort</b> or make <b>Recovery 2</b></p>
-              <p><b>SOLID:</b> You can do both</p>
-            </div>
-          </div>
           {{#each context.actions as |action id|}}
           {{> "systems/trespasser/templates/actor/adventurer/items/list-action.hbs" action=action id=id}}
           {{/each}}

@@ -16,7 +16,7 @@
       <p class="fakeinput flex3">{{context.equippedWeapons.left.name}}</p>
       <p class="fakeinput flex1">d{{context.equippedWeapons.left.system.damage}}</p>
       <p class="fakeinput flex3">{{context.equippedWeapons.left.system.keywords}}</p>
-      <p class="fakeinput flex3"><span>{{{context.equippedWeapons.left.system.details}}}</span></p>
+      <span class="fakeinput flex3">{{{context.equippedWeapons.left.system.details}}}</span>
 
     </div>
     <div class="flexrow">
@@ -32,7 +32,7 @@
       <p class="fakeinput flex3">{{context.equippedWeapons.right.name}}</p>
       <p class="fakeinput flex1">d{{context.equippedWeapons.right.system.damage}}</p>
       <p class="fakeinput flex3">{{context.equippedWeapons.right.system.keywords}}</p>
-      <p class="fakeinput flex3">{{{context.equippedWeapons.right.system.details}}}</p>
+      <span class="fakeinput flex3">{{{context.equippedWeapons.right.system.details}}}</span>
     </div>
   </div>
 </div>
@@ -90,7 +90,7 @@
 					data-item-type='inventory-item'
 				>
 					<i class='fas fa-plus'></i>
-					{{localize 'DOCUMENT.New' type='equipment'}}
+					{{localize 'DOCUMENT.New' type='item'}}
 				</a>
 			</div>
       {{#each context.inventory as |item id|}}

@@ -23,7 +23,7 @@
     {{/if}}
 
     <a class="action-roll flex-row">
-      <p><i class="fa-solid fa-dice-d20"></i><b> {{localize "TRESPASSER.ItemLabels.target"}}: </b> {{system.range}}</p>
+      <p><i class="fa-solid fa-dice-d20"></i><b> {{localize "TRESPASSER.ItemLabels.target"}}: </b> {{system.target}}</p>
 		</a>
 
     <a class="action-hit flex-row">
@@ -35,6 +35,9 @@
         {{/if}}
         {{#if system.hit_potency}}
           <span class="rollvalue"> {{system.hit_potency}} <i class="fa-solid fa-dice-six"></i></span>
+        {{/if}}
+        {{#if system.uses_bonus}}
+        <span class="rollvalue"> + {{system.skill}} </i></span>
         {{/if}}
         <br>
         {{{system.hit}}}
@@ -55,5 +58,6 @@
         {{{system.solid_hit}}}
       </p>
     </a>
+    {{{system.details}}}
   </div>
 </div>
