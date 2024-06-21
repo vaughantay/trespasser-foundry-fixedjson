@@ -31,6 +31,8 @@ export class TrespasserActorSheet extends ActorSheet {
 
 		//We will add to this based on which armor pieces are equipped.
 		let calculatedAC = this.actor.system.base_armor_class;
+	  	//Max HP is either 10, or your vigor score, whichever is higher
+	  	let calculatedHP = this.actor.system.attributes.vig > 10 ? this.actor.system.attributes.vig : 10;
 		const equippedArmor = {};
 		const equippedWeapons = {};
 		const inventory = [];
@@ -101,6 +103,7 @@ export class TrespasserActorSheet extends ActorSheet {
 		});
 
 
+	  	context.HP = calculatedHP;
 		context.AC = calculatedAC;
 		context.equippedWeapons = equippedWeapons;
 		context.equippedArmor = equippedArmor;
@@ -210,6 +213,16 @@ export class TrespasserActorSheet extends ActorSheet {
 				li.slideUp();
 			}
 		});
+		html.on('click', '.reset-actions', (ev) => {
+			let items = Object.values(Object.values(this.actor.items)[4]);
+			items.forEach((item, i) => {
+			let action = this.actor.items.get(item._id);
+				if(action.type == 'action') {
+					action.update({"system.increaseCount": 0});
+					action.update({"system.currentEffortCost": 0});
+				}
+			});
+		});
 
   }
 	//Not working yet
@@ -296,7 +309,28 @@ export class TrespasserActorSheet extends ActorSheet {
 		const li = $(event.currentTarget).parents('.action');
 		const action = this.actor.items.get(li.data('itemId'));
 		const ability_bonus = this.actor.system.ability_mods[action.system.skill];
-		let penalty = 0;
+		console.log(action.system.currentEffortCost);
+
+		//This is where we can increase the roll information too.
+		//this is just disgusting, ew
+		if(action.system.tier != 'basic') {
+			const increase = action.system.tier === 'special' ? 1 : 2;
+			if(action.currentEffortCost == 0) {
+				action.update({"system.currentEffortCost": increase});
+				increase += increase;
+			}
+			if((this.actor.system.effort - action.system.currentEffortCost) >= 0) {
+				this.actor.update({"system.effort": this.actor.system.effort - action.system.currentEffortCost});
+				if(action.system.increaseCount != 3) {
+					action.update({"system.currentEffortCost": action.system.currentEffortCost + increase});
+					action.update({"system.increaseCount": action.system.increaseCount + 1});
+				}
+			} else {
+				return ui.notifications.warn("You do not have enough effort.");
+			}
+		}
+
+
 		let sFlavor = action.name;
 		const roll = new Roll(
 			"d20 + @abilityBonus + @skilledBonus",
@@ -304,18 +338,8 @@ export class TrespasserActorSheet extends ActorSheet {
 				abilityBonus: ability_bonus,
 				skilledBonus: this.actor.system.skill_bonus
 			});
-
-		if (action.system.tier == "special") {
-			penalty = 1;
-		}
-		else if (action.system.tier == "mighty") {
-			penalty = 2;
-		}
-
-		if (this.actor.system.effort>=penalty) {
-
-		} else return;
 		//If we are going with support. We just have DC 10.
+
 		let hasDC = false;
 		let succeedDC = false;
 		// if(action.system.is_support) {
