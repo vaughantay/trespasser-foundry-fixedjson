@@ -21,11 +21,16 @@ export class ActionData extends BaseItemData {
 				option: ['basic', 'special', 'mighty'],
 				empty: false
 			}),
-			effortPenalty: new fields.NumberField({
-				required: true,
+			currentEffortCost: new fields.NumberField({
+				require: true,
+				initial: 0,
+				min: 0
+			}),
+			increaseCount: new fields.NumberField({
+				require: true,
 				initial: 0,
 				min: 0,
-				max:3
+				max: 3 
 			}),
 			//All actions must have a skill and whether its attack or support.
 			//I just want to have a button to confirm whether its support, if false, its an attack

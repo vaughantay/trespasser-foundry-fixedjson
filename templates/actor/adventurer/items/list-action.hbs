@@ -22,6 +22,14 @@
     <h5>{{system.skill}} {{localize "TRESPASSER.ItemLabels.attack"}} - {{system.keywords}}</h5>
     {{/if}}
 
+    {{#if (eq system.tier 'basic')}}
+    <h5>0/+0<h5>
+    {{else if (eq system.tier 'special')}}
+    <h5>{{system.currentEffortCost}}/+1<h5>
+    {{else}}
+    <h5>{{system.currentEffortCost}}/+2<h5>
+    {{/if}}
+
     <a class="action-roll flex-row">
       <p><i class="fa-solid fa-dice-d20"></i><b> {{localize "TRESPASSER.ItemLabels.target"}}: </b> {{system.target}}</p>
 		</a>

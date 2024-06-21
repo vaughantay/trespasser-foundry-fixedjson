@@ -115,7 +115,9 @@
 			"base-effort":"Base Effort",
 			"use":"Use",
 			"quantity":"Quantity",
-			"bonus": "Uses Bonus"
+			"bonus": "Uses Bonus",
+			"effort-cost": "Effort Cost",
+			"effort-buildup": "Effort Buildup"
 		},
 
 		"ItemTypes": {

@@ -2,6 +2,7 @@
 	<div class="flexrow spaced section">
 		<div class="topbar">
 			<div class="flexrow">
+				<img class="profile-img" src="{{actor.img}}" data-edit="img" title="{{actor.name}}" height="100" width="100"/>
 				<h1 class="title">Trespasser</h1>
 				<span class="flex1"><h5>Level</h5>
 				<p class="fakeinput">{{system.level}}</p></span>
@@ -40,7 +41,7 @@
 					</div>
 					<div class="flexrow">
 						<input name="system.combat.hit_points.value" type="text" value="{{system.combat.hit_points.value}}" data-dtype="Number"/>
-						<input name="system.combat.hit_points.max" type="text" value="{{system.combat.hit_points.max}}" data-dtype="Number"/>
+						<p class="flex2 fakeinput">{{context.HP}}</p>
 					</div>
 				</div>
 			</div>
