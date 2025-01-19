@@ -62,14 +62,6 @@ export class TrespasserActorSheet extends ActorSheet {
 			//Return the weapons in either hand.
 			if (item.type == 'weapon') {
 				const weapon = item.system;
-			/*	if (weapon.twohanded) {
-					if (weapon.equipped_left || weapon.equipped_right){
-						equippedWeapons.right = item;
-						equippedWeapons.left = equippedWeapons.right;
-					} else inventory.push(item);
-				}
-				else
-				This doesn't work yet dw about it */
 				if (weapon.equipped_left) {
 					equippedWeapons.left=item;
 				} else if (weapon.equipped_right) {
@@ -213,17 +205,85 @@ export class TrespasserActorSheet extends ActorSheet {
 				li.slideUp();
 			}
 		});
-		html.on('click', '.reset-actions', (ev) => {
+		html.on('click', '.armordie', (ev) => {
+
+		});
+		html.on('click', '.recollect', (ev) => {
 			let items = Object.values(Object.values(this.actor.items)[4]);
 			items.forEach((item, i) => {
-			let action = this.actor.items.get(item._id);
-				if(action.type == 'action') {
-					action.update({"system.increaseCount": 0});
-					action.update({"system.currentEffortCost": 0});
+				let armor = this.actor.items.get(item._id);
+				if(armor.type == 'armor') {
+					armor.update({ "system.die_used": false});
 				}
 			});
 		});
 
+		html.on('click', '.longrest', (ev) => {
+			let d = new Dialog({
+ title: "Long Rest",
+ content: "<p>Are you sure you want to take a long rest?</p>",
+ buttons: {
+  one: {
+   icon: '<i class="fas fa-check"></i>',
+   label: "Rest",
+   callback: () =>
+		{
+			let items = Object.values(Object.values(this.actor.items)[4]);
+			let effort = this.actor.system.base_effort;
+			let recovery = this.actor.system.recovery.max;
+			let current = this.actor.system.recovery.current;
+			let hp = this.actor.system.combat.hit_points.max;
+			this.actor.update({"system.combat.hit_points.value": hp});
+			this.actor.update({"system.recovery.current": recovery});
+			this.actor.update({"system.effort": effort});
+			items.forEach((item, i) => {
+			let action = this.actor.items.get(item._id);
+			 if(action.type == 'action') {
+				 if (action.system.tier === 'basic') {
+					 action.update({"system.currentEffortCost": 0});
+				 }
+				 else if (action.system.tier === 'special') {
+					 action.update({"system.currentEffortCost": 1});
+				 } else if (action.system.tier === 'mighty') {
+					 action.update({"system.currentEffortCost": 2});
+				 }
+				 action.update({"system.increaseCount": 0});
+			 }
+			});
+		}
+  },
+  	two: {
+   icon: '<i class="fas fa-times"></i>',
+   label: "No",
+		  }
+		 },
+		 default: "two",
+		});
+		d.render(true);
+
+		});
+
+		html.on('click', '.recover', (ev) => {
+			let recovery = this.actor.system.recovery.current;
+			let potency_dice = this.actor.system.potency_dice;
+			let health = this.actor.system.combat.hit_points.current;
+			let maxhp = this.actor.system.combat.hit_points.max;
+			if (recovery > 0) {
+				const roll = new Roll(
+					"d@potency",
+					{
+						potency:potency_dice
+					});
+				roll.toMessage({
+					flavor:'Recovery',
+					speaker: ChatMessage.getSpeaker({ actor: this.actor }),
+					rollMode: game.settings.get('core', 'rollMode'),
+				});
+				recovery = recovery -1;
+				this.actor.update({"system.recovery.current": recovery});
+				console.log(roll.result);
+			}
+		});
   }
 	//Not working yet
 	async _onItemCreate(event) {

@@ -42,18 +42,17 @@
   font-size: 18px;
   font-weight: 750px;
 }
+.grey{
+  color: grey;
+}
 .long{
   height:100px;
 }
-.trespasser .img {
+ .profile-img {
   text-align: center;
-  min-width: 60px;
-}
-.trespasser .img img {
-  max-width: 100%;
-  height: auto;
-  padding: 0;
-  margin: 0;
+  object-fit:   contain;
+  height: 100px;
+  width: 100px;
 }
 .title{
   flex:6;

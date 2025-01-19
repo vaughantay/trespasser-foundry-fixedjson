@@ -6,5 +6,9 @@
 	<p class="fakeinput flex4">{{name}}</p>
 	<p class="fakeinput flex1">{{system.weight}}</p>
 	<p class="fakeinput flex1">{{system.armor_class}}</p>
-	<p class="fakeinput flex2">{{system.armor_die}}</p>
+	{{#if system.die_used}}
+		<p class="fakeinput grey flex2">{{system.armor_die}}</p>
+		{{else}}
+		<p class="button armordie flex2">{{system.armor_die}}</p>
+	{{/if}}
 </div>

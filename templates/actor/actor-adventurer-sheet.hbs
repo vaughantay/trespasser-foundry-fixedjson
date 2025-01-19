@@ -1,8 +1,8 @@
 <form class="trespasser adventurer" autocomplete="off">
 	<div class="flexrow spaced section">
-		<div class="topbar">
+		<img class="profile-img flex1" src="{{actor.img}}" data-edit="img" title="{{actor.name}}" height="100" width="100"/>
+		<div class="topbar flex5">
 			<div class="flexrow">
-				<img class="profile-img" src="{{actor.img}}" data-edit="img" title="{{actor.name}}" height="100" width="100"/>
 				<h1 class="title">Trespasser</h1>
 				<span class="flex1"><h5>Level</h5>
 				<p class="fakeinput">{{system.level}}</p></span>
@@ -41,7 +41,7 @@
 					</div>
 					<div class="flexrow">
 						<input name="system.combat.hit_points.value" type="text" value="{{system.combat.hit_points.value}}" data-dtype="Number"/>
-						<p class="flex2 fakeinput">{{context.HP}}</p>
+						<input name="system.combat.hit_points.max" type="text" value="{{system.combat.hit_points.max}}" data-dtype="Number"/>
 					</div>
 				</div>
 			</div>
@@ -51,11 +51,11 @@
 						<h5>{{localize 'TRESPASSER.CombatLabels.recovery'}}</h5>
 					</div>
 					<div class="flexrow">
-						<input name="system.recovery.current" type="text" value="{{system.recovery.current}}" data-dtype="Number"/>
-						<div class="flex1 button">
-							<i class="fas fa-refresh"></i>
+						<input name="system.recovery.current" type="text" value="{{system.recovery.current}}" data-dtype="Number" class="flex2"/>
+						<input name="system.recovery.max" type="text" value="{{system.recovery.max}}" data-dtype="Number" class="flex2"/>
+						<div class="button flex1 recover">
+							<i class="fas fa-bandage"></i>
 						</div>
-						<input name="system.recovery.max" type="text" value="{{system.recovery.max}}" data-dtype="Number"/>
 					</div>
 				</div>
 			</div>
@@ -66,9 +66,6 @@
 					</div>
 					<div class="flexrow">
 						<input class="flex2" name="system.effort" type="text" value="{{system.effort}}" data-dtype="Number"/>
-						<div class="flex1 button">
-							<i class="fas fa-refresh"></i>
-						</div>
 						<p class="flex2 fakeinput">{{system.base_effort}}</p>
 					</div>
 				</div>
@@ -103,10 +100,16 @@
 					<p class="fakeinput">{{system.reactions}}</p>
 				</div>
 			</div>
-			<br>
-			<!-- <div class="flexrow button">
-				<h2>Rest  <i class="fas fa-bed"></i></h2>
-			</div> -->
+			<hr>
+			<div class="flexrow">
+				<div class="button">
+					<h5>Recollect <i class="fas fa-rotate-left"></i></h5>
+				</div>
+				<div class="button longrest">
+					<h5>Rest <i class="fas fa-bed"></i></h5>
+				</div>
+			</div>
+
 		</div>
 		<div id="body" class="flex3 section">
 
