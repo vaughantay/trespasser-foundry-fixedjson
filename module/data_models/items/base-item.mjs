@@ -1,12 +1,12 @@
 export class BaseItemData extends foundry.abstract.TypeDataModel {
-	
+
 	//This is a place to define templates, I'll make a few inherited methods which act as templates.
 
 	static defineSchema() {
 
 		const fields = foundry.data.fields;
 		return {
-			
+
 		};
 	}
 

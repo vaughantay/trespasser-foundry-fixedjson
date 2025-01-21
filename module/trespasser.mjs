@@ -8,6 +8,7 @@ import { ArmorData } from './data_models/items/armor.mjs';
 import { ActionData } from './data_models/items/action.mjs';
 import { WeaponData } from './data_models/items/weapon.mjs';
 import { SimpleItemData } from './data_models/items/simple-item.mjs';
+import { FeatureItemData } from './data_models/items/feature.mjs';
 import { AdventurerData } from './data_models/adventurer.mjs';
 import { loadHandlebarsPartials } from './helpers/preload.mjs'
 import { TrespasserRoll } from './roll/trespasser-roll.mjs';
@@ -26,6 +27,7 @@ Hooks.once('init', function () {
 
 	CONFIG.Item.dataModels.spell = SpellData;
 	CONFIG.Item.dataModels.armor = ArmorData;
+	CONFIG.Item.dataModels.feature = FeatureItemData;
 	CONFIG.Item.dataModels.simple_item = SimpleItemData;
 	CONFIG.Item.dataModels.action = ActionData;
 	CONFIG.Item.dataModels.weapon = WeaponData;
@@ -37,7 +39,7 @@ Hooks.once('init', function () {
 		makeDefault: true,
 		label: 'TRESPASSER.SheetLabels.Actor',
 	});
-	
+
 	Items.unregisterSheet('core', ItemSheet);
 	Items.registerSheet('trespasser', TrespasserItemSheet, {
 		makeDefault: true,

@@ -9,8 +9,8 @@ export class TrespasserActorSheet extends ActorSheet {
 	static get defaultOptions() {
 		return foundry.utils.mergeObject(super.defaultOptions, {
 			classes: ['trespasser', 'sheet', 'actor'],
-			width: 850,
-			height: 550,
+			width: 900,
+			height: 700,
 			tabs: [
 				{
 					navSelector: '.sheet-tabs',
@@ -95,7 +95,7 @@ export class TrespasserActorSheet extends ActorSheet {
 		});
 
 
-	  	context.HP = calculatedHP;
+	  context.HP = calculatedHP;
 		context.AC = calculatedAC;
 		context.equippedWeapons = equippedWeapons;
 		context.equippedArmor = equippedArmor;
@@ -205,9 +205,11 @@ export class TrespasserActorSheet extends ActorSheet {
 				li.slideUp();
 			}
 		});
+
 		html.on('click', '.armordie', (ev) => {
 
 		});
+
 		html.on('click', '.recollect', (ev) => {
 			let items = Object.values(Object.values(this.actor.items)[4]);
 			items.forEach((item, i) => {
@@ -218,14 +220,18 @@ export class TrespasserActorSheet extends ActorSheet {
 			});
 		});
 
+		html.on('click', '.keyattribute', (ev) => {
+			console.log(this.actor.system.keyattribute);
+		});
+
 		html.on('click', '.longrest', (ev) => {
 			let d = new Dialog({
- title: "Long Rest",
- content: "<p>Are you sure you want to take a long rest?</p>",
- buttons: {
-  one: {
-   icon: '<i class="fas fa-check"></i>',
-   label: "Rest",
+ 			title: "Long Rest",
+ 			content: "<p>Take a long rest?</p>",
+ 			buttons: {
+  		one: {
+   		icon: '<i class="fas fa-check"></i>',
+   		label: "Rest",
    callback: () =>
 		{
 			let items = Object.values(Object.values(this.actor.items)[4]);

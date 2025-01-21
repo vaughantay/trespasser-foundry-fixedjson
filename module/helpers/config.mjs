@@ -1,40 +1,30 @@
 export const TRESPASSER = {};
 
-TRESPASSER.SimpleItemTypes = {
+TRESPASSER.FeatureTypes = {
 	"feature": "TRESPASSER.ItemTypes.feature",
-	"inventory-item": "TRESPASSER.ItemTypes.inventory-item",
-	"other-ability": "TRESPASSER.ItemTypes.other-ability",
-	"talent": "TRESPASSER.ItemTypes.talent"
+	"talent": "TRESPASSER.ItemTypes.talent",
+	"other-ability": "TRESPASSER.ItemTypes.other-ability"
 };
 
 TRESPASSER.ActionTypes = {
-	"basic": "TRESPASSER.ActionTypes.basic",
+	"light": "TRESPASSER.ActionTypes.light",
+	"heavy": "TRESPASSER.ActionTypes.heavy",
 	"special": "TRESPASSER.ActionTypes.special",
 	"mighty": "TRESPASSER.ActionTypes.mighty",
 };
 
-//This needs to be abilities but im not sure what it would break if changed...
-TRESPASSER.Skills = {
-	"agi": "TRESPASSER.Ability.Agi.abbr",
-	"str": "TRESPASSER.Ability.Str.abbr",
-	"vig": "TRESPASSER.Ability.Vig.abbr",
-	"knw": "TRESPASSER.Ability.Knw.abbr",
-	"cng": "TRESPASSER.Ability.Cng.abbr",
-	"res": "TRESPASSER.Ability.Res.abbr"
-};
-
-TRESPASSER.AbilitiesLong = {
-	"agi": "TRESPASSER.Ability.Agi.long",
-	"str": "TRESPASSER.Ability.Str.long",
-	"vig": "TRESPASSER.Ability.Vig.long",
-	"knw": "TRESPASSER.Ability.Knw.long",
-	"cng": "TRESPASSER.Ability.Cng.long",
-	"res": "TRESPASSER.Ability.Res.long"
+TRESPASSER.Attributes = {
+	"agility": "TRESPASSER.Ability.Agi.agility",
+	"might": "TRESPASSER.Ability.Str.might",
+	"intellect": "TRESPASSER.Ability.Vig.intellect",
+	"spirit": "TRESPASSER.Ability.Knw.spirit",
 };
 
 TRESPASSER.PlayerSkills = {
 	"acrobatics": "TRESPASSER.Skills.acrobatics",
+	"alchemy": "TRESPASSER.Skills.alchemy",
 	"athletics": "TRESPASSER.Skills.athletics",
+	"crafting": "TRESPASSER.Skills.crafting",
 	"folklore": "TRESPASSER.Skills.folklore",
 	"letters": "TRESPASSER.Skills.letters",
 	"mystery": "TRESPASSER.Skills.mystery",

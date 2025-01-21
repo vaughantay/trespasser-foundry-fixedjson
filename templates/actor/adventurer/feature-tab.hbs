@@ -1,0 +1,32 @@
+  <div class="flexcol spaced">
+    <div class="flexrow">
+      <div class="section">
+        <div class="flexrow">
+          <h2>{{localize "TRESPASSER.MenuLabels.general"}}</h2>
+        </div>
+				<div class='item-controls'>
+					<a
+						class='item-control item-create'
+						title='{{localize "DOCUMENT.Create" type='simple_item'}}'
+						data-type='simple_item'
+						data-item-type='feature'
+					>
+						<i class='fas fa-plus'></i>
+						{{localize 'DOCUMENT.New' type='Item'}}
+					</a>
+				</div>
+        <div class="flex-container">
+          {{#each context.talents as |talent id|}}
+          {{> "systems/trespasser/templates/actor/adventurer/items/list-simple.hbs" talent}}
+          {{/each}}
+          {{#each context.features as |feature id|}}
+          {{> "systems/trespasser/templates/actor/adventurer/items/list-simple.hbs" feature}}
+          {{/each}}
+          {{#each context.otherAbilities as |ability id|}}
+          {{> "systems/trespasser/templates/actor/adventurer/items/list-simple.hbs" ability}}
+          {{/each}}
+        </div>
+      </div>
+    </div>
+
+  </div>

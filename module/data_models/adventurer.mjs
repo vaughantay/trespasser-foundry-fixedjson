@@ -34,6 +34,21 @@ export class AdventurerData extends CharacterBaseData {
 					initial: '',
 					blank: true
 				}),
+				strengths: new fields.StringField({
+					required: true,
+					initial: '',
+					blank: true
+				}),
+				flaws: new fields.StringField({
+					required: true,
+					initial: '',
+					blank: true
+				}),
+				words: new fields.StringField({
+					required: true,
+					initial: '',
+					blank: true
+				}),
 				alignment: new fields.StringField({
 					required: true,
 					initial: '',
@@ -51,7 +66,15 @@ export class AdventurerData extends CharacterBaseData {
 					required: true,
 					initial: false
 				}),
+				alchemy: new fields.BooleanField({
+					required: true,
+					initial: false
+				}),
 				athletics: new fields.BooleanField({
+					required: true,
+					initial: false
+				}),
+				crafting: new fields.BooleanField({
 					required: true,
 					initial: false
 				}),
@@ -63,7 +86,7 @@ export class AdventurerData extends CharacterBaseData {
 					required: true,
 					initial: false
 				}),
-				mystery: new fields.BooleanField({
+				magic: new fields.BooleanField({
 					required: true,
 					initial: false
 				}),
@@ -106,6 +129,73 @@ export class AdventurerData extends CharacterBaseData {
 					initial: 0,
 					min: 0
 				})
+			}),
+			endurance: new fields.SchemaField({
+				current: new fields.NumberField({
+					required: true,
+					initial: 0,
+					min: 0
+				}),
+				max: new fields.NumberField({
+					required: true,
+					initial: 0,
+					min: 0
+				})
+			}),
+			keyattribute: new fields.SchemaField({
+				might: new fields.BooleanField({
+					required: true,
+					initial: false
+				}),
+				agility: new fields.BooleanField({
+					required: true,
+					initial: false
+				}),
+				intellect: new fields.BooleanField({
+					required: true,
+					initial: false
+				}),
+				spirit: new fields.BooleanField({
+					required: true,
+					initial: false
+				}),
+				value: new fields.NumberField({
+					required: true,
+					initial: 0,
+					min: 0
+				}),
+				label: new fields.StringField({
+					required: true,
+					initial: 'might',
+					blank: true
+				})
+			}),
+			range: new fields.SchemaField({
+				melee: new fields.NumberField({
+					required: true,
+					initial: 0,
+					min: 0
+				}),
+				missile: new fields.NumberField({
+					required: true,
+					initial: 0,
+					min: 0
+				}),
+				spell: new fields.NumberField({
+					required: true,
+					initial: 0,
+					min: 0
+				})
+			}),
+			injury: new fields.HTMLField({
+					required: true,
+					initial: '',
+					blank: true
+			}),
+			resolve: new fields.NumberField({
+				required: true,
+				initial: 0,
+				min: 0
 			})
 		}
 	}
@@ -148,33 +238,31 @@ export class AdventurerData extends CharacterBaseData {
 		}
 	}
 
-	//Skilled modifier is just the regular mod plus the skill bonus based on level.
-	get skilled_mods() {
-		const mods = {...this.ability_mods};
-		const skillBonus = this.skill_bonus;
-
-		return {
-			str: mods.str + skillBonus,
-			agi: mods.agi + skillBonus,
-			vig: mods.vig + skillBonus,
-			knw: mods.knw + skillBonus,
-			cng: mods.cng + skillBonus,
-			res: mods.res + skillBonus
-		};
-	}
-
 	get is_peasant() {
 		return (level == 0) ? true : false;
 	}
 
 	get initiative() {
-		return this.skilled_mods.cng;
+		return this.attributes.agility + this.skill_bonus;
 	}
+	get accuracy() {
+		return this.keyattribute.value + this.skill_bonus;
+	}
+	get resist() {
+		return this.attributes.spirit + this.skill_bonus;
+	}
+	get prevail() {
+		return this.attributes.intellect + this.skill_bonus;
+	}
+	get tenacity(){
+		return this.attributes.might + this.attributes.spirit;
+	}
+
 
 	//Base because this gets modified by armor, which will be items.
 	//Should be able to handle it in a sheet no problem.
 	get base_armor_class() {
-		return 10 + this.ability_mods.agi;
+		return this.attributes.agility;
 	}
 
 	get potency_dice() {
@@ -196,6 +284,6 @@ export class AdventurerData extends CharacterBaseData {
 		return 4 + Math.floor(this.level / 2);
 	}
 	get inventory_max() {
-		return this.attributes.str;
+		return this.attributes.might;
 	}
 }

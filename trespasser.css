@@ -19,6 +19,9 @@
 .flex5{
   flex:5;
 }
+.flex6{
+  flex:6;
+}
 .flex {
   display: flex !important;
 }
@@ -58,7 +61,7 @@
   flex:6;
 }
 .trespasser .description {
-  --editor-height: 200px;
+  --editor-height: 100px;
   flex: 1;
   display: flex;
   min-height: var(--editor-height);
@@ -107,7 +110,7 @@
 }
 .trespasser {
   font-family: "LibreBaskerville", serif;
-  background-color: #f8f9fa;
+  background-color: #444444;
 }
 .trespasser .section {
   padding: 10px 3px;
@@ -212,9 +215,11 @@
 .table{
   font-size: 0.8em;
 }
-.skills input{
-  width: 1.5em;
-  height: 1.5em;
+.skills input,input.keyattribute{
+  width: 1.4em;
+  height: 1.4em;
+  padding: 0;
+  margin: 0;
 }
 .trespasser h3 a.addItem,
 .trespasser h4 a.addItem,
@@ -232,4 +237,9 @@
 }
 .trespasser .window-header .window-title {
   font-family: "LibreBaskerville", serif;
+}
+p.small{
+  font-size: 0.8em;
+  margin: auto;
+  padding: 0;
 }
