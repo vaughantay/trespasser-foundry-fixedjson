@@ -84,7 +84,7 @@ export class TrespasserActorSheet extends ActorSheet {
 					talents.push(item);
 				}
 
-				if (item.type == 'inventory-item') {
+				if (item.type == 'inventory_item') {
 					inventory.push(item);
 				}
 
@@ -115,7 +115,7 @@ export class TrespasserActorSheet extends ActorSheet {
 				if(item.type == 'monster-tag') {
 					tags.push(item);
 				}
-			}
+			});
 			context.tags = tags;
 		}
 

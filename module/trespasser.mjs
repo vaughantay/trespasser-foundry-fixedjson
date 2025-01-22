@@ -7,8 +7,9 @@ import { SpellData } from './data_models/items/spell.mjs';
 import { ArmorData } from './data_models/items/armor.mjs';
 import { ActionData } from './data_models/items/action.mjs';
 import { WeaponData } from './data_models/items/weapon.mjs';
-import { SimpleItemData } from './data_models/items/simple-item.mjs';
-import { FeatureItemData } from './data_models/items/feature.mjs';
+import { FeatureData } from './data_models/items/feature.mjs';
+import { TalentData } from './data_models/items/talent.mjs';
+import { InventoryItemData } from './data_models/items/inventory-item.mjs';
 import { AdventurerData } from './data_models/adventurer.mjs';
 import { loadHandlebarsPartials } from './helpers/preload.mjs'
 import { TrespasserRoll } from './roll/trespasser-roll.mjs';
@@ -27,8 +28,9 @@ Hooks.once('init', function () {
 
 	CONFIG.Item.dataModels.spell = SpellData;
 	CONFIG.Item.dataModels.armor = ArmorData;
-	CONFIG.Item.dataModels.feature = FeatureItemData;
-	CONFIG.Item.dataModels.simple_item = SimpleItemData;
+	CONFIG.Item.dataModels.feature = FeatureData;
+	CONFIG.Item.dataModels.talent = TalentData;
+	CONFIG.Item.dataModels.inventory_item = InventoryItemData;
 	CONFIG.Item.dataModels.action = ActionData;
 	CONFIG.Item.dataModels.weapon = WeaponData;
 

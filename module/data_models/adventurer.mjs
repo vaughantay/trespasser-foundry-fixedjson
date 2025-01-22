@@ -74,30 +74,33 @@ export class AdventurerData extends CharacterBaseData {
 				}),
 				words: new fields.StringField({
 					required: true,
-				magic: new fields.BooleanField({
-					required: true,
-					initial: false
+					initial: '',
+					blank: true
 				}),
-				nature: new fields.BooleanField({
-					required: true,
-					initial: false
-				}),
-				perception: new fields.BooleanField({
-					required: true,
-					initial: false
-				}),
-				speech: new fields.BooleanField({
-					required: true,
-					initial: false
-				}),
-				stealth: new fields.BooleanField({
-					required: true,
-					initial: false
-				}),
-				tinkering: new fields.BooleanField({
-					required: true,
-					initial: false
-				}),
+			}),
+			magic: new fields.BooleanField({
+				required: true,
+				initial: false
+			}),
+			nature: new fields.BooleanField({
+				required: true,
+				initial: false
+			}),
+			perception: new fields.BooleanField({
+				required: true,
+				initial: false
+			}),
+			speech: new fields.BooleanField({
+				required: true,
+				initial: false
+			}),
+			stealth: new fields.BooleanField({
+				required: true,
+				initial: false
+			}),
+			tinkering: new fields.BooleanField({
+				required: true,
+				initial: false
 			}),
 			//Dont have a better place for this unfortunately.
 			effort: new fields.NumberField({
