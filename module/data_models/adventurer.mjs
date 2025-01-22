@@ -246,7 +246,24 @@ export class AdventurerData extends CharacterBaseData {
 		return this.attributes.agility + this.skill_bonus;
 	}
 	get accuracy() {
-		return this.keyattribute.value + this.skill_bonus;
+		let keyval = 0;
+		if (this.keyattribute.might) {
+			this.keyattribute.label='Might';
+			keyval = this.attributes.might;
+		}
+		else if (this.keyattribute.agility) {
+			this.keyattribute.label='Agility';
+			keyval = this.attributes.agility;
+		}
+		else if (this.keyattribute.intellect) {
+			this.keyattribute.label='Intellect';
+			keyval = this.attributes.intellect;
+		}
+		else if (this.keyattribute.spirit) {
+			this.keyattribute.label='Spirit';
+			keyval = this.attributes.spirit;
+		}
+		return keyval + this.skill_bonus;
 	}
 	get resist() {
 		return this.attributes.spirit + this.skill_bonus;
@@ -257,7 +274,6 @@ export class AdventurerData extends CharacterBaseData {
 	get tenacity(){
 		return this.attributes.might + this.attributes.spirit;
 	}
-
 
 	//Base because this gets modified by armor, which will be items.
 	//Should be able to handle it in a sheet no problem.
