@@ -29,82 +29,99 @@ export class TrespasserActorSheet extends ActorSheet {
 
 		const context = {};
 
-		//We will add to this based on which armor pieces are equipped.
-		let calculatedAC = this.actor.system.base_armor_class;
-	  	//Max HP is either 10, or your vigor score, whichever is higher
-	  	let calculatedHP = this.actor.system.attributes.vig > 10 ? this.actor.system.attributes.vig : 10;
-		const equippedArmor = {};
-		const equippedWeapons = {};
-		const inventory = [];
-		const features = [];
-		const otherAbilities = [];
-		const talents = [];
+		//Actions are shared between monster and adventurer. So we will leave them out of the if statement.
 		const actions = [];
-		const spells = [];
 
-		let items = Object.values(Object.values(this.actor.items)[4]);
-		items.forEach((item, i) => {
-			if (item.type == 'armor') {
-				const armor = item.system;
-				//If equipped, add the ac to the calculated AC
-				calculatedAC += armor.equipped ? armor.armor_class : 0;
-				//Now we get the equipped armor.
-				if (armor.equipped) {
-					//This will look like head: {ac, location, etc.}
-					//If there is nothing equipped in a slot, the data will not populate, may need to change this.
-					equippedArmor[armor.loc] = item;
-				}
-				else{
-					inventory.push(item);
-				}
-			}
+		if(this.actor.type = 'adventurer') {
+			//We will add to this based on which armor pieces are equipped.
+			let calculatedAC = this.actor.system.base_armor_class;
+			//Max HP is either 10, or your vigor score, whichever is higher
+			let calculatedHP = this.actor.system.attributes.vig > 10 ? this.actor.system.attributes.vig : 10;
+			const equippedArmor = {};
+			const equippedWeapons = {};
+			const inventory = [];
+			const features = [];
+			const otherAbilities = [];
+			const talents = [];
 
-			//Return the weapons in either hand.
-			if (item.type == 'weapon') {
-				const weapon = item.system;
-				if (weapon.equipped_left) {
-					equippedWeapons.left=item;
-				} else if (weapon.equipped_right) {
-					equippedWeapons.right = item;
-				}
-				else{
-					inventory.push(item);
-				}
-			}
+			const spells = [];
 
-			if (item.type == 'simple_item') {
-				const simpleItem = item.system;
-				if (simpleItem.type == 'feature') {
+			let items = Object.values(Object.values(this.actor.items)[4]);
+			items.forEach((item, i) => {
+				if (item.type == 'armor') {
+					const armor = item.system;
+					//If equipped, add the ac to the calculated AC
+					calculatedAC += armor.equipped ? armor.armor_class : 0;
+					//Now we get the equipped armor.
+					if (armor.equipped) {
+						//This will look like head: {ac, location, etc.}
+						//If there is nothing equipped in a slot, the data will not populate, may need to change this.
+						equippedArmor[armor.loc] = item;
+					}
+					else{
+						inventory.push(item);
+					}
+				}
+
+				//Return the weapons in either hand.
+				if (item.type == 'weapon') {
+					const weapon = item.system;
+					if (weapon.equipped_left) {
+						equippedWeapons.left=item;
+					} else if (weapon.equipped_right) {
+						equippedWeapons.right = item;
+					}
+					else{
+						inventory.push(item);
+					}
+				}
+
+				/*
+				 * Make feature data model
+				 * Make talent data model
+				 * make inventory-item data model
+				 * make sheets for feature
+				 * make sheet for talent
+				 * make sheet for inventory-item
+				 */
+
+				if (item.type == 'feature') {
 					features.push(item);
-				} else if (simpleItem.type == 'other-ability') {
-					otherAbilities.push(item);
-				} else if (simpleItem.type == 'talent') {
+				}
+
+				if (item.type == 'talent') {
 					talents.push(item);
-				} else {
+				}
+
+				if (item.type == 'inventory-item') {
 					inventory.push(item);
 				}
-			}
 
-			if (item.type == 'action') {
-				actions.push(item);
-			}
+				if (item.type == 'action') {
+					actions.push(item);
+				}
 
-			if(item.type == 'spell') {
-				spells.push(item);
-			}
-		});
+				if(item.type == 'spell') {
+					spells.push(item);
+				}
+			});
 
 
-	  context.HP = calculatedHP;
-		context.AC = calculatedAC;
-		context.equippedWeapons = equippedWeapons;
-		context.equippedArmor = equippedArmor;
-		context.features = features;
-		context.otherAbilities = otherAbilities;
-		context.talents = talents;
+			context.HP = calculatedHP;
+			context.AC = calculatedAC;
+			context.equippedWeapons = equippedWeapons;
+			context.equippedArmor = equippedArmor;
+			context.features = features;
+			context.otherAbilities = otherAbilities;
+			context.talents = talents;
+			context.actions = actions;
+			context.spells = spells;
+			context.inventory = inventory;
+		} else if (this.actor.type = 'monster') {
+			context.features = [];
+		}
+
 		context.actions = actions;
-		context.spells = spells;
-		context.inventory = inventory;
 
 		return {
 			'context': context,
@@ -176,7 +193,7 @@ export class TrespasserActorSheet extends ActorSheet {
 
     html.on('click', '.effect-control', (ev) => {
       const row = ev.currentTarget.closest('li');
-      //const document =
+      //const document =,
         row.dataset.parentId === this.actor.id
           ? this.actor
           : this.actor.items.get(row.dataset.parentId);
@@ -485,7 +502,7 @@ export class TrespasserActorSheet extends ActorSheet {
 	}
 
 	async _createActionSolid(event) {
-		const li = $(event.currentTarget).parents('.action');
+		const li = $(event.currentTarget).parents('.,action');
 		const action = this.actor.items.get(li.data('itemId'));
 		if (action.system.solid_hit_weapon || action.system.solid_hit_potency || action.system.hit_weapon || action.system.hit_potency || action.system.uses_bonus) {
 			const items = this.actor.items;
