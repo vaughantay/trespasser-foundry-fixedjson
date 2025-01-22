@@ -10,8 +10,36 @@ export class AdventurerData extends CharacterBaseData {
 			//This does the characterBaseData
 			...super.defineSchema(),
 
-			//Attributes will be a schema with numbers inside.
-			//Buncha text fields.
+			attributes: new fields.SchemaField({
+				might: new fields.NumberField({
+					required: true,
+					initial: 1,
+					integer: true,
+					min: 0,
+					max: 10
+				}),
+				agility: new fields.NumberField({
+					required: true,
+					initial: 1,
+					integer: true,
+					min: 0,
+					max: 10
+				}),
+				intellect: new fields.NumberField({
+					required: true,
+					initial: 1,
+					integer: true,
+					min: 0,
+					max: 10
+				}),
+				spirit: new fields.NumberField({
+					required: true,
+					initial: 1,
+					integer: true,
+					min: 0,
+					max: 10
+				})
+			}),
 			text_details: new fields.SchemaField({
 				lineage: new fields.StringField({
 					required: true,
@@ -46,46 +74,6 @@ export class AdventurerData extends CharacterBaseData {
 				}),
 				words: new fields.StringField({
 					required: true,
-					initial: '',
-					blank: true
-				}),
-				alignment: new fields.StringField({
-					required: true,
-					initial: '',
-					blank: true
-				}),
-			}),
-			xp: new fields.NumberField({
-				initial: 0,
-				min: 0,
-				max: 40000
-			}),
-			//Skills are yes or no.
-			skills: new fields.SchemaField({
-				acrobatics: new fields.BooleanField({
-					required: true,
-					initial: false
-				}),
-				alchemy: new fields.BooleanField({
-					required: true,
-					initial: false
-				}),
-				athletics: new fields.BooleanField({
-					required: true,
-					initial: false
-				}),
-				crafting: new fields.BooleanField({
-					required: true,
-					initial: false
-				}),
-				folklore: new fields.BooleanField({
-					required: true,
-					initial: false
-				}),
-				letters: new fields.BooleanField({
-					required: true,
-					initial: false
-				}),
 				magic: new fields.BooleanField({
 					required: true,
 					initial: false
