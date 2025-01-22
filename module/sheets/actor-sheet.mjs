@@ -77,9 +77,6 @@ export class TrespasserActorSheet extends ActorSheet {
 				}
 
 				/*
-				 * Make feature data model
-				 * Make talent data model
-				 * make inventory-item data model
 				 * make sheets for feature
 				 * make sheet for talent
 				 * make sheet for inventory-item
@@ -112,13 +109,20 @@ export class TrespasserActorSheet extends ActorSheet {
 			context.equippedWeapons = equippedWeapons;
 			context.equippedArmor = equippedArmor;
 			context.features = features;
-			context.otherAbilities = otherAbilities;
 			context.talents = talents;
 			context.actions = actions;
 			context.spells = spells;
 			context.inventory = inventory;
 		} else if (this.actor.type = 'monster') {
-			context.features = [];
+			
+			const tags = [];
+
+			items.forEach((item, i) => {
+				if(item.type == 'monster-tag') {
+					tags.push(item);
+				}
+			}
+			context.tags = tags;
 		}
 
 		context.actions = actions;
@@ -318,15 +322,7 @@ export class TrespasserActorSheet extends ActorSheet {
 
 		const data = {...header.dataset};
 
-		if (type == 'simple_item') {
-			data['type'] = `${header.dataset.itemType}`;
-		}
-
 		let name = `New ${type.capitalize()}`;
-
-		if (type == 'simple_item') {
-			name = `New ${game.i18n.localize(CONFIG.TRESPASSER.SimpleItemTypes[data.type])}`;
-		}
 
 		const itemData = {
 			name: name,
