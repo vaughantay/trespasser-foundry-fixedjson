@@ -198,7 +198,8 @@
 }
 .trespasser h3,
 .trespasser h4,
-.trespasser h5 {
+.trespasser h5,
+.trespasser h6 {
   font-family: "VollkornSC", serif;
   border-bottom: none;
   margin: auto;
@@ -206,7 +207,6 @@
   position: relative;
   font-weight: 800;
   text-transform: uppercase;
-
 }
 .flex-container{
   display: flex;
