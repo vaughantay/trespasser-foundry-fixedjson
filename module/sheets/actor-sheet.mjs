@@ -76,12 +76,6 @@ export class TrespasserActorSheet extends ActorSheet {
 					}
 				}
 
-				/*
-				 * make sheets for feature
-				 * make sheet for talent
-				 * make sheet for inventory-item
-				 */
-
 				if (item.type == 'feature') {
 					features.push(item);
 				}
@@ -329,7 +323,6 @@ export class TrespasserActorSheet extends ActorSheet {
 			type: type,
 			system: data,
 		};
-
 
 		return await Item.create(itemData, { parent: this.actor });
 	}
