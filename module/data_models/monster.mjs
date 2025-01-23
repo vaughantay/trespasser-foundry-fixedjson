@@ -9,6 +9,11 @@ export class MonsterData extends CharacterBaseData {
 		return {
 			//This does the characterBaseData
 			...super.defineSchema(),
+			type: new fields.StringField({
+				required: true,
+				initial: '',
+				blank: true
+			}),
 
 			initiative: new fields.NumberField({
 				required: true,

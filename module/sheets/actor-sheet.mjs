@@ -29,8 +29,9 @@ export class TrespasserActorSheet extends ActorSheet {
 
 		const context = {};
 
-		//Actions are shared between monster and adventurer. So we will leave them out of the if statement.
+		//Actions and features are shared between monster and adventurer. So we will leave them out of the if statement.
 		const actions = [];
+		const features = [];
 
 		if(this.actor.type === 'adventurer') {
 			//We will add to this based on which armor pieces are equipped.
@@ -40,10 +41,8 @@ export class TrespasserActorSheet extends ActorSheet {
 			const equippedArmor = {};
 			const equippedWeapons = {};
 			const inventory = [];
-			const features = [];
 			const otherAbilities = [];
 			const talents = [];
-
 			const spells = [];
 
 			let items = Object.values(Object.values(this.actor.items)[4]);
@@ -64,7 +63,7 @@ export class TrespasserActorSheet extends ActorSheet {
 				}
 
 				//Return the weapons in either hand.
-				if (item.type == 'weapon') {
+				else if (item.type == 'weapon') {
 					const weapon = item.system;
 					if (weapon.equipped_left) {
 						equippedWeapons.left=item;
@@ -76,23 +75,23 @@ export class TrespasserActorSheet extends ActorSheet {
 					}
 				}
 
-				if (item.type == 'feature') {
+				else if (item.type == 'feature') {
 					features.push(item);
 				}
 
-				if (item.type == 'talent') {
+				else if (item.type == 'talent') {
 					talents.push(item);
 				}
 
-				if (item.type == 'object') {
+				else if (item.type == 'object') {
 					inventory.push(item);
 				}
 
-				if (item.type == 'action') {
+				else if (item.type == 'action') {
 					actions.push(item);
 				}
 
-				if(item.type == 'spell') {
+				else if(item.type == 'spell') {
 					spells.push(item);
 				}
 			});
@@ -102,7 +101,7 @@ export class TrespasserActorSheet extends ActorSheet {
 			context.AC = calculatedAC;
 			context.equippedWeapons = equippedWeapons;
 			context.equippedArmor = equippedArmor;
-			context.features = features;
+
 			context.talents = talents;
 			context.actions = actions;
 			context.spells = spells;
@@ -110,16 +109,16 @@ export class TrespasserActorSheet extends ActorSheet {
 		} else if (this.actor.type = 'monster') {
 
 			let items = Object.values(Object.values(this.actor.items)[4]);
-			const tags = [];
-
 			items.forEach((item, i) => {
-				if(item.type == 'monster-tag') {
-					tags.push(item);
+				if(item.type == 'feature') {
+					features.push(item);
+				}
+				else if (item.type == 'action') {
+					actions.push(item);
 				}
 			});
-			context.tags = tags;
 		}
-
+		context.features = features;
 		context.actions = actions;
 
 		return {

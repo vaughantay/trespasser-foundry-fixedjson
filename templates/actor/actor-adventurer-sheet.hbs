@@ -6,18 +6,17 @@
 				<h1>Trespasser</h1>
 			</div>
 			<div class="flexrow">
-				<h4 class="flex3">{{localize 'TRESPASSER.DetailsLabels.playername'}}</h4>
+				<h4 class="flex3">{{localize 'TRESPASSER.DetailsLabels.name'}}</h4>
 				<h4 class="flex2">{{localize 'TRESPASSER.DetailsLabels.lineage'}}</h4>
 			</div>
 			<div class="flexrow">
-				<input class="flex3" name="name" type="text" value="{{actor.name}}" placeholder="Name"/>
+				<input class="flex3" name="system.name" type="text" value="{{actor.name}}" placeholder="Name"/>
 				<input class="flex2" name="system.text_details.lineage" type="text" value="{{system.text_details.lineage}}" placeholder="Lineage" data-dtype="text"/>
 			</div>
 			<div class="flexrow">
 				<h4 class="flex5">{{localize 'TRESPASSER.DetailsLabels.words'}}</h4>
 				<h5 class="flex2">{{localize 'TRESPASSER.CombatLabels.hitpoints'}}</h5>
 				<h5 class="flex2">{{localize 'TRESPASSER.CombatLabels.effort'}}</h5>
-
 			</div>
 			<div class="flexrow">
 				<input class="flex5" name="system.text_details.words" type="text" value="{{system.text_details.words}}" placeholder="Words To Live By" data-dtype="text"/>

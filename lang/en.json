@@ -69,7 +69,7 @@
 			"class":"Calling",
 			"experience":"XP",
 			"level":"Level",
-			"playername":"Name",
+			"name":"Name",
 			"themes":"Crafts",
 			"lineage":"Lineage",
 			"profession":"Past Life",
@@ -84,7 +84,8 @@
 			"accuracy":"Accuracy",
 			"guard":"Guard",
 			"resist":"Resist",
-			"rollbon":"Roll Bonus"
+			"rollbon":"Roll Bonus",
+			"type":"Type and Level"
 		},
 
 		"DialogLabels": {
