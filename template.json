@@ -5,7 +5,7 @@
     "monster":{}
   },
   "Item": {
-    "types": ["spell", "armor", "simple_item","feature", "action", "weapon"],
+    "types": ["spell", "armor", "feature", "talent", "inventory_item",  "action", "weapon"],
 		"spell": {},
 		"armor": {},
 		"base_item": {},

@@ -32,7 +32,7 @@ export class TrespasserActorSheet extends ActorSheet {
 		//Actions are shared between monster and adventurer. So we will leave them out of the if statement.
 		const actions = [];
 
-		if(this.actor.type = 'adventurer') {
+		if(this.actor.type === 'adventurer') {
 			//We will add to this based on which armor pieces are equipped.
 			let calculatedAC = this.actor.system.base_armor_class;
 			//Max HP is either 10, or your vigor score, whichever is higher
@@ -109,6 +109,7 @@ export class TrespasserActorSheet extends ActorSheet {
 			context.inventory = inventory;
 		} else if (this.actor.type = 'monster') {
 			
+			let items = Object.values(Object.values(this.actor.items)[4]);
 			const tags = [];
 
 			items.forEach((item, i) => {

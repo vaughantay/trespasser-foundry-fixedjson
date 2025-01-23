@@ -1,6 +1,7 @@
 export const loadHandlebarsPartials = () => {
   const partials = [
 		'systems/trespasser/templates/actor-adventurer-sheet.hbs',
+		"systems/trespasser/templates/actor-monster-sheet.hbs",
     "systems/trespasser/templates/actor/adventurer/skills-tab.hbs",
     "systems/trespasser/templates/actor/adventurer/feature-tab.hbs",
 		"systems/trespasser/templates/actor/adventurer/equip-tab.hbs",
@@ -17,6 +18,9 @@ export const loadHandlebarsPartials = () => {
 		'systems/trespasser/templates/fields/number-field.hbs',
 		'systems/trespasser/templates/fields/select-field.hbs',
 		'systems/trespasser/templates/fields/bool-field.hbs',
+		'systems/trespasser/templates/item/item-feature-sheet.hbs',
+		'systems/trespasser/templates/item/item-talent-sheet.hbs',
+		'systems/trespasser/templates/item/item-inventory-item-sheet.hbs',
 		'systems/trespasser/templates/actor/adventurer/items/armor-slot.hbs'
   ]
 

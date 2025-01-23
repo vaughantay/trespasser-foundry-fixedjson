@@ -77,6 +77,16 @@
 			"words":"Words To Live By"
 		},
 
+		"MonsterLabels":{
+			"hp":"HP",
+			"speed":"Speed",
+			"initiative":"Initiative",
+			"accuracy":"Accuracy",
+			"guard":"Guard",
+			"resist":"Resist",
+			"rollbon":"Roll Bonus"
+		},
+
 		"DialogLabels": {
 			"ability": "Ability",
 			"skill": "Skill",

@@ -11,6 +11,7 @@ import { FeatureData } from './data_models/items/feature.mjs';
 import { TalentData } from './data_models/items/talent.mjs';
 import { InventoryItemData } from './data_models/items/inventory-item.mjs';
 import { AdventurerData } from './data_models/adventurer.mjs';
+import { MonsterData } from './data_models/monster.mjs';
 import { loadHandlebarsPartials } from './helpers/preload.mjs'
 import { TrespasserRoll } from './roll/trespasser-roll.mjs';
 
@@ -24,6 +25,7 @@ Hooks.once('init', function () {
 	CONFIG.TRESPASSER = TRESPASSER;
 
 	CONFIG.Actor.dataModels.adventurer = AdventurerData;
+	CONFIG.Actor.dataModels.monster = MonsterData;
 	CONFIG.Actor.documentClass = TrespasserActor;
 
 	CONFIG.Item.dataModels.spell = SpellData;
