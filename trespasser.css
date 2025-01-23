@@ -51,7 +51,7 @@
 .long{
   height:100px;
 }
- .profile-img {
+ .profile-img,.img {
   text-align: center;
   object-fit:   contain;
   height: 100px;
