@@ -84,7 +84,7 @@ export class TrespasserActorSheet extends ActorSheet {
 					talents.push(item);
 				}
 
-				if (item.type == 'inventory_item') {
+				if (item.type == 'object') {
 					inventory.push(item);
 				}
 
@@ -108,7 +108,7 @@ export class TrespasserActorSheet extends ActorSheet {
 			context.spells = spells;
 			context.inventory = inventory;
 		} else if (this.actor.type = 'monster') {
-			
+
 			let items = Object.values(Object.values(this.actor.items)[4]);
 			const tags = [];
 

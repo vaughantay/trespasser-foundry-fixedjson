@@ -20,7 +20,7 @@ export const loadHandlebarsPartials = () => {
 		'systems/trespasser/templates/fields/bool-field.hbs',
 		'systems/trespasser/templates/item/item-feature-sheet.hbs',
 		'systems/trespasser/templates/item/item-talent-sheet.hbs',
-		'systems/trespasser/templates/item/item-inventory-item-sheet.hbs',
+		'systems/trespasser/templates/item/item-object-sheet.hbs',
 		'systems/trespasser/templates/actor/adventurer/items/armor-slot.hbs'
   ]
 

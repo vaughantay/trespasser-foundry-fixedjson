@@ -157,7 +157,7 @@
 
 		"ItemTypes": {
 			"feature": "Feature",
-			"inventory-item": "Inventory Item",
+			"object": "Inventory Item",
 			"other-ability": "Other Ability",
 			"talent": "Talent"
 		},

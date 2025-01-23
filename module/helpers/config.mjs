@@ -1,11 +1,5 @@
 export const TRESPASSER = {};
 
-TRESPASSER.FeatureTypes = {
-	"feature": "TRESPASSER.ItemTypes.feature",
-	"talent": "TRESPASSER.ItemTypes.talent",
-	"other-ability": "TRESPASSER.ItemTypes.other-ability"
-};
-
 TRESPASSER.ActionTypes = {
 	"light": "TRESPASSER.ActionTypes.light",
 	"heavy": "TRESPASSER.ActionTypes.heavy",

@@ -154,11 +154,6 @@ export class AdventurerData extends CharacterBaseData {
 					required: true,
 					initial: 0,
 					min: 0
-				}),
-				label: new fields.StringField({
-					required: true,
-					initial: 'might',
-					blank: true
 				})
 			}),
 			range: new fields.SchemaField({
@@ -239,23 +234,36 @@ export class AdventurerData extends CharacterBaseData {
 	get accuracy() {
 		let keyval = 0;
 		if (this.keyattribute.might) {
-			this.keyattribute.label='Might';
 			keyval = this.attributes.might;
 		}
 		else if (this.keyattribute.agility) {
-			this.keyattribute.label='Agility';
 			keyval = this.attributes.agility;
 		}
 		else if (this.keyattribute.intellect) {
-			this.keyattribute.label='Intellect';
 			keyval = this.attributes.intellect;
 		}
 		else if (this.keyattribute.spirit) {
-			this.keyattribute.label='Spirit';
 			keyval = this.attributes.spirit;
 		}
 		return keyval + this.skill_bonus;
 	}
+	get keyattr(){
+			let keystring = 'None';
+			if (this.keyattribute.might) {
+				keystring='Might';
+			}
+			else if (this.keyattribute.agility) {
+				keystring='Agility';
+			}
+			else if (this.keyattribute.intellect) {
+				keystring='Intellect';
+			}
+			else if (this.keyattribute.spirit) {
+				keystring='Spirit';
+			}
+			return keystring;
+	}
+
 	get resist() {
 		return this.attributes.spirit + this.skill_bonus;
 	}

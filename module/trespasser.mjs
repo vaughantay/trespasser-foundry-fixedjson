@@ -9,7 +9,7 @@ import { ActionData } from './data_models/items/action.mjs';
 import { WeaponData } from './data_models/items/weapon.mjs';
 import { FeatureData } from './data_models/items/feature.mjs';
 import { TalentData } from './data_models/items/talent.mjs';
-import { InventoryItemData } from './data_models/items/inventory-item.mjs';
+import { InventoryItemData } from './data_models/items/object.mjs';
 import { AdventurerData } from './data_models/adventurer.mjs';
 import { MonsterData } from './data_models/monster.mjs';
 import { loadHandlebarsPartials } from './helpers/preload.mjs'
@@ -32,7 +32,7 @@ Hooks.once('init', function () {
 	CONFIG.Item.dataModels.armor = ArmorData;
 	CONFIG.Item.dataModels.feature = FeatureData;
 	CONFIG.Item.dataModels.talent = TalentData;
-	CONFIG.Item.dataModels.inventory_item = InventoryItemData;
+	CONFIG.Item.dataModels.object = InventoryItemData;
 	CONFIG.Item.dataModels.action = ActionData;
 	CONFIG.Item.dataModels.weapon = WeaponData;
 

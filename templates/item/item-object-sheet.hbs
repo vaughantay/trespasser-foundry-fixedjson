@@ -5,7 +5,6 @@
         <div class="flex0 img"><img src="{{item.img}}" data-edit="img" title="{{item.name}}"/></div>
         <div class="flexcol spaced">
           <input id="name" type="text" name="name" value="{{item.name}}" placeholder="{{localize "trespasser.name"}}" />
-					{{> 'systems/trespasser/templates/fields/select-field.hbs' label='TRESPASSER.ItemLabels.item-type' field='system.type' options=ItemTypes selected=document.system.type includeEmpty=false localizeOptions=true}}
         </div>
       </div>
     </div>

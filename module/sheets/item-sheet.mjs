@@ -47,10 +47,6 @@ export class TrespasserItemSheet extends ItemSheet {
 			context.Damage = CONFIG.TRESPASSER.DamageDiceSelections;
 		}
 
-		if(this.item.type == 'simple_item') {
-			context.ItemTypes = CONFIG.TRESPASSER.SimpleItemTypes;
-		}
-
 		if(this.item.type == 'action') {
 			context.ActionTypes = CONFIG.TRESPASSER.ActionTypes;
 			context.Skills = CONFIG.TRESPASSER.Skills;
