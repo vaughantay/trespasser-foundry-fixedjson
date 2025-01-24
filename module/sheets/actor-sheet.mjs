@@ -7,6 +7,7 @@ import { TrespasserRoll } from '../roll/trespasser-roll.mjs';
 
 export class TrespasserActorSheet extends ActorSheet {
 	static get defaultOptions() {
+
 		return foundry.utils.mergeObject(super.defaultOptions, {
 			classes: ['trespasser', 'sheet', 'actor'],
 			width: 900,

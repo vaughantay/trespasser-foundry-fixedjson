@@ -37,7 +37,13 @@ Hooks.once('init', function () {
 	CONFIG.Item.dataModels.weapon = WeaponData;
 
 	CONFIG.Dice.rolls.push(TrespasserRoll);
+	let status = TRESPASSER.statusEffects;
+	CONFIG.statusEffects = [];
+	status.forEach((stat, i) => {
+		CONFIG.statusEffects.push(stat);
+	});
 
+	console.log(CONFIG.statusEffects);
 	Actors.unregisterSheet('core', ActorSheet);
 	Actors.registerSheet('trespasser', TrespasserActorSheet, {
 		makeDefault: true,

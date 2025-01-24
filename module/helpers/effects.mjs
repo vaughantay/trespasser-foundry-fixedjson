@@ -4,6 +4,7 @@
  * @param {Actor|Item} owner      The owning document which manages this effect
  */
 export function onManageActiveEffect(event, owner) {
+  console.log('hi');
   event.preventDefault();
   const a = event.currentTarget;
   const li = a.closest('li');
@@ -31,6 +32,7 @@ export function onManageActiveEffect(event, owner) {
     case 'toggle':
       return effect.update({ disabled: !effect.disabled });
   }
+
 }
 
 /**
