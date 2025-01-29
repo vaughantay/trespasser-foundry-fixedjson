@@ -31,6 +31,17 @@ export class WeaponData extends BaseItemData {
 				required: false,
 				initial: '',
 				blank: true
+			}),
+			range: new fields.NumberField({
+				require: true,
+				initial: 0,
+				min: 0
+			}),
+			type: new fields.StringField({
+				required: true,
+				initial:'melee',
+				option: ['melee', 'missile', 'spell', 'unarmed'],
+				empty: false
 			})
 		};
 	}

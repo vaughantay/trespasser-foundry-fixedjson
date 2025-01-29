@@ -11,7 +11,7 @@ export function onManageActiveEffect(event, owner) {
   const effect = li.dataset.effectId
     ? owner.effects.get(li.dataset.effectId)
     : null;
-  switch (a.dataset.action) {
+  switch (a.dataset.deed) {
     case 'create':
       return owner.createEmbeddedDocuments('ActiveEffect', [
         {

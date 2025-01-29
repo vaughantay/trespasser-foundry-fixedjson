@@ -17,7 +17,7 @@ export class CharacterBaseData extends foundry.abstract.TypeDataModel {
 				}),
 				speed: new fields.NumberField({
 					required: true,
-					initial: 5
+					initial: 0
 				})
 			})
 		};

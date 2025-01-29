@@ -6,18 +6,15 @@
         <div class="flexcol spaced">
           <input id="name" type="text" name="name" value="{{item.name}}" placeholder="{{localize "trespasser.name"}}" />
 					{{> 'systems/trespasser/templates/fields/select-field.hbs' label='TRESPASSER.ItemLabels.weight' field='system.weight' options=Weight selected=document.system.weight includeEmpty=false localizeOptions=true}}
-					{{> 'systems/trespasser/templates/fields/select-field.hbs' label='TRESPASSER.ItemLabels.damage-dice' field='system.damage' options=Damage selected=document.system.damage includeEmpty=true localizeOptions=true}}
-					{{> 'systems/trespasser/templates/fields/text-field.hbs' label='TRESPASSER.ItemLabels.keywords' field='system.keywords' value=document.system.keywords}}
+					{{> 'systems/trespasser/templates/fields/select-field.hbs' label='TRESPASSER.ItemLabels.damage' field='system.damage' options=Damage selected=document.system.damage includeEmpty=true localizeOptions=true}}
           {{> 'systems/trespasser/templates/fields/bool-field.hbs' label='TRESPASSER.ItemLabels.twohanded' field='system.two_handed' isChecked=document.system.two_handed}}
+
         </div>
       </div>
     </div>
 
     <div id="body">
-			<h3 class="corners mid">{{localize 'TRESPASSER.ItemLabels.weapon-effect'}}</h3>
-			<div class="description" data-group="primary" data-tab="description">
-				{{editor enrichedDetails target="system.details" button=true owner=owner editable=editable}}
-			</div>
+        {{> 'systems/trespasser/templates/fields/text-field.hbs' label='TRESPASSER.EquipLabels.weaponeffect' field='system.details' value=document.system.details}}
     </div>
   </div>
 </form>

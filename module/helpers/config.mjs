@@ -1,10 +1,39 @@
 export const TRESPASSER = {};
 
-TRESPASSER.ActionTypes = {
-	"light": "TRESPASSER.ActionTypes.light",
-	"heavy": "TRESPASSER.ActionTypes.heavy",
-	"special": "TRESPASSER.ActionTypes.special",
-	"mighty": "TRESPASSER.ActionTypes.mighty",
+TRESPASSER.DeedTiers = {
+	"light": "TRESPASSER.DeedTiers.light",
+	"heavy": "TRESPASSER.DeedTiers.heavy",
+	"special": "TRESPASSER.DeedTiers.special",
+	"mighty": "TRESPASSER.DeedTiers.mighty"
+};
+
+TRESPASSER.TargetTypes = {
+	"creature": "TRESPASSER.TargetTypes.creature",
+	"spread": "TRESPASSER.TargetTypes.spread",
+	"special": "TRESPASSER.TargetTypes.special",
+	"blast": "TRESPASSER.TargetTypes.blast",
+	"path": "TRESPASSER.TargetTypes.path",
+	"personal": "TRESPASSER.TargetTypes.personal"
+};
+
+TRESPASSER.TargetSpecs = {
+	"melee": "TRESPASSER.TargetSpecs.melee",
+	"close": "TRESPASSER.TargetSpecs.close"
+};
+TRESPASSER.WeaponTypes = {
+	"melee": "TRESPASSER.WeaponTypes.melee",
+	"missile": "TRESPASSER.WeaponTypes.close",
+	"spell": "TRESPASSER.WeaponTypes.spell",
+	"missile": "TRESPASSER.WeaponTypes.close"
+};
+TRESPASSER.DeedTypes = {
+	"innate": "TRESPASSER.DeedTypes.innate",
+	"spell": "TRESPASSER.DeedTypes.spell",
+	"missile": "TRESPASSER.DeedTypes.missile",
+	"item": "TRESPASSER.DeedTypes.item",
+	"melee": "TRESPASSER.DeedTypes.melee",
+	"unarmed": "TRESPASSER.DeedTypes.unarmed",
+	"versatile": "TRESPASSER.DeedTypes.versatile"
 };
 
 TRESPASSER.Attributes = {
@@ -21,7 +50,7 @@ TRESPASSER.PlayerSkills = {
 	"crafting": "TRESPASSER.Skills.crafting",
 	"folklore": "TRESPASSER.Skills.folklore",
 	"letters": "TRESPASSER.Skills.letters",
-	"mystery": "TRESPASSER.Skills.mystery",
+	"magic": "TRESPASSER.Skills.magic",
 	"nature": "TRESPASSER.Skills.nature",
 	"perception": "TRESPASSER.Skills.perception",
 	"speech": "TRESPASSER.Skills.speech",

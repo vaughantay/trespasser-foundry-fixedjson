@@ -47,11 +47,11 @@ export class TrespasserItemSheet extends ItemSheet {
 			context.Damage = CONFIG.TRESPASSER.DamageDiceSelections;
 		}
 
-		if(this.item.type == 'action') {
-			context.ActionTypes = CONFIG.TRESPASSER.ActionTypes;
-			context.Skills = CONFIG.TRESPASSER.Skills;
-			context.enrichedHit = await TextEditor.enrichHTML(this.item.system.hit, {async: true});
-			context.enrichedSolid = await TextEditor.enrichHTML(this.item.system.solid_hit, {async: true});
+		if(this.item.type == 'deed') {
+			context.DeedTiers = CONFIG.TRESPASSER.DeedTiers;
+			context.TargetTypes = CONFIG.TRESPASSER.TargetTypes;
+      context.TargetSpecs = CONFIG.TRESPASSER.TargetSpecs;
+			context.DeedTypes = CONFIG.TRESPASSER.DeedTypes;
 		}
 
 		return context;
