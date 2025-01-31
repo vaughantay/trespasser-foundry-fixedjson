@@ -34,16 +34,22 @@
 .window-app .window-content {
   background: #ededed;
 }
-.trespasser #name {
+h1 {
   font-family: "CantaraGotica", sans-serif;
   padding: 0.05rem 0.4rem 0;
   height: 60px;
   font-size: 40px;
 }
 .trespasser label {
-  font-family: "PirataOne", sans-serif;
+  font-family: "Gotham", sans-serif;
   font-size: 18px;
   font-weight: 750px;
+}
+.trespasser .boxed label {
+  font-family: "Gotham", sans-serif;
+  font-size: 14px;
+  line-height: 0.8em;
+  font-weight: 800;
 }
 .grey{
   color: grey;
@@ -57,11 +63,8 @@
   height: 100px;
   width: 100px;
 }
-.title{
-  flex:6;
-}
 .trespasser .description {
-  --editor-height: 100px;
+  --editor-height: 700px;
   flex: 1;
   display: flex;
   min-height: var(--editor-height);
@@ -87,29 +90,21 @@
   src: url(./less/fonts/CantaraGotica.ttf);
 }
 @font-face {
-  font-family: "LibreBaskerville";
-  src: url(./less/fonts/LibreBaskerville/LibreBaskerville-Regular.ttf);
+  font-family: "Lusitana";
+  src: url(./less/fonts/Lusitana-Regular.ttf);
 }
 @font-face {
-  font-family: "LibreBaskerville";
-  src: url(./less/fonts/LibreBaskerville/LibreBaskerville-Italic.ttf);
-  font-style: italic;
+  font-family: "Gotham";
+  src: url(./less/fonts/Gotham-Black.otf);
 }
 @font-face {
-  font-family: "LibreBaskerville";
-  src: url(./less/fonts/LibreBaskerville/LibreBaskerville-Bold.ttf);
-  font-weight: bold;
+  font-family: "Boucherie";
+  src: url(./less/fonts/Boucherie-Block-Bold.ttf);
 }
-@font-face {
-  font-family: "VollkornSC";
-  src: url(./less/fonts/VollkornSC-regular.ttf);
-}
-@font-face {
-  font-family: "PirataOne";
-  src: url(./less/fonts/PirataOne-regular.ttf);
-}
+
+
 .trespasser {
-  font-family: "LibreBaskerville", serif;
+  font-family: "Lusitana", serif;
   background-color: #444444;
 }
 .trespasser .section {
@@ -125,8 +120,8 @@
 .expand{
   display: none;
 }
-.action{
-  width: 31.5%;
+.deed{
+  width: 44.5%;
   margin:5px;
   border-bottom-style: groove;
   border-right-style: groove;
@@ -150,7 +145,11 @@
   		width: 100%;
 }
 .trespasser .box {
-
+  padding: 2px;
+}
+.boxed{
+  border-width: thin;
+  border-style: dashed;
   padding: 2px;
 }
 .trespasser input, .trespasser .fakeinput, .trespasser .button{
@@ -176,9 +175,8 @@
   border-style: outset;
   border-width: 1px;
 }
-.trespasser h1,
-.trespasser h2 {
-  font-family: "CantaraGotica", sans-serif;
+.trespasser h2, .trespasser .tabs {
+  font-family: "Boucherie", sans-serif;
   border-bottom: none;
   margin: 0 0 0.25rem;
   padding: 0;
@@ -199,13 +197,12 @@
 .trespasser h3,
 .trespasser h4,
 .trespasser h5,
-.trespasser h6 {
-  font-family: "VollkornSC", serif;
+.trespasser h6,.trespasser p b  {
+  font-family: "Gotham", sans-serif;
   border-bottom: none;
   margin: auto;
   padding: 0;
   position: relative;
-  font-weight: 800;
   text-transform: uppercase;
 }
 .flex-container{
@@ -236,7 +233,7 @@
   text-transform: initial;
 }
 .trespasser .window-header .window-title {
-  font-family: "LibreBaskerville", serif;
+  font-family: "Lusitana", serif;
 }
 p.small{
   font-size: 0.8em;

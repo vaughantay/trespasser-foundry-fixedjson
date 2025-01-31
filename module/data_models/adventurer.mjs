@@ -16,28 +16,28 @@ export class AdventurerData extends CharacterBaseData {
 					initial: 1,
 					integer: true,
 					min: 0,
-					max: 10
+					max: 5
 				}),
 				agility: new fields.NumberField({
 					required: true,
 					initial: 1,
 					integer: true,
 					min: 0,
-					max: 10
+					max: 5
 				}),
 				intellect: new fields.NumberField({
 					required: true,
 					initial: 1,
 					integer: true,
 					min: 0,
-					max: 10
+					max: 5
 				}),
 				spirit: new fields.NumberField({
 					required: true,
 					initial: 1,
 					integer: true,
 					min: 0,
-					max: 10
+					max: 5
 				})
 			}),
 			text_details: new fields.SchemaField({
@@ -62,45 +62,61 @@ export class AdventurerData extends CharacterBaseData {
 					initial: '',
 					blank: true
 				}),
-				strengths: new fields.StringField({
-					required: true,
-					initial: '',
-					blank: true
-				}),
-				flaws: new fields.StringField({
-					required: true,
-					initial: '',
-					blank: true
-				}),
 				words: new fields.StringField({
 					required: true,
 					initial: '',
 					blank: true
 				}),
 			}),
-			magic: new fields.BooleanField({
-				required: true,
-				initial: false
-			}),
-			nature: new fields.BooleanField({
-				required: true,
-				initial: false
-			}),
-			perception: new fields.BooleanField({
-				required: true,
-				initial: false
-			}),
-			speech: new fields.BooleanField({
-				required: true,
-				initial: false
-			}),
-			stealth: new fields.BooleanField({
-				required: true,
-				initial: false
-			}),
-			tinkering: new fields.BooleanField({
-				required: true,
-				initial: false
+			skills: new fields.SchemaField({
+				acrobatics: new fields.BooleanField({
+					required: true,
+					initial: false
+				}),
+				alchemy: new fields.BooleanField({
+					required: true,
+					initial: false
+				}),
+				athletics: new fields.BooleanField({
+					required: true,
+					initial: false
+				}),
+				crafting: new fields.BooleanField({
+					required: true,
+					initial: false
+				}),
+				folklore: new fields.BooleanField({
+					required: true,
+					initial: false
+				}),
+				letters: new fields.BooleanField({
+					required: true,
+					initial: false
+				}),
+				magic: new fields.BooleanField({
+					required: true,
+					initial: false
+				}),
+				nature: new fields.BooleanField({
+					required: true,
+					initial: false
+				}),
+				perception: new fields.BooleanField({
+					required: true,
+					initial: false
+				}),
+				speech: new fields.BooleanField({
+					required: true,
+					initial: false
+				}),
+				stealth: new fields.BooleanField({
+					required: true,
+					initial: false
+				}),
+				tinkering: new fields.BooleanField({
+					required: true,
+					initial: false
+				})
 			}),
 			//Dont have a better place for this unfortunately.
 			effort: new fields.NumberField({
@@ -156,6 +172,11 @@ export class AdventurerData extends CharacterBaseData {
 					min: 0
 				})
 			}),
+			xp: new fields.NumberField({
+				required: true,
+				initial: 0,
+				min: 0
+			}),
 			range: new fields.SchemaField({
 				melee: new fields.NumberField({
 					required: true,
@@ -182,50 +203,33 @@ export class AdventurerData extends CharacterBaseData {
 				required: true,
 				initial: 0,
 				min: 0
+			}),
+			level: new fields.NumberField({
+				required: true,
+				initial: 1,
+				min: 0
 			})
 		}
-	}
-	//Returns level based on xp
-	get level() {
-		let level = 0;
-
-		if (this.xp >= 30000) {
-			level = 9;
-		} else if (this.xp >= 24000) {
-			level = 8;
-		} else if (this.xp >= 18000) {
-			level = 7;
-		} else if (this.xp >= 14000) {
-			level = 6;
-		} else if (this.xp >= 10000) {
-			level = 5;
-		} else if (this.xp >= 7000) {
-			level = 4;
-		} else if (this.xp >= 4000) {
-			level = 3;
-		} else if (this.xp >= 2000) {
-			level = 2;
-		} else if (this.xp >= 100) {
-			level = 1;
-		}
-
-		return level;
 	}
 
 	get skill_bonus() {
 		const level = this.level;
 
-		if (level <= 3) {
+		if (level <= 2) {
+			return 1;
+		} else if (level <= 4) {
 			return 2;
 		} else if (level <= 6) {
 			return 3;
-		} else {
+		} else if (level <= 8) {
 			return 4;
+		} else {
+			return 5;
 		}
 	}
 
 	get is_peasant() {
-		return (level == 0) ? true : false;
+		return (level == 1) ? true : false;
 	}
 
 	get initiative() {
@@ -293,12 +297,16 @@ export class AdventurerData extends CharacterBaseData {
 		return potency;
 	}
 
-	//4 + level / 2. It seems to round down, can work with this for now.
-	//Effort changes all combat, so we have a field for current effort. Base effort is just a display field basically
+	get totalspeed(){
+		return 5 + this.attributes.agility + this.combat.speed;
+	}
+
 	get base_effort() {
-		return 4 + Math.floor(this.level / 2);
+		return this.attributes.intellect;
 	}
+
 	get inventory_max() {
-		return this.attributes.might;
+		return (this.attributes.might * 2);
 	}
+
 }

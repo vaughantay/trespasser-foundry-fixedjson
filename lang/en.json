@@ -14,7 +14,7 @@
 			"crafting":"Crafting",
 			"folklore":"Folklore",
 			"letters":"Letters",
-			"mystery":"Mystery",
+			"magic":"Magic",
 			"nature":"Nature",
 			"perception":"Perception",
 			"speech":"Speech",
@@ -38,12 +38,12 @@
 			"totalhp":"Total HP",
 			"recovery":"Recovery Dice",
 			"endurance":"Endurance",
-			"effort":"Focus",
+			"focus":"Focus",
 			"skillbonus":"Skill",
 			"potency":"Skill Die",
 			"initiative":"Initiative",
 			"speed":"Speed",
-			"armorclass":"Guard",
+			"guard":"Guard",
 			"reactions":"Reactions",
 			"accuracy":"Accuracy",
 			"resist":"Resist",
@@ -62,7 +62,8 @@
 			"deeddesc":"Apply the deed spark (once only)",
 			"impactdesc":"Increase the distance of a forced movement by +2",
 			"potencydesc":"Increase intensity of a state or created effect by +1",
-			"powerdesc":"Add skill die damage or increase recovery by +1"
+			"powerdesc":"Add skill die damage or increase recovery by +1",
+			"vs":"vs."
 		},
 
 		"DetailsLabels":{
@@ -97,10 +98,9 @@
 		"MenuLabels":{
 			"combatpage":"Combat",
 			"skillspage":"Character",
-			"actionpage":"Actions",
 			"featurepage":"Features",
 			"equippage":"Equipment",
-			"actions":"Actions",
+			"deeds":"Deeds",
 			"general":"Features & Talents",
 			"spells":"Spells",
 			"delete":"Delete",
@@ -112,6 +112,7 @@
 		"EquipLabels":{
 			"weapon":"Weapon",
 			"weapons":"Weapons",
+			"weapondie":"Weapon Die",
 			"armor":"Armour",
 			"head":"Head",
 			"body":"Body",
@@ -120,11 +121,12 @@
 			"outer":"Outer",
 			"shield":"Shield",
 			"damage":"DMG",
-			"keywordsandrange":"Keywords & Range",
+			"keywordsandrange":"Range",
 			"weaponeffect":"Weapon Effect",
 			"weight":"WGT",
-			"armorclass":"AC",
-			"die":"Die"
+			"guard":"AC",
+			"die":"Die",
+			"type":"Type/Range"
     },
 
 		"ItemLabels": {
@@ -133,27 +135,33 @@
 			"item-type": "Item Type",
 			"target": "Target",
 			"hit": "Hit",
-			"solid_hit": "Solid Hit",
+			"base":"Base",
+			"spark":"Spark",
+			"start":"Start",
+			"after":"After",
 			"support": "Support",
 			"attack":"Attack",
 			"armor-location": "Armor Location",
 			"weight": "Weight",
 			"weapon-effect": "Weapon Effect",
-			"damage-dice": "Damage",
+			"damage": "Damage",
 			"keywords": "Keywords",
 			"armor-die": "Armor Die",
 			"twohanded": "Two Handed",
-			"hit-weapon": "Hit Weapon Dice",
-			"hit-potency":"Hit Potency Dice",
-			"solid-hit-weapon": "Solid Hit Weapon Dice",
-			"solid-hit-potency":"Solid Hit Potency Dice",
-			"has-action":"Has Action",
-			"base-effort":"Base Effort",
+			"thrown":"Thrown",
+			"has-ability":"Has Ability",
+			"base-focus":"Base focus",
 			"use":"Use",
 			"quantity":"Quantity",
 			"bonus": "Uses Bonus",
-			"effort-cost": "Effort Cost",
-			"effort-buildup": "Effort Buildup"
+			"focus-cost": "Focus Cost",
+			"focus-buildup": "Focus Buildup",
+			"basedamage": "Base Damage",
+			"hitdamage" : "Damage on hit",
+			"sparkdamage" : "Damage on spark",
+			"advanced":"Advanced",
+			"deal":"Deal",
+			"type":"Type"
 		},
 
 		"ItemTypes": {
@@ -163,10 +171,33 @@
 			"talent": "Talent"
 		},
 
-		"ActionTypes": {
-			"basic": "Basic",
+		"DeedTiers": {
+			"light": "Light",
+			"heavy":"Heavy",
 			"special": "Special",
 			"mighty": "Mighty"
+		},
+		"DeedTypes": {
+			"innate": "Innate",
+			"spell":"Spell",
+			"missile": "Missile",
+			"item": "Item",
+			"melee":"Melee",
+			"unarmed": "Unarmed",
+			"versatile": "Versatile"
+		},
+		"TargetTypes": {
+			"creature": "Creature",
+			"spread":"Spread",
+			"special": "Special",
+			"blast": "Blast",
+			"path":"Path",
+			"personal": "Personal"
+		},
+
+		"TargetSpecs" : {
+			"melee": "Melee",
+			"close": "Close"
 		},
 
 		"ArmorSlots": {
@@ -177,7 +208,12 @@
 			"outer": "Outer",
 			"shield": "Shield"
 		},
-
+		"WeaponTypes":{
+			"melee":"Melee",
+			"missile":"Missile",
+			"spell":"Spell",
+			"unarmed":"Unarmed"
+		},
 		"Weights": {
 			"l": "Light",
 			"m": "Medium",

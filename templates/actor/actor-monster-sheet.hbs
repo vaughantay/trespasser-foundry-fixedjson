@@ -45,8 +45,8 @@
 			</div>
 			<div class="flexrow section">
 				<div class="flex-container">
-          {{#each context.actions as |action id|}}
-          {{> "systems/trespasser/templates/actor/adventurer/items/list-action.hbs" action=action id=id}}
+          {{#each context.deeds as |deed id|}}
+          {{> "systems/trespasser/templates/actor/adventurer/items/list-deed.hbs" deed=deed id=id}}
           {{/each}}
         </div>
 			</div>

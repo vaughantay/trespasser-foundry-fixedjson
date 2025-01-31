@@ -1,29 +1,28 @@
 <form class="trespasser adventurer" autocomplete="off">
 	<div class="flexrow spaced section">
 		<img class="profile-img flex1" src="{{actor.img}}" data-edit="img" title="{{actor.name}}" height="100" width="100"/>
-		<div class="topbar flex6">
-			<div class="flexrow">
-				<h1>Trespasser</h1>
+		<div class="topbar flex6" >
+			<div class="flexrow title">
+				<h1 >Trespasser</h1>
 			</div>
 			<div class="flexrow">
 				<h4 class="flex3">{{localize 'TRESPASSER.DetailsLabels.name'}}</h4>
 				<h4 class="flex2">{{localize 'TRESPASSER.DetailsLabels.lineage'}}</h4>
 			</div>
 			<div class="flexrow">
-				<input class="flex3" name="system.name" type="text" value="{{actor.name}}" placeholder="Name"/>
+				<input class="flex3" name="name" type="text" value="{{actor.name}}" placeholder="Name"/>
 				<input class="flex2" name="system.text_details.lineage" type="text" value="{{system.text_details.lineage}}" placeholder="Lineage" data-dtype="text"/>
 			</div>
 			<div class="flexrow">
 				<h4 class="flex5">{{localize 'TRESPASSER.DetailsLabels.words'}}</h4>
+				<h5 class="flex2">{{localize 'TRESPASSER.CombatLabels.focus'}}</h5>
 				<h5 class="flex2">{{localize 'TRESPASSER.CombatLabels.hitpoints'}}</h5>
-				<h5 class="flex2">{{localize 'TRESPASSER.CombatLabels.effort'}}</h5>
 			</div>
 			<div class="flexrow">
 				<input class="flex5" name="system.text_details.words" type="text" value="{{system.text_details.words}}" placeholder="Words To Live By" data-dtype="text"/>
+				<input class="flex2" name="system.effort" type="text" value="{{system.effort}}" data-dtype="Number"/>
 				<p class="flex1 fakeinput">{{system.combat.hit_points.value}}</p>
 				<p class="flex1 fakeinput">{{system.combat.hit_points.max}}</p>
-				<input class="flex1" name="system.effort" type="text" value="{{system.effort}}" data-dtype="Number"/>
-				<p class="flex1 fakeinput">{{system.base_effort}}</p>
 			</div>
 		</div>
 	</div>

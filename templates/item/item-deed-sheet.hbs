@@ -1,0 +1,70 @@
+<form class="{{cssClass}}" autocomplete="off">
+  <div class="flexcol spaced">
+    <div id="header" class="flexrow spaced">
+      <div class="flexrow spaced">
+        <div class="flexcol spaced">
+          <input id="name" type="text" name="name" value="{{item.name}}" placeholder="{{localize "trespasser.name"}}" />
+					<div class="right flexrow">
+						{{> 'systems/trespasser/templates/fields/select-field.hbs' label='' field='system.tier' options=DeedTiers selected=document.system.tier includeEmpty=false localizeOptions=true}}
+					</div>
+          <div class="flexrow spaced">
+            <span class='flex2 flexrow boxed'>{{> 'systems/trespasser/templates/fields/select-field.hbs' class='flex3' label='' field='system.type' options=DeedTypes selected=document.system.type includeEmpty=false localizeOptions=true}}</span>
+            <span class='flex2 flexrow boxed'>{{#if document.system.isattack}}
+            <h5 class="flex2">{{localize "TRESPASSER.ItemLabels.attack"}}</h5>
+            {{else}}
+            <h5 class="flex2">{{localize "TRESPASSER.ItemLabels.support"}}</h5>
+            {{/if}}
+            {{> 'systems/trespasser/templates/fields/bool-field.hbs' label='' class='flex1' field='system.isattack' isChecked=document.system.isattack}}
+            </span>
+            <span class='flex2 flexrow boxed'>
+            {{#if document.system.isattack}}
+            <h5 class="flex3">vs.
+              {{#if document.system.targetguard}}{{localize 'TRESPASSER.CombatLabels.guard'}}
+              {{else}}{{localize 'TRESPASSER.CombatLabels.resist'}}{{/if}}</h5>
+              {{> 'systems/trespasser/templates/fields/bool-field.hbs' label='' class='flex1' field='system.targetguard' isChecked=document.system.targetguard}}
+            {{else}}
+              <h5 class="flex3">vs. 10</h5>
+            {{/if}}
+          </span>
+          </div>
+          <div class="flexrow spaced">
+              {{> 'systems/trespasser/templates/fields/select-field.hbs' label='' field='system.targetspec' options=TargetSpecs selected=document.system.targetspec includeEmpty=true localizeOptions=true}}
+            	{{> 'systems/trespasser/templates/fields/select-field.hbs' label='' field='system.target' options=TargetTypes selected=document.system.target includeEmpty=false localizeOptions=true}}
+              {{> 'systems/trespasser/templates/fields/number-field.hbs' label='' field="system.targetnum" value=document.system.targetnum min=0 max=1000}}
+          </div>
+          <div class="flexrow">
+            <hr>
+          </div>
+          <h4>Results</h4>
+          {{#if document.system.isattack}}
+          <div class="flexrow">
+            <h4><u>
+              {{#if document.system.damagetype}}<i class="fa-solid fa-sword"></i> {{localize 'TRESPASSER.EquipLabels.weapondie'}}
+              {{else}}<i class="fa-solid fa-dice-six"></i> {{localize 'TRESPASSER.CombatLabels.potency'}}{{/if}} </u> {{localize 'TRESPASSER.ItemLabels.damage'}}</h4>
+              {{> 'systems/trespasser/templates/fields/bool-field.hbs' label='' class='flex1' field='system.damagetype' isChecked=document.system.damagetype}}
+          </div>
+          <div class="flexrow spaced">
+            <span class="flex2 boxed">
+            {{> 'systems/trespasser/templates/fields/number-field.hbs' label='TRESPASSER.ItemLabels.basedamage' field="system.base.damage" value=document.system.base.damage min=0 max=1000}}</span>
+            <span class="flex2 boxed">
+            {{> 'systems/trespasser/templates/fields/number-field.hbs' label='TRESPASSER.ItemLabels.hitdamage' field="system.hit.damage" value=document.system.hit.damage min=0 max=1000}}</span>
+            <span class="flex2 boxed">
+            {{> 'systems/trespasser/templates/fields/number-field.hbs' label='TRESPASSER.ItemLabels.sparkdamage' field="system.spark.damage" value=document.system.spark.damage min=0 max=1000}}</span>
+          </div>
+          {{/if}}
+          {{> 'systems/trespasser/templates/fields/text-field.hbs' label='TRESPASSER.ItemLabels.base' field='system.base.text' value=document.system.base.text}}
+          {{> 'systems/trespasser/templates/fields/text-field.hbs' label='TRESPASSER.ItemLabels.hit' field='system.hit.text' value=document.system.hit.text}}
+          {{> 'systems/trespasser/templates/fields/text-field.hbs' label='TRESPASSER.ItemLabels.spark' field='system.spark.text' value=document.system.spark.text}}
+          <div class="flexrow">
+            <hr>
+          </div>
+          <div class="flexrow">
+            <h5>{{localize 'TRESPASSER.ItemLabels.advanced'}}</h5>
+          </div>
+          {{> 'systems/trespasser/templates/fields/text-field.hbs' label='TRESPASSER.ItemLabels.start' field='system.start' value=document.system.start}}
+          {{> 'systems/trespasser/templates/fields/text-field.hbs' label='TRESPASSER.ItemLabels.after' field='system.after' value=document.system.after}}
+        </div>
+      </div>
+    </div>
+  </div>
+</form>

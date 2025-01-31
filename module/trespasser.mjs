@@ -5,7 +5,7 @@ import { TrespasserItem } from './item/item.mjs';
 import { TrespasserItemSheet } from './sheets/item-sheet.mjs';
 import { SpellData } from './data_models/items/spell.mjs';
 import { ArmorData } from './data_models/items/armor.mjs';
-import { ActionData } from './data_models/items/action.mjs';
+import { DeedData } from './data_models/items/deed.mjs';
 import { WeaponData } from './data_models/items/weapon.mjs';
 import { FeatureData } from './data_models/items/feature.mjs';
 import { TalentData } from './data_models/items/talent.mjs';
@@ -33,7 +33,7 @@ Hooks.once('init', function () {
 	CONFIG.Item.dataModels.feature = FeatureData;
 	CONFIG.Item.dataModels.talent = TalentData;
 	CONFIG.Item.dataModels.object = InventoryItemData;
-	CONFIG.Item.dataModels.action = ActionData;
+	CONFIG.Item.dataModels.deed = DeedData;
 	CONFIG.Item.dataModels.weapon = WeaponData;
 
 	CONFIG.Dice.rolls.push(TrespasserRoll);
@@ -54,6 +54,11 @@ Hooks.once('init', function () {
 	Items.registerSheet('trespasser', TrespasserItemSheet, {
 		makeDefault: true,
 		label: 'TRESPASSER.SheetLabels.Item',
+	});
+	Handlebars.registerHelper('hasDeedContent', function(value){
+		if (value.damage == 0 & value.text == '') {
+			return false;
+		} else return true;
 	});
 
 	loadHandlebarsPartials();

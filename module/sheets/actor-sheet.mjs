@@ -30,8 +30,8 @@ export class TrespasserActorSheet extends ActorSheet {
 
 		const context = {};
 
-		//Actions and features are shared between monster and adventurer. So we will leave them out of the if statement.
-		const actions = [];
+		//deeds and features are shared between monster and adventurer. So we will leave them out of the if statement.
+
 		const features = [];
 
 		if(this.actor.type === 'adventurer') {
@@ -45,7 +45,10 @@ export class TrespasserActorSheet extends ActorSheet {
 			const otherAbilities = [];
 			const talents = [];
 			const spells = [];
-
+			const lightdeeds = [];
+			const heavydeeds = [];
+			const mightydeeds = [];
+			const specialdeeds = [];
 			let items = Object.values(Object.values(this.actor.items)[4]);
 			items.forEach((item, i) => {
 				if (item.type == 'armor') {
@@ -88,8 +91,18 @@ export class TrespasserActorSheet extends ActorSheet {
 					inventory.push(item);
 				}
 
-				else if (item.type == 'action') {
-					actions.push(item);
+				else if (item.type == 'deed') {
+					const tier = item.system.tier;
+					if (tier == 'light') {
+						lightdeeds.push(item);
+					}else if (tier == 'heavy') {
+						heavydeeds.push(item);
+					}else if (tier == 'mighty') {
+						mightydeeds.push(item);
+					}else {
+						specialdeeds.push(item);
+					}
+
 				}
 
 				else if(item.type == 'spell') {
@@ -98,29 +111,73 @@ export class TrespasserActorSheet extends ActorSheet {
 			});
 
 
+			//range calculation and two handed handling
+			let mel = 1;
+			let mis = 0;
+			let spe = this.actor.system.attributes.intellect +1;
+			if (equippedWeapons.left && equippedWeapons.right) {
+				if (equippedWeapons.left.system.twohanded) {
+					equippedWeapons.right = null;
+				} else if (equippedWeapons.right.system.twohanded) {
+					equippedWeapons.left = null;
+				}
+				spe = 0;
+			} else {
+				mel = 1;
+			}
+			if (equippedWeapons.left) {
+				if (equippedWeapons.left.system.range.melee > mel) {
+					mel = equippedWeapons.left.system.range.melee;
+				}
+				if (equippedWeapons.left.system.range.missile > mis) {
+					mis = equippedWeapons.left.system.range.missile;
+				}
+				if (equippedWeapons.left.system.range.spell > spe) {
+					spe = equippedWeapons.left.system.range.spell;
+				}
+			}
+			if (equippedWeapons.right) {
+				if (equippedWeapons.right.system.range.melee > mel) {
+					mel = equippedWeapons.right.system.range.melee;
+				}
+				if (equippedWeapons.right.system.range.missile > mis) {
+					mis = equippedWeapons.right.system.range.missile;
+				}
+				if (equippedWeapons.right.system.range.spell > spe) {
+					spe = equippedWeapons.right.system.range.spell;
+				}
+			}
+
+
+			context.melee = mel;
+			context.missile = mis;
+			context.spell=spe;
 			context.HP = calculatedHP;
 			context.AC = calculatedAC;
 			context.equippedWeapons = equippedWeapons;
 			context.equippedArmor = equippedArmor;
-
+			context.lightdeeds = lightdeeds;
+			context.heavydeeds = heavydeeds;
+			context.mightydeeds = mightydeeds;
+			context.specialdeeds = specialdeeds;
 			context.talents = talents;
-			context.actions = actions;
 			context.spells = spells;
 			context.inventory = inventory;
 		} else if (this.actor.type = 'monster') {
-
+			const deeds=[];
 			let items = Object.values(Object.values(this.actor.items)[4]);
 			items.forEach((item, i) => {
 				if(item.type == 'feature') {
 					features.push(item);
 				}
-				else if (item.type == 'action') {
-					actions.push(item);
+				else if (item.type == 'deed') {
+					deeds['light'].push(item);
 				}
 			});
+			context.deeds = deeds;
 		}
 		context.features = features;
-		context.actions = actions;
+
 
 		return {
 			'context': context,
@@ -130,6 +187,8 @@ export class TrespasserActorSheet extends ActorSheet {
 		};
 
   }
+
+
 
   activateListeners(html) {
     super.activateListeners(html);
@@ -210,9 +269,7 @@ export class TrespasserActorSheet extends ActorSheet {
       });
     }
 
-		html.on('click', '.action-roll', this._createActionRoll.bind(this));
-		html.on('click', '.action-hit', this._createActionHit.bind(this));
-		html.on('click', '.action-solid', this._createActionSolid.bind(this));
+		html.on('click', '.deed-roll', this._createdeedRoll.bind(this));
 		html.on('click', '.expand-header', (ev) => {
 			let li = $(ev.currentTarget.parentNode).find('.expand');
 			if (li.is(':hidden')) {
@@ -227,13 +284,7 @@ export class TrespasserActorSheet extends ActorSheet {
 		});
 
 		html.on('click', '.recollect', (ev) => {
-			let items = Object.values(Object.values(this.actor.items)[4]);
-			items.forEach((item, i) => {
-				let armor = this.actor.items.get(item._id);
-				if(armor.type == 'armor') {
-					armor.update({ "system.die_used": false});
-				}
-			});
+
 		});
 
 		html.on('click', '.keyattribute', (ev) => {
@@ -250,28 +301,7 @@ export class TrespasserActorSheet extends ActorSheet {
    		label: "Rest",
    callback: () =>
 		{
-			let items = Object.values(Object.values(this.actor.items)[4]);
-			let effort = this.actor.system.base_effort;
-			let recovery = this.actor.system.recovery.max;
-			let current = this.actor.system.recovery.current;
-			let hp = this.actor.system.combat.hit_points.max;
-			this.actor.update({"system.combat.hit_points.value": hp});
-			this.actor.update({"system.recovery.current": recovery});
-			this.actor.update({"system.effort": effort});
-			items.forEach((item, i) => {
-			let action = this.actor.items.get(item._id);
-			 if(action.type == 'action') {
-				 if (action.system.tier === 'basic') {
-					 action.update({"system.currentEffortCost": 0});
-				 }
-				 else if (action.system.tier === 'special') {
-					 action.update({"system.currentEffortCost": 1});
-				 } else if (action.system.tier === 'mighty') {
-					 action.update({"system.currentEffortCost": 2});
-				 }
-				 action.update({"system.increaseCount": 0});
-			 }
-			});
+
 		}
   },
   	two: {
@@ -378,25 +408,25 @@ export class TrespasserActorSheet extends ActorSheet {
 		};
 	}
 
-	async _createActionRoll(event) {
-		const li = $(event.currentTarget).parents('.action');
-		const action = this.actor.items.get(li.data('itemId'));
-		const ability_bonus = this.actor.system.ability_mods[action.system.skill];
-		console.log(action.system.currentEffortCost);
+	async _createdeedRoll(event) {
+		const li = $(event.currentTarget).parents('.deed');
+		const deed = this.actor.items.get(li.data('itemId'));
+		const ability_bonus = this.actor.system.ability_mods[deed.system.skill];
+		console.log(deed.system.currentEffortCost);
 
 		//This is where we can increase the roll information too.
 		//this is just disgusting, ew
-		if(action.system.tier != 'basic') {
-			const increase = action.system.tier === 'special' ? 1 : 2;
-			if(action.currentEffortCost == 0) {
-				action.update({"system.currentEffortCost": increase});
+		if(deed.system.tier != 'basic') {
+			const increase = deed.system.tier === 'special' ? 1 : 2;
+			if(deed.currentEffortCost == 0) {
+				deed.update({"system.currentEffortCost": increase});
 				increase += increase;
 			}
-			if((this.actor.system.effort - action.system.currentEffortCost) >= 0) {
-				this.actor.update({"system.effort": this.actor.system.effort - action.system.currentEffortCost});
-				if(action.system.increaseCount != 3) {
-					action.update({"system.currentEffortCost": action.system.currentEffortCost + increase});
-					action.update({"system.increaseCount": action.system.increaseCount + 1});
+			if((this.actor.system.effort - deed.system.currentEffortCost) >= 0) {
+				this.actor.update({"system.effort": this.actor.system.effort - deed.system.currentEffortCost});
+				if(deed.system.increaseCount != 3) {
+					deed.update({"system.currentEffortCost": deed.system.currentEffortCost + increase});
+					deed.update({"system.increaseCount": deed.system.increaseCount + 1});
 				}
 			} else {
 				return ui.notifications.warn("You do not have enough effort.");
@@ -424,7 +454,7 @@ export class TrespasserActorSheet extends ActorSheet {
 			);
 		}
 
-		let sFlavor = action.name;
+		let sFlavor = deed.name;
 		const roll = new Roll(
 			"d20 + @abilityBonus + @skilledBonus",
 			{
@@ -440,86 +470,5 @@ export class TrespasserActorSheet extends ActorSheet {
 		});
 	}
 
-	async _createActionHit(event) {
-		const li = $(event.currentTarget).parents('.action');
-		const action = this.actor.items.get(li.data('itemId'));
-		if (action.system.hit_weapon || action.system.hit_potency  || action.system.uses_bonus) {
-			const items = this.actor.items;
-			let weapon_dice = 4;
-			let weapon_effect = "";
-			items.forEach((item, i) => {
-					if (item.type == 'weapon') {
-						const weapon = item.system;
-						if (weapon.equipped_left || weapon.equipped_right) {
-							if (weapon.damage > weapon_dice) {weapon_dice = weapon.damage;}
-								weapon_effect = `${weapon_effect} | ${weapon.details}`;
-						}
-				}
-			});
-			let bonus = 0;
-			if (action.system.uses_bonus) {
-				bonus = this.actor.system.ability_mods[action.system.skill];
-			}
-			const rollEval = `${action.system.hit_weapon}d${weapon_dice} + ${action.system.hit_potency}d${this.actor.system.potency_dice} + ${bonus}`;
-
-
-
-			const roll = new Roll(
-				rollEval,
-				{
-					weapon_amount: action.hit_weapon,
-					weapon_dice: weapon_dice,
-					potency_amount: action.hit_potency,
-					potency_dice: this.actor.system.potency_dice,
-				});
-				let sFlavor = `${action.name} | Hit`
-				roll.toMessage({
-					flavor:sFlavor,
-					speaker: ChatMessage.getSpeaker({ actor: this.actor }),
-					rollMode: game.settings.get('core', 'rollMode'),
-				});
-		}
-	}
-
-	async _createActionSolid(event) {
-		const li = $(event.currentTarget).parents('.,action');
-		const action = this.actor.items.get(li.data('itemId'));
-		if (action.system.solid_hit_weapon || action.system.solid_hit_potency || action.system.hit_weapon || action.system.hit_potency || action.system.uses_bonus) {
-			const items = this.actor.items;
-			let weapon_dice = 4;
-			let weapon_effect = "";
-			items.forEach((item, i) => {
-					if (item.type == 'weapon') {
-						const weapon = item.system;
-						if (weapon.equipped_left || weapon.equipped_right) {
-							if (weapon.damage > weapon_dice) {weapon_dice = weapon.damage;}
-								weapon_effect = `${weapon_effect} | ${weapon.details}`;
-						}
-				}
-			});
-			const weaponAmount = action.system.hit_weapon + action.system.solid_hit_weapon;
-			const potencyAmount = action.system.hit_potency + action.system.solid_hit_potency;
-			let bonus = 0;
-			if (action.system.uses_bonus) {
-				bonus = this.actor.system.ability_mods[action.system.skill];
-			}
-			const chat = action.system.hit + "<br>" + action.system.solid_hit;
-
-			const rollEval = `${weaponAmount}d${weapon_dice} + ${potencyAmount}d${this.actor.system.potency_dice} + ${bonus}`
-			const roll = new Roll(
-				rollEval,
-				{
-					weapon_amount: action.hit_weapon,
-					weapon_dice: weapon_dice,
-					potency_amount: action.hit_potency,
-					potency_dice: this.actor.system.potency_dice,
-				});
-				let sFlavor = `${action.name} | Solid Hit`
-				roll.toMessage({
-					flavor:sFlavor,
-					speaker: ChatMessage.getSpeaker({ actor: this.actor }),
-					rollMode: game.settings.get('core', 'rollMode')
-				});
-		}
-  }
+//end
 }
