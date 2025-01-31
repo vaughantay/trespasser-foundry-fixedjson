@@ -121,7 +121,7 @@
 			"outer":"Outer",
 			"shield":"Shield",
 			"damage":"DMG",
-			"keywordsandrange":"Keywords & Range",
+			"keywordsandrange":"Range",
 			"weaponeffect":"Weapon Effect",
 			"weight":"WGT",
 			"guard":"AC",
@@ -148,6 +148,7 @@
 			"keywords": "Keywords",
 			"armor-die": "Armor Die",
 			"twohanded": "Two Handed",
+			"thrown":"Thrown",
 			"has-ability":"Has Ability",
 			"base-focus":"Base focus",
 			"use":"Use",
@@ -159,7 +160,8 @@
 			"hitdamage" : "Damage on hit",
 			"sparkdamage" : "Damage on spark",
 			"advanced":"Advanced",
-			"deal":"Deal"
+			"deal":"Deal",
+			"type":"Type"
 		},
 
 		"ItemTypes": {
@@ -206,7 +208,12 @@
 			"outer": "Outer",
 			"shield": "Shield"
 		},
-
+		"WeaponTypes":{
+			"melee":"Melee",
+			"missile":"Missile",
+			"spell":"Spell",
+			"unarmed":"Unarmed"
+		},
 		"Weights": {
 			"l": "Light",
 			"m": "Medium",

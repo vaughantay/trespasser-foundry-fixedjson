@@ -22,9 +22,9 @@ TRESPASSER.TargetSpecs = {
 };
 TRESPASSER.WeaponTypes = {
 	"melee": "TRESPASSER.WeaponTypes.melee",
-	"missile": "TRESPASSER.WeaponTypes.close",
+	"missile": "TRESPASSER.WeaponTypes.missile",
 	"spell": "TRESPASSER.WeaponTypes.spell",
-	"missile": "TRESPASSER.WeaponTypes.close"
+	"unarmed": "TRESPASSER.WeaponTypes.unarmed"
 };
 TRESPASSER.DeedTypes = {
 	"innate": "TRESPASSER.DeedTypes.innate",

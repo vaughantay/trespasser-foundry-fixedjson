@@ -3,6 +3,7 @@
     <div class="flexrow">
       <h2>{{localize 'TRESPASSER.EquipLabels.weapons'}}</h2>
     </div>
+    {{#if context.equippedWeapons.left}}
     <div class="flexrow">
       <h5 class="flex3">{{localize 'TRESPASSER.EquipLabels.weapon'}}</h5>
       <h5 class="flex1">{{localize 'TRESPASSER.EquipLabels.damage'}}</h5>
@@ -15,10 +16,24 @@
     <div class="flexrow weaponL" data-item-id='{{context.equippedWeapons.left._id}}'>
       <p class="fakeinput flex3">{{context.equippedWeapons.left.name}}</p>
       <p class="fakeinput flex1">d{{context.equippedWeapons.left.system.damage}}</p>
-      <p class="fakeinput flex3">{{context.equippedWeapons.left.system.keywords}}</p>
+      <p class="fakeinput flex3">
+        {{#if context.equippedWeapons.left.system.range.melee}}
+        {{localize 'TRESPASSER.WeaponTypes.melee'}}
+        <b>{{context.equippedWeapons.left.system.range.melee}}</b>
+        {{/if}}
+        {{#if context.equippedWeapons.left.system.range.missile}}
+        {{localize 'TRESPASSER.WeaponTypes.missile'}}
+        {{context.equippedWeapons.left.system.range.missile}}
+        {{/if}}
+        {{#if context.equippedWeapons.left.system.range.spell}}
+        {{localize 'TRESPASSER.WeaponTypes.spell'}}
+        {{context.equippedWeapons.left.system.range.spell}}
+        {{/if}}</p>
       <span class="fakeinput flex3">{{{context.equippedWeapons.left.system.details}}}</span>
 
     </div>
+    {{/if}}
+    {{#if context.equippedWeapons.right}}
     <div class="flexrow">
       <h5 class="flex3">{{localize 'TRESPASSER.EquipLabels.weapon'}}</h5>
       <h5 class="flex1">{{localize 'TRESPASSER.EquipLabels.damage'}}</h5>
@@ -31,9 +46,22 @@
     <div class="flexrow weaponR" data-item-id='{{context.equippedWeapons.right._id}}'>
       <p class="fakeinput flex3">{{context.equippedWeapons.right.name}}</p>
       <p class="fakeinput flex1">d{{context.equippedWeapons.right.system.damage}}</p>
-      <p class="fakeinput flex3">{{context.equippedWeapons.right.system.keywords}}</p>
+      <p class="fakeinput flex3">
+        {{#if context.equippedWeapons.right.system.range.melee}}
+        {{localize 'TRESPASSER.WeaponTypes.melee'}}
+        <b>{{context.equippedWeapons.right.system.range.melee}}</b>
+        {{/if}}
+        {{#if context.equippedWeapons.right.system.range.missile}}
+        {{localize 'TRESPASSER.WeaponTypes.missile'}}
+        <b>{{context.equippedWeapons.right.system.range.missile}}</b>
+        {{/if}}
+        {{#if context.equippedWeapons.right.system.range.spell}}
+        {{localize 'TRESPASSER.WeaponTypes.spell'}}
+        <b>{{context.equippedWeapons.right.system.range.spell}}</b>
+        {{/if}}</p>
       <span class="fakeinput flex3">{{{context.equippedWeapons.right.system.details}}}</span>
     </div>
+    {{/if}}
   </div>
 </div>
 <div class="flexrow spaced">

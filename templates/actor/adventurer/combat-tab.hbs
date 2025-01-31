@@ -38,7 +38,7 @@
         <hr/>
         <div class="flexrow">
           <span class="flex1"><h4>{{localize 'TRESPASSER.CombatLabels.speed'}}</h4>
-            <input name="system.combat.speed" type="text" value="{{system.combat.speed}}" data-dtype="Number"/></span>
+            <p class="fakeinput">{{system.totalspeed}}</p></span>
           <span><h4>{{localize 'TRESPASSER.CombatLabels.resolve'}}</h4>
           <input name="system.resolve" type="text" value="{{system.resolve}}"  data-dtype="Number"/></span>
         </div>
@@ -49,15 +49,15 @@
         <div class="flexrow">
           <span>
             <h5>{{localize 'TRESPASSER.CombatLabels.melee'}}</h5>
-            <input name="system.range.melee" type="text" value="{{system.range.melee}}"  data-dtype="Number"/></span>
+            <p class="fakeinput">{{context.melee}}</p></span>
           </span>
           <span>
             <h5>{{localize 'TRESPASSER.CombatLabels.missile'}}</h5>
-            <input name="system.range.missile" type="text" value="{{system.range.missile}}"  data-dtype="Number"/></span>
+            <p class="fakeinput">{{context.missile}}</p></span>
           </span>
           <span>
             <h5>{{localize 'TRESPASSER.CombatLabels.spell'}}</h5>
-            <input name="system.range.spell" type="text" value="{{system.range.spell}}"  data-dtype="Number"/></span>
+            <p class="fakeinput">{{context.spell}}</p></span>
           </span>
         </div>
       </div>

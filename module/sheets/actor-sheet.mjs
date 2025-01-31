@@ -111,6 +111,47 @@ export class TrespasserActorSheet extends ActorSheet {
 			});
 
 
+			//range calculation and two handed handling
+			let mel = 1;
+			let mis = 0;
+			let spe = this.actor.system.attributes.intellect +1;
+			if (equippedWeapons.left && equippedWeapons.right) {
+				if (equippedWeapons.left.system.twohanded) {
+					equippedWeapons.right = null;
+				} else if (equippedWeapons.right.system.twohanded) {
+					equippedWeapons.left = null;
+				}
+				spe = 0;
+			} else {
+				mel = 1;
+			}
+			if (equippedWeapons.left) {
+				if (equippedWeapons.left.system.range.melee > mel) {
+					mel = equippedWeapons.left.system.range.melee;
+				}
+				if (equippedWeapons.left.system.range.missile > mis) {
+					mis = equippedWeapons.left.system.range.missile;
+				}
+				if (equippedWeapons.left.system.range.spell > spe) {
+					spe = equippedWeapons.left.system.range.spell;
+				}
+			}
+			if (equippedWeapons.right) {
+				if (equippedWeapons.right.system.range.melee > mel) {
+					mel = equippedWeapons.right.system.range.melee;
+				}
+				if (equippedWeapons.right.system.range.missile > mis) {
+					mis = equippedWeapons.right.system.range.missile;
+				}
+				if (equippedWeapons.right.system.range.spell > spe) {
+					spe = equippedWeapons.right.system.range.spell;
+				}
+			}
+
+
+			context.melee = mel;
+			context.missile = mis;
+			context.spell=spe;
 			context.HP = calculatedHP;
 			context.AC = calculatedAC;
 			context.equippedWeapons = equippedWeapons;
@@ -275,7 +316,25 @@ export class TrespasserActorSheet extends ActorSheet {
 		});
 
 		html.on('click', '.recover', (ev) => {
-
+			let recovery = this.actor.system.recovery.current;
+			let potency_dice = this.actor.system.potency_dice;
+			let health = this.actor.system.combat.hit_points.current;
+			let maxhp = this.actor.system.combat.hit_points.max;
+			if (recovery > 0) {
+				const roll = new Roll(
+					"d@potency",
+					{
+						potency:potency_dice
+					});
+				roll.toMessage({
+					flavor:'Recovery',
+					speaker: ChatMessage.getSpeaker({ actor: this.actor }),
+					rollMode: game.settings.get('core', 'rollMode'),
+				});
+				recovery = recovery -1;
+				this.actor.update({"system.recovery.current": recovery});
+				console.log(roll.result);
+			}
 		});
   }
 	//Not working yet

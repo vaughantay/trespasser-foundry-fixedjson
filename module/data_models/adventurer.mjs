@@ -203,34 +203,13 @@ export class AdventurerData extends CharacterBaseData {
 				required: true,
 				initial: 0,
 				min: 0
+			}),
+			level: new fields.NumberField({
+				required: true,
+				initial: 1,
+				min: 0
 			})
 		}
-	}
-	//Returns level based on xp
-	get level() {
-		let level = 1;
-
-		if (this.xp >= 30000) {
-			level = 9;
-		} else if (this.xp >= 80) {
-			level = 8;
-		} else if (this.xp >= 70) {
-			level = 7;
-		} else if (this.xp >= 60) {
-			level = 6;
-		} else if (this.xp >= 50) {
-			level = 5;
-		} else if (this.xp >= 40) {
-			level = 4;
-		} else if (this.xp >= 30) {
-			level = 3;
-		} else if (this.xp >= 20) {
-			level = 2;
-		} else if (this.xp >= 10) {
-			level = 1;
-		}
-
-		return level;
 	}
 
 	get skill_bonus() {
@@ -321,12 +300,13 @@ export class AdventurerData extends CharacterBaseData {
 	get totalspeed(){
 		return 5 + this.attributes.agility + this.combat.speed;
 	}
-	//4 + level / 2. It seems to round down, can work with this for now.
-	//Effort changes all combat, so we have a field for current effort. Base effort is just a display field basically
+
 	get base_effort() {
-		return 4 + Math.floor(this.level / 2);
+		return this.attributes.intellect;
 	}
+
 	get inventory_max() {
 		return (this.attributes.might * 2);
 	}
+
 }
