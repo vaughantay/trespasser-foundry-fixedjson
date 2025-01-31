@@ -16,6 +16,7 @@ export class TrespasserRoll extends Roll {
 		//-1 Just means there is no DC.
 		if (this.DC != -1) {
 			this.success = results._total > this.DC ? true : false;
+			this.successvalue = Math.floor((results._total - this.dc) / 5);
 		}
 
 		console.log(results);

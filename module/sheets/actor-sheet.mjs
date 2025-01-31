@@ -403,6 +403,26 @@ export class TrespasserActorSheet extends ActorSheet {
 			}
 		}
 
+		//if we have a target, we want to set the dc to their guard.
+		if (game.user.targets.length > 0) {
+			hasDC = true;
+			const roll = new Roll(
+				"d20 + @abilityBonus + @skilledBonus",
+				{
+					abilityBonus: ability_bonus,
+					skilledBonus: this.actor.system.skill_bonus
+				},
+				DC = 0;
+			);
+		} else {
+			const roll = new Roll(
+				"d20 + @abilityBonus + @skilledBonus",
+				{
+					abilityBonus: ability_bonus,
+					skilledBonus: this.actor.system.skill_bonus
+				}
+			);
+		}
 
 		let sFlavor = action.name;
 		const roll = new Roll(
@@ -411,38 +431,8 @@ export class TrespasserActorSheet extends ActorSheet {
 				abilityBonus: ability_bonus,
 				skilledBonus: this.actor.system.skill_bonus
 			});
-		//If we are going with support. We just have DC 10.
-
-		let hasDC = false;
-		let succeedDC = false;
-		// if(action.system.is_support) {
-		// 	hasDC = true;
-		// 	if (result > 10) {
-		// 		succeedDC = true;
-		// 	}
-		// }// else {
-		// 	//DC is going to be the opponent's AC.
-		// 	let targets = game.user.targets;
-		// 	if(targets.values().next().value?.actor) {
-		// 		console.log(targets.values().next().value?.actor._source.system.base_armor_class);
-		// 		hasDC = true;
-		// 		if(result > targets.values().next().value?.actor._source.system.base_armor_class()){
-		// 			succeedDC = true;
-		// 		}
-		// 	} else {
-		// 		hasDC = false;
-		// 	}
-		// }
 
 
-		if (hasDC) {
-			if (succeedDC) {
-				sFlavor = sFlavor.concat(" : ", "Success");
-			}
-			else {
-				sFlavor = sFlavor.concat(" : ", "Failure");
-			}
-		}
 		roll.toMessage({
 			flavor:sFlavor,
 			speaker: ChatMessage.getSpeaker({ actor: this.actor }),
