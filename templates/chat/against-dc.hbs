@@ -4,4 +4,11 @@
 	{{else}}
 		<h2>{{localize 'TRESPASSER.ChatCards.failure-dc-roll'}} {{DC}}</h2>
 	{{/if}}
+	{{#if (ne successValue 0) includeZero=true}}
+		{{#if (gt successValue 0) includeZero=true}}
+			<h2>{{localize 'TRESPASSER.ChatCards.sparks'}} {{successValue}}</h2>
+		{{else}}
+			<h2>{{localize 'TRESPASSER.ChatCards.shadows'}} {{successValue}}<h2>
+		{{/if}}
+	{{/if}}
 </div>

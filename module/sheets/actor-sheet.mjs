@@ -411,64 +411,96 @@ export class TrespasserActorSheet extends ActorSheet {
 	async _createdeedRoll(event) {
 		const li = $(event.currentTarget).parents('.deed');
 		const deed = this.actor.items.get(li.data('itemId'));
-		const ability_bonus = this.actor.system.ability_mods[deed.system.skill];
-		console.log(deed.system.currentEffortCost);
 
-		//This is where we can increase the roll information too.
-		//this is just disgusting, ew
-		if(deed.system.tier != 'basic') {
-			const increase = deed.system.tier === 'special' ? 1 : 2;
-			if(deed.currentEffortCost == 0) {
-				deed.update({"system.currentEffortCost": increase});
-				increase += increase;
-			}
-			if((this.actor.system.effort - deed.system.currentEffortCost) >= 0) {
-				this.actor.update({"system.effort": this.actor.system.effort - deed.system.currentEffortCost});
-				if(deed.system.increaseCount != 3) {
-					deed.update({"system.currentEffortCost": deed.system.currentEffortCost + increase});
-					deed.update({"system.increaseCount": deed.system.increaseCount + 1});
-				}
+		//base cost is calculated by the tier.
+		//Increase Count is added when used, unless it is a light deed.
+		//Light deeds have a base cost of -1, meaning when you "decrease" focus it goes up.
+		const focusCost = deed.system.base_cost + deed.system.increaseCount;
+		console.log(focusCost);
+
+		if (this.actor.system.effort - focusCost < 0) {
+			return ui.notifications.warn("You do not have enough effort.");
+		}
+		
+		let DC = 0;
+
+		if (deed.system.isattack) {
+			if (Array.from(game.user.targets).length > 0) {
+				const target = Array.from(game.user.targets)[0].actor.system;
+				//If we target guard, set dc to guard, otherwise use resist.
+				DC = deed.system.targetguard ? target.guard : target.resist
 			} else {
-				return ui.notifications.warn("You do not have enough effort.");
+				//Abort the action, returning the cost.
+				return ui.notifications.warn("Please target a monster before using an attack.");
 			}
+		} else {
+			//Support deeds have dc of 10
+			DC = 10;
 		}
 
-		//if we have a target, we want to set the dc to their guard.
-		if (game.user.targets.length > 0) {
-			hasDC = true;
-			const roll = new Roll(
-				"d20 + @abilityBonus + @skilledBonus",
-				{
-					abilityBonus: ability_bonus,
-					skilledBonus: this.actor.system.skill_bonus
-				},
-				DC = 0;
-			);
-		} else {
-			const roll = new Roll(
-				"d20 + @abilityBonus + @skilledBonus",
-				{
-					abilityBonus: ability_bonus,
-					skilledBonus: this.actor.system.skill_bonus
-				}
-			);
-		}
+		const roll = new TrespasserRoll(
+			"d20 + @accuracy",
+			DC,
+			{
+				accuracy: this.actor.system.accuracy
+			},
+		);
 
 		let sFlavor = deed.name;
-		const roll = new Roll(
-			"d20 + @abilityBonus + @skilledBonus",
-			{
-				abilityBonus: ability_bonus,
-				skilledBonus: this.actor.system.skill_bonus
-			});
 
+		const evaluationData = await roll.evaluate();
 
 		roll.toMessage({
 			flavor:sFlavor,
 			speaker: ChatMessage.getSpeaker({ actor: this.actor }),
 			rollMode: game.settings.get('core', 'rollMode'),
 		});
+
+		//if we get this far, finally subtract effort
+		this.actor.update({"system.effort": this.actor.system.effort - focusCost});
+		//Light deeds will not change in cost.
+		if (deed.system.tier != 'light') {
+			deed.update({"system.increaseCount": deed.system.increaseCount + 1});
+		}
+
+		if(deed.system.isAttack){
+			await this._rollDeedDamage(deed, evaluationData);
+		}
 	}
 
-//end
+	async _rollDeedDamage(deed, rollData){
+
+		const messageDeedAdditions = {base: deed.system.base.text, hit: '', spark: ''};
+		let diceCount = deed.system.base.damage;
+		let diceType = this.actor.system.potency_dice;
+
+
+		//If its 0, its a hit with no spark.
+		//If its 1, its a hit with a spark.
+		//We just add damage dice depending on whether we need to or not.
+		if (rollData.successvalue >= 0) {
+			messageDeedAdditions.hit = deed.system.hit.text;
+			diceCount += deed.system.hit.damage;
+			if (rollData.successvalue >= 1) {
+				messageDeedAdditions.spark = deed.system.spark.text;
+				diceCount += deed.system.spark.damage;
+			}
+		}
+
+		const rollFormula = `${diceCount}d${diceType}`;
+
+		console.log(rollFormula);
+		const roll = new TrespasserRoll(rollFormula);
+
+		let sFlavor = deed.name;
+
+		roll.toMessage({
+			flavor:sFlavor,
+			speaker: ChatMessage.getSpeaker({ actor: this.actor }),
+			rollMode: game.settings.get('core', 'rollMode'),
+		},
+		{},
+		await renderTemplate('systems/trespasser/templates/chat/deed-result.hbs', messageDeedAdditions)
+		);
+	}
 }

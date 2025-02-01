@@ -24,7 +24,9 @@
 
 		"ChatCards": {
 			"overcome-dc-roll": "Succeed against DC: ",
-			"failure-dc-roll": "Failure against DC: "
+			"failure-dc-roll": "Failure against DC: ",
+			"sparks": "Sparks: ",
+			"shadows": "Shadows: "
 		},
 
 		"DialogButtons": {

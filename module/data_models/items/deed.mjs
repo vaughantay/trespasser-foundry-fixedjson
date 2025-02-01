@@ -20,11 +20,6 @@ export class DeedData extends BaseItemData {
 				option: ['innate', 'spell', 'missile', 'item', 'melee', 'unarmed', 'versatile'],
 				empty: false
 			}),
-			currentEffortCost: new fields.NumberField({
-				require: true,
-				initial: 0,
-				min: 0
-			}),
 			increaseCount: new fields.NumberField({
 				require: true,
 				initial: 0,
@@ -113,6 +108,19 @@ export class DeedData extends BaseItemData {
 				required: true,
 				initial: false
 			})
-		};
+		}
+	}
+	get base_cost() {
+		switch (this.tier) {
+			case 'light':
+				return -1;
+				break;
+			case 'heavy': 
+				return 2;
+				break;
+			case 'mighty':
+				return 4;
+				break;
+		}
 	}
 }
