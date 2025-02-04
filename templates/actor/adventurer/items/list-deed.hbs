@@ -1,9 +1,13 @@
 <div class="deed item" data-item-id='{{_id}}'>
   <div class="flexrow">
 		<a class='deed-roll'>
-			<h4 class="flex3">{{name}}</h4>
-		</a>
-    <h5 class="flex1 small">{{system.tier}}</h5>
+		<h4 class="flex3">{{name}}</h4>
+    </a>
+    <h5 class="flex1 small">{{system.tier}}
+      | {{system.base_cost}}
+  
+    </h5>
+
     <a
 			class='item-control item-edit flex0'
 			title='{{localize "DOCUMENT.Update" type='Item'}}'

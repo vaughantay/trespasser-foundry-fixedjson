@@ -111,16 +111,18 @@ export class DeedData extends BaseItemData {
 		}
 	}
 	get base_cost() {
+		console.log('wow');
 		switch (this.tier) {
 			case 'light':
-				return -1;
-				break;
-			case 'heavy': 
+				return 0;
+			case 'heavy':
 				return 2;
-				break;
 			case 'mighty':
 				return 4;
-				break;
+			case 'special':
+				return 0;
 		}
+		return 0;
+
 	}
 }

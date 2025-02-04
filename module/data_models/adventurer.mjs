@@ -118,12 +118,11 @@ export class AdventurerData extends CharacterBaseData {
 					initial: false
 				})
 			}),
-			//Dont have a better place for this unfortunately.
 			effort: new fields.NumberField({
 				required: true,
-				initial: 4,
+				initial: 0,
 				min: 0,
-				max: 8
+				max: 1000
 			}),
 			recovery: new fields.SchemaField({
 				current: new fields.NumberField({

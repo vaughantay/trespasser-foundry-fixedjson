@@ -3,8 +3,8 @@ export const TRESPASSER = {};
 TRESPASSER.DeedTiers = {
 	"light": "TRESPASSER.DeedTiers.light",
 	"heavy": "TRESPASSER.DeedTiers.heavy",
-	"special": "TRESPASSER.DeedTiers.special",
-	"mighty": "TRESPASSER.DeedTiers.mighty"
+	"mighty": "TRESPASSER.DeedTiers.mighty",
+		"special": "TRESPASSER.DeedTiers.special"
 };
 
 TRESPASSER.TargetTypes = {

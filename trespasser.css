@@ -64,7 +64,8 @@ h1 {
   width: 100px;
 }
 .trespasser .description {
-  --editor-height: 700px;
+  --editor-height: 100%;
+  height: 200px;
   flex: 1;
   display: flex;
   min-height: var(--editor-height);
