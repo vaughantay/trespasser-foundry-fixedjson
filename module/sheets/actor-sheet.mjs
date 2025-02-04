@@ -488,20 +488,28 @@ export class TrespasserActorSheet extends ActorSheet {
 			}
 		}
 
-		const rollFormula = `${diceCount}d${diceType}`;
+		//Basically if we have 0 dice, we dont want to post 0d10 or something, so we just ignore making the roll, and post
+		//A chat message with the relevant details.
+		if(diceCount === 0) {
+			
+			const message_details = await renderTemplate('systems/trespasser/templates/chat/deed-result.hbs', messageDeedAdditions)
+			ChatMessage.Create({user: user.game.user._id, content: message_details});		
+		} else {
 
-		console.log(rollFormula);
-		const roll = new TrespasserRoll(rollFormula);
+			const rollFormula = `${diceCount}d${diceType}`;
 
-		let sFlavor = deed.name;
+			const roll = new TrespasserRoll(rollFormula);
 
-		roll.toMessage({
-			flavor:sFlavor,
-			speaker: ChatMessage.getSpeaker({ actor: this.actor }),
-			rollMode: game.settings.get('core', 'rollMode'),
-		},
-		{},
-		await renderTemplate('systems/trespasser/templates/chat/deed-result.hbs', messageDeedAdditions)
-		);
+			let sFlavor = deed.name;
+
+			roll.toMessage({
+				flavor:sFlavor,
+				speaker: ChatMessage.getSpeaker({ actor: this.actor }),
+				rollMode: game.settings.get('core', 'rollMode'),
+			},
+			{},
+			await renderTemplate('systems/trespasser/templates/chat/deed-result.hbs', messageDeedAdditions)
+			);
+		}
 	}
 }
