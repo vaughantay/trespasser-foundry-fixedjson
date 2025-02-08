@@ -111,7 +111,6 @@ export class DeedData extends BaseItemData {
 		}
 	}
 	get base_cost() {
-		console.log('wow');
 		switch (this.tier) {
 			case 'light':
 				return 0;
@@ -124,5 +123,9 @@ export class DeedData extends BaseItemData {
 		}
 		return 0;
 
+	}
+
+	get current_cost() {
+		return this.base_cost + this.increaseCount
 	}
 }

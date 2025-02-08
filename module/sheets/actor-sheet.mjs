@@ -49,7 +49,7 @@ export class TrespasserActorSheet extends ActorSheet {
 			const heavydeeds = [];
 			const mightydeeds = [];
 			const specialdeeds = [];
-			let items = Object.values(Object.values(this.actor.items)[4]);
+			let items = this.actor.items;
 			items.forEach((item, i) => {
 				if (item.type == 'armor') {
 					const armor = item.system;
@@ -149,6 +149,7 @@ export class TrespasserActorSheet extends ActorSheet {
 			}
 
 
+			console.log(heavydeeds);
 			context.melee = mel;
 			context.missile = mis;
 			context.spell=spe;
@@ -414,8 +415,8 @@ export class TrespasserActorSheet extends ActorSheet {
 
 		//base cost is calculated by the tier.
 		//Increase Count is added when used, unless it is a light deed.
-
-		const focusCost = deed.system.base_cost + deed.system.increaseCount;
+		console.log(deed);
+		const focusCost = deed.system.current_cost;
 
 		if (this.actor.system.effort < focusCost) {
 			return ui.notifications.warn("You do not have enough focus.");

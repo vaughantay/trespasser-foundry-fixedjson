@@ -52,6 +52,7 @@ export class TrespasserItemSheet extends ItemSheet {
 			context.DeedTiers = CONFIG.TRESPASSER.DeedTiers;
 			context.TargetTypes = CONFIG.TRESPASSER.TargetTypes;
       context.TargetSpecs = CONFIG.TRESPASSER.TargetSpecs;
+			context.DeedCost = this.item.system.base_cost + this.item.system.increaseCount;
 			context.DeedTypes = CONFIG.TRESPASSER.DeedTypes;
 		}
 
