@@ -45,6 +45,9 @@
           <a data-tab="combatpage">{{localize "TRESPASSER.MenuLabels.combatpage"}}</a>
           <a data-tab="equippage">{{localize "TRESPASSER.MenuLabels.equippage"}}</a>
 					<a data-tab="featurepage">{{localize "TRESPASSER.MenuLabels.featurepage"}}</a>
+					{{#if context.spells}}
+					<a data-tab="spellpage">{{localize "TRESPASSER.MenuLabels.spells"}}</a>
+					{{/if}}
         </nav>
       </section>
       <section class="sheet-body">
@@ -60,6 +63,9 @@
 				<div class="tab-features tab" data-group="primary" data-tab="featurepage">
           {{> "systems/trespasser/templates/actor/adventurer/feature-tab.hbs"}}
         </div>
+				<div class="tab-features tab" data-group="primary" data-tab="spellpage">
+					{{> "systems/trespasser/templates/actor/adventurer/spells-tab.hbs"}}
+				</div>
       </section>
 	</div>
 </div>

@@ -163,7 +163,7 @@ export class TrespasserActorSheet extends ActorSheet {
 			context.talents = talents;
 			context.spells = spells;
 			context.inventory = inventory;
-		} else if (this.actor.type = 'monster') {
+		} else if (this.actor.type == 'monster') {
 			const deeds=[];
 			let items = Object.values(Object.values(this.actor.items)[4]);
 			items.forEach((item, i) => {
@@ -171,7 +171,7 @@ export class TrespasserActorSheet extends ActorSheet {
 					features.push(item);
 				}
 				else if (item.type == 'deed') {
-					deeds['light'].push(item);
+					deeds.push(item);
 				}
 			});
 			context.deeds = deeds;
@@ -414,14 +414,13 @@ export class TrespasserActorSheet extends ActorSheet {
 
 		//base cost is calculated by the tier.
 		//Increase Count is added when used, unless it is a light deed.
-		//Light deeds have a base cost of -1, meaning when you "decrease" focus it goes up.
-		const focusCost = deed.system.base_cost + deed.system.increaseCount;
-		console.log(focusCost);
 
-		if (this.actor.system.effort - focusCost < 0) {
-			return ui.notifications.warn("You do not have enough effort.");
+		const focusCost = deed.system.base_cost + deed.system.increaseCount;
+
+		if (this.actor.system.effort < focusCost) {
+			return ui.notifications.warn("You do not have enough focus.");
 		}
-		
+
 		let DC = 0;
 
 		if (deed.system.isattack) {
@@ -430,8 +429,8 @@ export class TrespasserActorSheet extends ActorSheet {
 				//If we target guard, set dc to guard, otherwise use resist.
 				DC = deed.system.targetguard ? target.guard : target.resist
 			} else {
-				//Abort the action, returning the cost.
-				return ui.notifications.warn("Please target a monster before using an attack.");
+				//if nothing is targeted, use DC -1
+				DC = -1;
 			}
 		} else {
 			//Support deeds have dc of 10
@@ -450,17 +449,19 @@ export class TrespasserActorSheet extends ActorSheet {
 
 		const evaluationData = await roll.evaluate();
 
-		roll.toMessage({
+		roll.deedMessage({
 			flavor:sFlavor,
 			speaker: ChatMessage.getSpeaker({ actor: this.actor }),
 			rollMode: game.settings.get('core', 'rollMode'),
 		});
 
-		//if we get this far, finally subtract effort
-		this.actor.update({"system.effort": this.actor.system.effort - focusCost});
 		//Light deeds will not change in cost.
 		if (deed.system.tier != 'light') {
+			this.actor.update({"system.effort": this.actor.system.effort - focusCost});
 			deed.update({"system.increaseCount": deed.system.increaseCount + 1});
+		}
+		else {
+			this.actor.update({"system.effort": this.actor.system.effort + this.actor.system.skill_bonus});
 		}
 
 		if(deed.system.isAttack){
@@ -487,20 +488,28 @@ export class TrespasserActorSheet extends ActorSheet {
 			}
 		}
 
-		const rollFormula = `${diceCount}d${diceType}`;
+		//Basically if we have 0 dice, we dont want to post 0d10 or something, so we just ignore making the roll, and post
+		//A chat message with the relevant details.
+		if(diceCount === 0) {
+			
+			const message_details = await renderTemplate('systems/trespasser/templates/chat/deed-result.hbs', messageDeedAdditions)
+			ChatMessage.Create({user: user.game.user._id, content: message_details});		
+		} else {
 
-		console.log(rollFormula);
-		const roll = new TrespasserRoll(rollFormula);
+			const rollFormula = `${diceCount}d${diceType}`;
 
-		let sFlavor = deed.name;
+			const roll = new TrespasserRoll(rollFormula);
 
-		roll.toMessage({
-			flavor:sFlavor,
-			speaker: ChatMessage.getSpeaker({ actor: this.actor }),
-			rollMode: game.settings.get('core', 'rollMode'),
-		},
-		{},
-		await renderTemplate('systems/trespasser/templates/chat/deed-result.hbs', messageDeedAdditions)
-		);
+			let sFlavor = deed.name;
+
+			roll.toMessage({
+				flavor:sFlavor,
+				speaker: ChatMessage.getSpeaker({ actor: this.actor }),
+				rollMode: game.settings.get('core', 'rollMode'),
+			},
+			{},
+			await renderTemplate('systems/trespasser/templates/chat/deed-result.hbs', messageDeedAdditions)
+			);
+		}
 	}
 }
