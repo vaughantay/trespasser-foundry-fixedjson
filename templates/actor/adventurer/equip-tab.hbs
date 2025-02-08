@@ -33,7 +33,7 @@
 
     </div>
     {{/if}}
-    {{#if context.equippedWeapons.right}}
+    {{#if (ne system.weapons.weapon-R '')}}
     <div class="flexrow">
       <h5 class="flex3">{{localize 'TRESPASSER.EquipLabels.weapon'}}</h5>
       <h5 class="flex1">{{localize 'TRESPASSER.EquipLabels.damage'}}</h5>

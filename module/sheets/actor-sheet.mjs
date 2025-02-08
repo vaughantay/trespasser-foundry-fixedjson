@@ -50,6 +50,7 @@ export class TrespasserActorSheet extends ActorSheet {
 			const mightydeeds = [];
 			const specialdeeds = [];
 			let items = this.actor.items;
+			console.log(items);
 			items.forEach((item, i) => {
 				if (item.type == 'armor') {
 					const armor = item.system;
@@ -68,13 +69,12 @@ export class TrespasserActorSheet extends ActorSheet {
 
 				//Return the weapons in either hand.
 				else if (item.type == 'weapon') {
-					const weapon = item.system;
-					if (weapon.equipped_left) {
-						equippedWeapons.left=item;
-					} else if (weapon.equipped_right) {
+					
+					if (this.actor.system.weapons.weaponR == item._id) {
 						equippedWeapons.right = item;
-					}
-					else{
+					} else if (this.actor.system.weapons.weaponL == item._id) {
+						equippedWeapons.left = item;
+					} else {
 						inventory.push(item);
 					}
 				}
@@ -149,7 +149,6 @@ export class TrespasserActorSheet extends ActorSheet {
 			}
 
 
-			console.log(heavydeeds);
 			context.melee = mel;
 			context.missile = mis;
 			context.spell=spe;
@@ -203,27 +202,21 @@ export class TrespasserActorSheet extends ActorSheet {
     if (!this.isEditable) return;
 
 		html.on('click', '.weapon-equip-L', (ev) => {
-      const li = $(ev.currentTarget).parents('.item');
-			const weaponL = $(".weaponL");
-			const current = this.actor.items.get(weaponL.data('itemId'));
-      const weap = this.actor.items.get(li.data('itemId'));
-			if (current) current.update({ 'system.equipped_left' :  false });
-			weap.update({ 'system.equipped_left' :  true });
+			const weapID = $(ev.currentTarget).parents('.item').data('itemId');
+			this.actor.update({"system.weapons.weaponL": weapID});
     });
 		html.on('click', '.weapon-equip-R', (ev) => {
-      const li = $(ev.currentTarget).parents('.item');
-			const weaponL = $(".weaponR");
-			const current = this.actor.items.get(weaponL.data('itemId'));
-      const weap = this.actor.items.get(li.data('itemId'));
-			if (current) current.update({ 'system.equipped_right' :  false });
-			weap.update({ 'system.equipped_right' :  true });
+			const weapID = $(ev.currentTarget).parents('.item').data('itemId');
+			this.actor.update({"system.weapons.weaponR": weapID});
     });
 
 		html.on('click', '.weapon-unequip', (ev) =>{
 			const item = this.actor.items.get($(ev.currentTarget).data('itemId'));
-			if (item) {
-				item.update({ 'system.equipped_right' :  false });
-				item.update({ 'system.equipped_left' :  false });
+			const isLeft = (item._id === this.actor.system.weapons.weaponL) ? true : false;
+			if (isLeft) {
+				this.actor.update({"system.weapons.weaponL": ''});
+			} else {
+				this.actor.update({"system.weapons.weaponR": ''});
 			}
 		});
 

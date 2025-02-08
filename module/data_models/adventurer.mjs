@@ -176,6 +176,18 @@ export class AdventurerData extends CharacterBaseData {
 				initial: 0,
 				min: 0
 			}),
+			weapons: new fields.SchemaField({
+				weaponL: new fields.StringField({
+					required: true,
+					initial: '',
+					blank: true
+				}),
+				weaponR: new fields.StringField({
+					required: true,
+					initial: '',
+					blank: true
+				})
+			}),
 			range: new fields.SchemaField({
 				melee: new fields.NumberField({
 					required: true,
