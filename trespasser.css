@@ -104,7 +104,7 @@ h1 {
 }
 
 
-.trespasser {
+.trespasser, body {
   font-family: "Lusitana", serif;
   background-color: #444444;
 }

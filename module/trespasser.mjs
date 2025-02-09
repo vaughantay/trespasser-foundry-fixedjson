@@ -35,13 +35,16 @@ Hooks.once('init', function () {
 	CONFIG.Item.dataModels.object = InventoryItemData;
 	CONFIG.Item.dataModels.deed = DeedData;
 	CONFIG.Item.dataModels.weapon = WeaponData;
-
 	CONFIG.Dice.rolls.push(TrespasserRoll);
 	let status = TRESPASSER.statusEffects;
 	CONFIG.statusEffects = [];
 	status.forEach((stat, i) => {
 		CONFIG.statusEffects.push(stat);
 	});
+
+	CONFIG.canvasTextStyle.fontFamily='Lusitana';
+	CONFIG.defaultFontFamily='Lusitana';
+
 	Actors.unregisterSheet('core', ActorSheet);
 	Actors.registerSheet('trespasser', TrespasserActorSheet, {
 		makeDefault: true,

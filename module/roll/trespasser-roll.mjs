@@ -34,7 +34,7 @@ export class TrespasserRoll extends Roll {
 
 	}
 
-	async deedMessage(messageData = {}, options = {}, extraText = '') {
+	async deedMessage(messageData = {}, options = {}, extraText = '', deed ={}) {
 
 		//We will override some message data to add content, and then pass it to super.
 		const renderedRoll = await super.render(messageData, options);
@@ -42,7 +42,7 @@ export class TrespasserRoll extends Roll {
 		let extraContent = '';
 
 		if (this.success !== undefined) {
-			extraContent += await renderTemplate('systems/trespasser/templates/chat/against-dc.hbs', {success: this.success, DC: this.DC, successValue: this.successValue});
+			extraContent += await renderTemplate('systems/trespasser/templates/chat/deed-dc.hbs', {success: this.success, DC: this.DC, successValue: this.successValue, deed:this.deed});
 		}
 		messageData.content = renderedRoll + extraContent + extraText;
 

@@ -496,7 +496,9 @@ export class TrespasserActorSheet extends ActorSheet {
 		await this._rollDeedDamage(deed,'after');
 	}
 	async _rollDeedDamage(deed, type){
-		const messageDeedAdditions = {message:''};
+		const messageDeedAdditions = {message:'',name:'',type:''};
+		messageDeedAdditions.name = deed.name;
+		messageDeedAdditions.type = type.toUpperCase();
 		let diceCount = 0;
 		let message = '';
 		switch (type) {
