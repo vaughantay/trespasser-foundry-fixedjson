@@ -458,7 +458,8 @@ export class TrespasserActorSheet extends ActorSheet {
 			this.actor.update({"system.effort": this.actor.system.effort + this.actor.system.skill_bonus});
 		}
 
-		if(deed.system.isAttack){
+		console.log(deed);
+		if(deed.system.isattack){
 			await this._rollDeedDamage(deed, evaluationData);
 		}
 	}
@@ -467,7 +468,26 @@ export class TrespasserActorSheet extends ActorSheet {
 
 		const messageDeedAdditions = {base: deed.system.base.text, hit: '', spark: ''};
 		let diceCount = deed.system.base.damage;
+
+
+		//Now that we have weapons figured out, we'll do potency or weapon damage.
+		
+		//potency dice by default, if its weapon damage, we do logic to overwrite it.
 		let diceType = this.actor.system.potency_dice;
+		if (deed.system.damagetype) {
+			//If its weapon damage, this will be true, and we need to choose the highest damage weapon
+			const weaponRDamage = parseInt(this.actor.items.get(this.actor.system.weapons.weaponR)?.system.damage);
+			const weaponLDamage = parseInt(this.actor.items.get(this.actor.system.weapons.weaponL)?.system.damage);
+			const weaponRDam_NaN = isNaN(weaponRDamage) ? 0 : weaponRDamage;
+			const weaponLDam_NaN = isNaN(weaponLDamage) ? 0 : weaponLDamage;
+			//if they both return nothing, then we just need to say oop.
+			if (isNaN(weaponRDamage) && isNaN(weaponLDamage)) {
+				return ui.notifications.warn("The damage type is weapon, but no weapon is equipped.");
+			}
+			diceType = (weaponRDam_NaN > weaponLDam_NaN) ? weaponRDam_NaN : weaponLDam_NaN;
+		}
+
+		console.log(diceType);
 
 
 		//If its 0, its a hit with no spark.
@@ -484,7 +504,7 @@ export class TrespasserActorSheet extends ActorSheet {
 
 		//Basically if we have 0 dice, we dont want to post 0d10 or something, so we just ignore making the roll, and post
 		//A chat message with the relevant details.
-		if(diceCount === 0) {
+		if(diceCount == 0) {
 			
 			const message_details = await renderTemplate('systems/trespasser/templates/chat/deed-result.hbs', messageDeedAdditions)
 			ChatMessage.Create({user: user.game.user._id, content: message_details});		
