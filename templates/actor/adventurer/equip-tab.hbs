@@ -33,7 +33,7 @@
 
     </div>
     {{/if}}
-    {{#if (ne system.weapons.weapon-R '')}}
+    {{#if context.equippedWeapons.right}}
     <div class="flexrow">
       <h5 class="flex3">{{localize 'TRESPASSER.EquipLabels.weapon'}}</h5>
       <h5 class="flex1">{{localize 'TRESPASSER.EquipLabels.damage'}}</h5>
@@ -77,12 +77,12 @@
         <h5 class="flex1">{{localize 'TRESPASSER.EquipLabels.guard'}}</h5>
         <h5 class="flex2">{{localize 'TRESPASSER.EquipLabels.die'}}</h5>
       </div>
-			{{> 'systems/trespasser/templates/actor/adventurer/items/armor-slot.hbs' context.equippedArmor.head location='head'}}
-			{{> 'systems/trespasser/templates/actor/adventurer/items/armor-slot.hbs' context.equippedArmor.body location='body'}}
-			{{> 'systems/trespasser/templates/actor/adventurer/items/armor-slot.hbs' context.equippedArmor.arms location='arms'}}
-			{{> 'systems/trespasser/templates/actor/adventurer/items/armor-slot.hbs' context.equippedArmor.legs location='legs'}}
-			{{> 'systems/trespasser/templates/actor/adventurer/items/armor-slot.hbs' context.equippedArmor.outer location='outer'}}
-			{{> 'systems/trespasser/templates/actor/adventurer/items/armor-slot.hbs' context.equippedArmor.shield location='shield'}}
+			{{> 'systems/trespasser/templates/actor/adventurer/items/armor-slot.hbs' context.equippedArmor.head id=context.equippedArmor.head.id location='head'}}
+			{{> 'systems/trespasser/templates/actor/adventurer/items/armor-slot.hbs' context.equippedArmor.body id=context.equippedArmor.body.id location='body'}}
+			{{> 'systems/trespasser/templates/actor/adventurer/items/armor-slot.hbs' context.equippedArmor.arms id=context.equippedArmor.arms.id location='arms'}}
+			{{> 'systems/trespasser/templates/actor/adventurer/items/armor-slot.hbs' context.equippedArmor.legs id=context.equippedArmor.legs.id location='legs'}}
+			{{> 'systems/trespasser/templates/actor/adventurer/items/armor-slot.hbs' context.equippedArmor.outer id=context.equippedArmor.outer.id location='outer'}}
+			{{> 'systems/trespasser/templates/actor/adventurer/items/armor-slot.hbs' context.equippedArmor.shield id=context.equippedArmor.shield.id location='shield'}}
     </div>
   </div>
   <div class="flexcol spaced " data-group='primary' data-tab='items'>

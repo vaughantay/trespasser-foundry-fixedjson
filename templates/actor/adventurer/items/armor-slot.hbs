@@ -1,14 +1,14 @@
-<div class="flexrow">
-	<p class="flex2">{{localize (concat 'TRESPASSER.EquipLabels.' location)}}</p>
-	<a class="armor-unequip flex1" data-item-id='{{item._id}}'>
-		<i class="fas fa-hexagon-xmark"></i>
-	</a>
+<div class="armorslot flexrow" data-item-id='{{id}}'>
+	<h4 class="flex2">{{localize (concat 'TRESPASSER.EquipLabels.' location)}}</h4>
 	<p class="fakeinput flex4">{{name}}</p>
+	<a class="armor-unequip flex1" >
+		<p class="button"><i class="fas fa-hexagon-xmark"></i></p>
+	</a>
 	<p class="fakeinput flex1">{{system.weight}}</p>
 	<p class="fakeinput flex1">{{system.armor_class}}</p>
 	{{#if system.die_used}}
-		<p class="fakeinput grey flex2">{{system.armor_die}}</p>
+		<p class="fakeinput grey flex1">{{system.armor_die}}</p>
 		{{else}}
-		<p class="button armordie flex2">{{system.armor_die}}</p>
+		<p class="button armordie flex1">{{system.armor_die}}</p>
 	{{/if}}
 </div>

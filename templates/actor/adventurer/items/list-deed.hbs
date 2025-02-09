@@ -1,9 +1,9 @@
 <div class="deed item" data-item-id='{{deed._id}}'>
-  <div class="flexrow">
-		<a class='deed-roll'>
-		<h4 class="flex3">{{name}}</h4>
+  <div class="flexrow spaced">
+		<a class='deed-roll flexrow'>
+		<i class="fa-solid fa-dice-d20"></i><h4 class="flex3">{{name}}</h4>
     </a>
-		<h5 class="flex1 small">{{system.tier}} | {{#if (eq system.tier 'light')}}+1{{else}}{{system.current_cost}}{{/if}}</h5>
+		<h5 class="flex1 small">{{system.tier}} | {{#if (eq system.tier 'light')}} +{{localize 'TRESPASSER.CombatLabels.skillbonus'}}{{else}}{{system.current_cost}}{{/if}}</h5>
 
     <a
 			class='item-control item-edit flex0'
@@ -30,18 +30,20 @@
     {{/if}}
      | {{system.targetspec}} {{system.target}} {{system.targetnum}}
    </h5>
+   <a class="deed-start flex-row">
    {{#if system.start}}
    <hr>
-    <a class="deed-hit flex-row">
+
       <p>
         <b> {{localize "TRESPASSER.ItemLabels.start"}}: </b>
         {{{system.start}}}
       </p>
-    </a>
+
     {{/if}}
+        </a>
     {{#if (hasDeedContent system.base)}}
     <hr>
-     <a class="deed-hit flex-row">
+     <a class="deed-base flex-row">
        <p>
          <b> {{localize "TRESPASSER.ItemLabels.base"}}: </b>
          {{#if system.base.damage}}
@@ -79,7 +81,7 @@
 
         {{#if (hasDeedContent system.spark)}}
         <hr>
-         <a class="deed-hit flex-row">
+         <a class="deed-spark flex-row">
            <p>
              <b> {{localize "TRESPASSER.ItemLabels.spark"}}: </b>
              {{#if system.spark.damage}}
@@ -97,7 +99,7 @@
          {{/if}}
          {{#if system.after}}
          <hr>
-          <a class="deed-hit flex-row">
+          <a class="deed-after flex-row">
             <p>
               <b> {{localize "TRESPASSER.ItemLabels.after"}}: </b>
               {{{system.after}}}

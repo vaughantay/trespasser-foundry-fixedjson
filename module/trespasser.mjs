@@ -42,8 +42,6 @@ Hooks.once('init', function () {
 	status.forEach((stat, i) => {
 		CONFIG.statusEffects.push(stat);
 	});
-
-	console.log(CONFIG.statusEffects);
 	Actors.unregisterSheet('core', ActorSheet);
 	Actors.registerSheet('trespasser', TrespasserActorSheet, {
 		makeDefault: true,

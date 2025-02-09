@@ -50,7 +50,6 @@ export class TrespasserActorSheet extends ActorSheet {
 			const mightydeeds = [];
 			const specialdeeds = [];
 			let items = this.actor.items;
-			console.log(items);
 			items.forEach((item, i) => {
 				if (item.type == 'armor') {
 					const armor = item.system;
@@ -69,7 +68,7 @@ export class TrespasserActorSheet extends ActorSheet {
 
 				//Return the weapons in either hand.
 				else if (item.type == 'weapon') {
-					
+
 					if (this.actor.system.weapons.weaponR == item._id) {
 						equippedWeapons.right = item;
 					} else if (this.actor.system.weapons.weaponL == item._id) {
@@ -228,7 +227,8 @@ export class TrespasserActorSheet extends ActorSheet {
 		});
 
 		html.on('click', '.armor-unequip', (ev) =>{
-			const item = this.actor.items.get($(ev.currentTarget).data('itemId'));
+			const li = $(ev.currentTarget).parents('.armorslot');
+			const item = this.actor.items.get(li.data('itemId'));
 			if (item) {
 				item.update({ 'system.equipped' :  false });
 			}
@@ -264,6 +264,14 @@ export class TrespasserActorSheet extends ActorSheet {
     }
 
 		html.on('click', '.deed-roll', this._createdeedRoll.bind(this));
+
+		html.on('click', '.deed-start', this._deedStart.bind(this));
+		html.on('click', '.deed-base', this._deedBase.bind(this));
+		html.on('click', '.deed-hit', this._deedHit.bind(this));
+		html.on('click', '.deed-spark', this._deedSpark.bind(this));
+		html.on('click', '.deed-after', this._deedAfter.bind(this));
+
+
 		html.on('click', '.expand-header', (ev) => {
 			let li = $(ev.currentTarget.parentNode).find('.expand');
 			if (li.is(':hidden')) {
@@ -282,7 +290,7 @@ export class TrespasserActorSheet extends ActorSheet {
 		});
 
 		html.on('click', '.keyattribute', (ev) => {
-			console.log(this.actor.system.keyattribute);
+
 		});
 
 		html.on('click', '.longrest', (ev) => {
@@ -293,19 +301,19 @@ export class TrespasserActorSheet extends ActorSheet {
   		one: {
    		icon: '<i class="fas fa-check"></i>',
    		label: "Rest",
-   callback: () =>
-		{
+			   callback: () =>
+					{
 
-		}
-  },
-  	two: {
-   icon: '<i class="fas fa-times"></i>',
-   label: "No",
-		  }
-		 },
-		 default: "two",
-		});
-		d.render(true);
+					}
+			  },
+			  	two: {
+			   icon: '<i class="fas fa-times"></i>',
+			   label: "No",
+					  }
+					 },
+					 default: "two",
+					});
+					d.render(true);
 
 		});
 
@@ -327,7 +335,6 @@ export class TrespasserActorSheet extends ActorSheet {
 				});
 				recovery = recovery -1;
 				this.actor.update({"system.recovery.current": recovery});
-				console.log(roll.result);
 			}
 		});
   }
@@ -403,16 +410,21 @@ export class TrespasserActorSheet extends ActorSheet {
 	}
 
 	async _createdeedRoll(event) {
+		console.log(event.currentTarget);
 		const li = $(event.currentTarget).parents('.deed');
 		const deed = this.actor.items.get(li.data('itemId'));
 
 		//base cost is calculated by the tier.
 		//Increase Count is added when used, unless it is a light deed.
-		console.log(deed);
 		const focusCost = deed.system.current_cost;
 
 		if (this.actor.system.effort < focusCost) {
 			return ui.notifications.warn("You do not have enough focus.");
+		}
+		if (deed.system.type == "missile") {
+			if (this.actor.system.range.missile == 0) {
+				return ui.notifications.warn("This is a missile deed. You have no missile weapons equipped.");
+			}
 		}
 
 		let DC = 0;
@@ -449,7 +461,7 @@ export class TrespasserActorSheet extends ActorSheet {
 			rollMode: game.settings.get('core', 'rollMode'),
 		});
 
-		//Light deeds will not change in cost.
+		//Light deeds will not change in cost. but they increase focus by skill
 		if (deed.system.tier != 'light') {
 			this.actor.update({"system.effort": this.actor.system.effort - focusCost});
 			deed.update({"system.increaseCount": deed.system.increaseCount + 1});
@@ -457,64 +469,94 @@ export class TrespasserActorSheet extends ActorSheet {
 		else {
 			this.actor.update({"system.effort": this.actor.system.effort + this.actor.system.skill_bonus});
 		}
-
-		console.log(deed);
-		if(deed.system.isattack){
-			await this._rollDeedDamage(deed, evaluationData);
-		}
 	}
+	async _deedStart(event){
+		const li = $(event.currentTarget).parents('.deed');
+		const deed = this.actor.items.get(li.data('itemId'));
+		await this._rollDeedDamage(deed,'start');
+	}
+	async _deedBase(event){
+		const li = $(event.currentTarget).parents('.deed');
+		const deed = this.actor.items.get(li.data('itemId'));
+		await this._rollDeedDamage(deed,'base');
+	}
+	async _deedHit(event){
+		const li = $(event.currentTarget).parents('.deed');
+		const deed = this.actor.items.get(li.data('itemId'));
+		await this._rollDeedDamage(deed,'hit');
+	}
+	async _deedSpark(event){
+		const li = $(event.currentTarget).parents('.deed');
+		const deed = this.actor.items.get(li.data('itemId'));
+		await this._rollDeedDamage(deed,'spark');
+	}
+	async _deedAfter(event){
+		const li = $(event.currentTarget).parents('.deed');
+		const deed = this.actor.items.get(li.data('itemId'));
+		await this._rollDeedDamage(deed,'after');
+	}
+	async _rollDeedDamage(deed, type){
+		const messageDeedAdditions = {message:''};
+		let diceCount = 0;
+		let message = '';
+		switch (type) {
+			case 'start':
+				messageDeedAdditions.message = deed.system.start;
+				break;
+			case 'base':
+				messageDeedAdditions.message = deed.system.base.text;
+				diceCount = deed.system.base.damage;
+				break;
+			case 'hit':
+				messageDeedAdditions.message = deed.system.hit.text;
+				diceCount = deed.system.hit.damage;
+				break;
+			case 'spark':
+				messageDeedAdditions.message = deed.system.spark.text;
+				diceCount = deed.system.spark.damage;
+				break;
+			case 'after':
+				messageDeedAdditions.message = deed.system.after;
+				break;
+		}
 
-	async _rollDeedDamage(deed, rollData){
 
-		const messageDeedAdditions = {base: deed.system.base.text, hit: '', spark: ''};
-		let diceCount = deed.system.base.damage;
-
-
-		//Now that we have weapons figured out, we'll do potency or weapon damage.
-		
 		//potency dice by default, if its weapon damage, we do logic to overwrite it.
 		let diceType = this.actor.system.potency_dice;
+
+		//if its weapon, we have to check which weapons use the right range and shit dawg
+		//// ['innate', 'spell', 'missile', 'item', 'melee', 'unarmed', 'versatile'],
 		if (deed.system.damagetype) {
+			if (deed.system.type == "missile") {
+				if (this.actor.system.range.missile == 0) {
+					return ui.notifications.warn("This is a missile deed. You have no missile weapons equipped.");
+				}
+			}
 			//If its weapon damage, this will be true, and we need to choose the highest damage weapon
 			const weaponRDamage = parseInt(this.actor.items.get(this.actor.system.weapons.weaponR)?.system.damage);
 			const weaponLDamage = parseInt(this.actor.items.get(this.actor.system.weapons.weaponL)?.system.damage);
 			const weaponRDam_NaN = isNaN(weaponRDamage) ? 0 : weaponRDamage;
 			const weaponLDam_NaN = isNaN(weaponLDamage) ? 0 : weaponLDamage;
-			//if they both return nothing, then we just need to say oop.
+			//if they both return nothing, WE USE UNARMED DAMAGE IF ITS MELEE
 			if (isNaN(weaponRDamage) && isNaN(weaponLDamage)) {
-				return ui.notifications.warn("The damage type is weapon, but no weapon is equipped.");
-			}
-			diceType = (weaponRDam_NaN > weaponLDam_NaN) ? weaponRDam_NaN : weaponLDam_NaN;
-		}
+				diceType = 4;
+			} else diceType = (weaponRDam_NaN > weaponLDam_NaN) ? weaponRDam_NaN : weaponLDam_NaN;
 
-		console.log(diceType);
-
-
-		//If its 0, its a hit with no spark.
-		//If its 1, its a hit with a spark.
-		//We just add damage dice depending on whether we need to or not.
-		if (rollData.successvalue >= 0) {
-			messageDeedAdditions.hit = deed.system.hit.text;
-			diceCount += deed.system.hit.damage;
-			if (rollData.successvalue >= 1) {
-				messageDeedAdditions.spark = deed.system.spark.text;
-				diceCount += deed.system.spark.damage;
-			}
 		}
 
 		//Basically if we have 0 dice, we dont want to post 0d10 or something, so we just ignore making the roll, and post
 		//A chat message with the relevant details.
 		if(diceCount == 0) {
-			
+
 			const message_details = await renderTemplate('systems/trespasser/templates/chat/deed-result.hbs', messageDeedAdditions)
-			ChatMessage.Create({user: user.game.user._id, content: message_details});		
+				ChatMessage.create({user: game.user._id, content: message_details});
 		} else {
 
 			const rollFormula = `${diceCount}d${diceType}`;
 
 			const roll = new TrespasserRoll(rollFormula);
 
-			let sFlavor = deed.name;
+			let sFlavor = deed.name + ' | ' + type.toUpperCase();
 
 			roll.toMessage({
 				flavor:sFlavor,

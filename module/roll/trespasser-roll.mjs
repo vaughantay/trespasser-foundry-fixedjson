@@ -42,7 +42,7 @@ export class TrespasserRoll extends Roll {
 		let extraContent = '';
 
 		if (this.success !== undefined) {
-			extraContent += await renderTemplate('systems/trespasser/templates/chat/deed-dc.hbs', {success: this.success, DC: this.DC, successValue: this.successValue});
+			extraContent += await renderTemplate('systems/trespasser/templates/chat/against-dc.hbs', {success: this.success, DC: this.DC, successValue: this.successValue});
 		}
 		messageData.content = renderedRoll + extraContent + extraText;
 
