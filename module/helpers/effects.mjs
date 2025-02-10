@@ -4,13 +4,14 @@
  * @param {Actor|Item} owner      The owning document which manages this effect
  */
 export function onManageActiveEffect(event, owner) {
+  console.log('Managing Active Effect');
   event.preventDefault();
   const a = event.currentTarget;
   const li = a.closest('li');
   const effect = li.dataset.effectId
     ? owner.effects.get(li.dataset.effectId)
     : null;
-  switch (a.dataset.action) {
+  switch (a.dataset.deed) {
     case 'create':
       return owner.createEmbeddedDocuments('ActiveEffect', [
         {
@@ -31,6 +32,7 @@ export function onManageActiveEffect(event, owner) {
     case 'toggle':
       return effect.update({ disabled: !effect.disabled });
   }
+
 }
 
 /**

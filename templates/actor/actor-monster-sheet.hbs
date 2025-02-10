@@ -1,0 +1,55 @@
+<form class="trespasser monster" autocomplete="off">
+	<div class="flexrow spaced section">
+		<img class="profile-img flex1" src="{{actor.img}}" data-edit="img" title="{{actor.name}}" height="100" width="100"/>
+		<div class="flexcol flex6">
+			<div class="flexrow">
+				<h4 class="flex4">{{localize 'TRESPASSER.DetailsLabels.name'}}</h4>
+				<h5 class="flex2">{{localize 'TRESPASSER.MonsterLabels.type'}}</h5>
+				<h5 class="flex2">{{localize 'TRESPASSER.MonsterLabels.hp'}}</h5>
+			</div>
+			<div class="flexrow">
+				<input class="flex4" name="name" type="text" value="{{actor.name}}" placeholder="Name"/>
+				<input class="flex2" name="system.type" type="text" value="{{system.type}}" placeholder="Creature 1"/>
+				<input class="flex1" name="system.combat.hit_points.value" type="text" value="{{system.combat.hit_points.value}}"data-dtype="Number"/>
+				<input class="flex1" name="system.combat.hit_points.max" type="text" value="{{system.combat.hit_points.max}}"data-dtype="Number"/>
+			</div>
+			<div class="flexrow">
+				<h4 class="flex2">{{localize 'TRESPASSER.MonsterLabels.accuracy'}}</h4>
+				<h5 class="flex2">{{localize 'TRESPASSER.MonsterLabels.guard'}}</h5>
+				<h5 class="flex2">{{localize 'TRESPASSER.MonsterLabels.initiative'}}</h5>
+			</div>
+			<div class="flexrow">
+				<input class="flex2" name="system.accuracy" type="text" value="{{system.accuracy}}" data-dtype="Number"/>
+				<input class="flex2" name="system.guard" type="text" value="{{system.guard}}"data-dtype="Number"/>
+				<input class="flex2" name="system.initiative" type="text" value="{{system.initiative}}" data-dtype="Number"/>
+			</div>
+			<div class="flexrow">
+				<h4 class="flex2">{{localize 'TRESPASSER.MonsterLabels.speed'}}</h4>
+				<h5 class="flex2">{{localize 'TRESPASSER.MonsterLabels.resist'}}</h5>
+				<h5 class="flex2">{{localize 'TRESPASSER.MonsterLabels.rollbon'}}</h5>
+			</div>
+			<div class="flexrow">
+				<input class="flex2" name="system.combat.speed" type="text" value="{{system.combat.speed}}" data-dtype="Number"/>
+				<input class="flex2" name="system.resist" type="text" value="{{system.resist}}"data-dtype="Number"/>
+				<input class="flex2" name="system.roll_bonus" type="text" value="{{system.roll_bonus}}" data-dtype="Number"/>
+			</div>
+		</div>
+	</div>
+	<div class="flexcol main">
+			<div class="flexrow section">
+				<div class="flex-container">
+          {{#each context.features as |feature id|}}
+          {{> "systems/trespasser/templates/actor/adventurer/items/list-simple.hbs" feature}}
+          {{/each}}
+        </div>
+			</div>
+			<div class="flexrow section">
+				<div class="flex-container">
+          {{#each context.deeds as |deed id|}}
+          {{> "systems/trespasser/templates/actor/adventurer/items/list-deed.hbs" deed=deed id=id}}
+          {{/each}}
+        </div>
+			</div>
+	</div>
+</div>
+</form>

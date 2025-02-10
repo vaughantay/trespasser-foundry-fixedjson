@@ -2,22 +2,36 @@
   <div class="flexcol spaced">
     <div id="header" class="flexrow spaced">
       <div class="flexrow spaced">
-        <div class="flex0 img"><img src="{{item.img}}" data-edit="img" title="{{item.name}}"/></div>
         <div class="flexcol spaced">
-          <input id="name" type="text" name="name" value="{{item.name}}" placeholder="{{localize "trespasser.name"}}" />
+          <div class="flexrow spaced">
+            <div class=" flex1 img"><img src="{{item.img}}" data-edit="img" title="{{item.name}}"/></div>
+            <input class="flex5" id="name" type="text" name="name" value="{{item.name}}" placeholder="{{localize "trespasser.name"}}" />
+          </div>
 					{{> 'systems/trespasser/templates/fields/select-field.hbs' label='TRESPASSER.ItemLabels.weight' field='system.weight' options=Weight selected=document.system.weight includeEmpty=false localizeOptions=true}}
-					{{> 'systems/trespasser/templates/fields/select-field.hbs' label='TRESPASSER.ItemLabels.damage-dice' field='system.damage' options=Damage selected=document.system.damage includeEmpty=true localizeOptions=true}}
-					{{> 'systems/trespasser/templates/fields/text-field.hbs' label='TRESPASSER.ItemLabels.keywords' field='system.keywords' value=document.system.keywords}}
-          {{> 'systems/trespasser/templates/fields/bool-field.hbs' label='TRESPASSER.ItemLabels.twohanded' field='system.two_handed' isChecked=document.system.two_handed}}
+          {{> 'systems/trespasser/templates/fields/select-field.hbs' label='TRESPASSER.ItemLabels.damage' field='system.damage' options=Damage selected=document.system.damage includeEmpty=false localizeOptions=true}}
+          <h4></h4>
+          <div class="boxed">
+            <div class="flexrow spaced">
+              <h5>Melee</h5>
+              <h5>Missile</h5>
+              <h5>Spell</h5>
+            </div>
+            <div class="flexrow spaced">
+              {{> 'systems/trespasser/templates/fields/number-field.hbs' label='' field="system.range.melee" value=document.system.range.melee min=0 max=3}}
+              {{> 'systems/trespasser/templates/fields/number-field.hbs' label='' field="system.range.missile" value=document.system.range.missile min=0 max=1000}}
+              {{> 'systems/trespasser/templates/fields/number-field.hbs' label='' field="system.range.spell" value=document.system.range.spell min=0 max=1000}}
+            </div>
+
+          </div>
+
+          <div class="flexrow spaced">
+            {{> 'systems/trespasser/templates/fields/bool-field.hbs' label='TRESPASSER.ItemLabels.twohanded' field='system.twohanded' isChecked=document.system.twohanded}}
+            {{> 'systems/trespasser/templates/fields/bool-field.hbs' label='TRESPASSER.ItemLabels.thrown' field='system.thrown' isChecked=document.system.thrown}}
+          </div>
+          {{> 'systems/trespasser/templates/fields/text-field.hbs' label='TRESPASSER.EquipLabels.weaponeffect' field='system.details' value=document.system.details}}
+
         </div>
       </div>
-    </div>
-
-    <div id="body">
-			<h3 class="corners mid">{{localize 'TRESPASSER.ItemLabels.weapon-effect'}}</h3>
-			<div class="description" data-group="primary" data-tab="description">
-				{{editor enrichedDetails target="system.details" button=true owner=owner editable=editable}}
-			</div>
     </div>
   </div>
 </form>

@@ -7,10 +7,11 @@ import { TrespasserRoll } from '../roll/trespasser-roll.mjs';
 
 export class TrespasserActorSheet extends ActorSheet {
 	static get defaultOptions() {
+
 		return foundry.utils.mergeObject(super.defaultOptions, {
 			classes: ['trespasser', 'sheet', 'actor'],
-			width: 850,
-			height: 550,
+			width: 900,
+			height: 700,
 			tabs: [
 				{
 					navSelector: '.sheet-tabs',
@@ -29,90 +30,153 @@ export class TrespasserActorSheet extends ActorSheet {
 
 		const context = {};
 
-		//We will add to this based on which armor pieces are equipped.
-		let calculatedAC = this.actor.system.base_armor_class;
-	  	//Max HP is either 10, or your vigor score, whichever is higher
-	  	let calculatedHP = this.actor.system.attributes.vig > 10 ? this.actor.system.attributes.vig : 10;
-		const equippedArmor = {};
-		const equippedWeapons = {};
-		const inventory = [];
+		//deeds and features are shared between monster and adventurer. So we will leave them out of the if statement.
+
 		const features = [];
-		const otherAbilities = [];
-		const talents = [];
-		const actions = [];
-		const spells = [];
 
-		let items = Object.values(Object.values(this.actor.items)[4]);
-		items.forEach((item, i) => {
-			if (item.type == 'armor') {
-				const armor = item.system;
-				//If equipped, add the ac to the calculated AC
-				calculatedAC += armor.equipped ? armor.armor_class : 0;
-				//Now we get the equipped armor.
-				if (armor.equipped) {
-					//This will look like head: {ac, location, etc.}
-					//If there is nothing equipped in a slot, the data will not populate, may need to change this.
-					equippedArmor[armor.loc] = item;
+		if(this.actor.type === 'adventurer') {
+			//We will add to this based on which armor pieces are equipped.
+			let calculatedAC = this.actor.system.base_armor_class;
+			//Max HP is either 10, or your vigor score, whichever is higher
+			let calculatedHP = this.actor.system.attributes.vig > 10 ? this.actor.system.attributes.vig : 10;
+			const equippedArmor = {};
+			const equippedWeapons = {};
+			const inventory = [];
+			const otherAbilities = [];
+			const talents = [];
+			const spells = [];
+			const lightdeeds = [];
+			const heavydeeds = [];
+			const mightydeeds = [];
+			const specialdeeds = [];
+			let items = this.actor.items;
+			items.forEach((item, i) => {
+				if (item.type == 'armor') {
+					const armor = item.system;
+					//If equipped, add the ac to the calculated AC
+					calculatedAC += armor.equipped ? armor.armor_class : 0;
+					//Now we get the equipped armor.
+					if (armor.equipped) {
+						//This will look like head: {ac, location, etc.}
+						//If there is nothing equipped in a slot, the data will not populate, may need to change this.
+						equippedArmor[armor.loc] = item;
+					}
+					else{
+						inventory.push(item);
+					}
 				}
-				else{
-					inventory.push(item);
-				}
-			}
 
-			//Return the weapons in either hand.
-			if (item.type == 'weapon') {
-				const weapon = item.system;
-			/*	if (weapon.twohanded) {
-					if (weapon.equipped_left || weapon.equipped_right){
+				//Return the weapons in either hand.
+				else if (item.type == 'weapon') {
+
+					if (this.actor.system.weapons.weaponR == item._id) {
 						equippedWeapons.right = item;
-						equippedWeapons.left = equippedWeapons.right;
-					} else inventory.push(item);
+					} else if (this.actor.system.weapons.weaponL == item._id) {
+						equippedWeapons.left = item;
+					} else {
+						inventory.push(item);
+					}
 				}
-				else
-				This doesn't work yet dw about it */
-				if (weapon.equipped_left) {
-					equippedWeapons.left=item;
-				} else if (weapon.equipped_right) {
-					equippedWeapons.right = item;
-				}
-				else{
-					inventory.push(item);
-				}
-			}
 
-			if (item.type == 'simple_item') {
-				const simpleItem = item.system;
-				if (simpleItem.type == 'feature') {
+				else if (item.type == 'feature') {
 					features.push(item);
-				} else if (simpleItem.type == 'other-ability') {
-					otherAbilities.push(item);
-				} else if (simpleItem.type == 'talent') {
+				}
+
+				else if (item.type == 'talent') {
 					talents.push(item);
-				} else {
+				}
+
+				else if (item.type == 'object') {
 					inventory.push(item);
+				}
+
+				else if (item.type == 'deed') {
+					const tier = item.system.tier;
+					if (tier == 'light') {
+						lightdeeds.push(item);
+					}else if (tier == 'heavy') {
+						heavydeeds.push(item);
+					}else if (tier == 'mighty') {
+						mightydeeds.push(item);
+					}else {
+						specialdeeds.push(item);
+					}
+
+				}
+
+				else if(item.type == 'spell') {
+					spells.push(item);
+				}
+			});
+
+
+			//range calculation and two handed handling
+			let mel = 1;
+			let mis = 0;
+			let spe = this.actor.system.attributes.intellect +1;
+			if (equippedWeapons.left && equippedWeapons.right) {
+				if (equippedWeapons.left.system.twohanded) {
+					equippedWeapons.right = null;
+				} else if (equippedWeapons.right.system.twohanded) {
+					equippedWeapons.left = null;
+				}
+				spe = 0;
+			} else {
+				mel = 1;
+			}
+			if (equippedWeapons.left) {
+				if (equippedWeapons.left.system.range.melee > mel) {
+					mel = equippedWeapons.left.system.range.melee;
+				}
+				if (equippedWeapons.left.system.range.missile > mis) {
+					mis = equippedWeapons.left.system.range.missile;
+				}
+				if (equippedWeapons.left.system.range.spell > spe) {
+					spe = equippedWeapons.left.system.range.spell;
+				}
+			}
+			if (equippedWeapons.right) {
+				if (equippedWeapons.right.system.range.melee > mel) {
+					mel = equippedWeapons.right.system.range.melee;
+				}
+				if (equippedWeapons.right.system.range.missile > mis) {
+					mis = equippedWeapons.right.system.range.missile;
+				}
+				if (equippedWeapons.right.system.range.spell > spe) {
+					spe = equippedWeapons.right.system.range.spell;
 				}
 			}
 
-			if (item.type == 'action') {
-				actions.push(item);
-			}
 
-			if(item.type == 'spell') {
-				spells.push(item);
-			}
-		});
-
-
-	  	context.HP = calculatedHP;
-		context.AC = calculatedAC;
-		context.equippedWeapons = equippedWeapons;
-		context.equippedArmor = equippedArmor;
+			context.melee = mel;
+			context.missile = mis;
+			context.spell=spe;
+			context.HP = calculatedHP;
+			context.AC = calculatedAC;
+			context.equippedWeapons = equippedWeapons;
+			context.equippedArmor = equippedArmor;
+			context.lightdeeds = lightdeeds;
+			context.heavydeeds = heavydeeds;
+			context.mightydeeds = mightydeeds;
+			context.specialdeeds = specialdeeds;
+			context.talents = talents;
+			context.spells = spells;
+			context.inventory = inventory;
+		} else if (this.actor.type == 'monster') {
+			const deeds=[];
+			let items = Object.values(Object.values(this.actor.items)[4]);
+			items.forEach((item, i) => {
+				if(item.type == 'feature') {
+					features.push(item);
+				}
+				else if (item.type == 'deed') {
+					deeds.push(item);
+				}
+			});
+			context.deeds = deeds;
+		}
 		context.features = features;
-		context.otherAbilities = otherAbilities;
-		context.talents = talents;
-		context.actions = actions;
-		context.spells = spells;
-		context.inventory = inventory;
+
 
 		return {
 			'context': context,
@@ -122,6 +186,8 @@ export class TrespasserActorSheet extends ActorSheet {
 		};
 
   }
+
+
 
   activateListeners(html) {
     super.activateListeners(html);
@@ -135,27 +201,21 @@ export class TrespasserActorSheet extends ActorSheet {
     if (!this.isEditable) return;
 
 		html.on('click', '.weapon-equip-L', (ev) => {
-      const li = $(ev.currentTarget).parents('.item');
-			const weaponL = $(".weaponL");
-			const current = this.actor.items.get(weaponL.data('itemId'));
-      const weap = this.actor.items.get(li.data('itemId'));
-			if (current) current.update({ 'system.equipped_left' :  false });
-			weap.update({ 'system.equipped_left' :  true });
+			const weapID = $(ev.currentTarget).parents('.item').data('itemId');
+			this.actor.update({"system.weapons.weaponL": weapID});
     });
 		html.on('click', '.weapon-equip-R', (ev) => {
-      const li = $(ev.currentTarget).parents('.item');
-			const weaponL = $(".weaponR");
-			const current = this.actor.items.get(weaponL.data('itemId'));
-      const weap = this.actor.items.get(li.data('itemId'));
-			if (current) current.update({ 'system.equipped_right' :  false });
-			weap.update({ 'system.equipped_right' :  true });
+			const weapID = $(ev.currentTarget).parents('.item').data('itemId');
+			this.actor.update({"system.weapons.weaponR": weapID});
     });
 
 		html.on('click', '.weapon-unequip', (ev) =>{
 			const item = this.actor.items.get($(ev.currentTarget).data('itemId'));
-			if (item) {
-				item.update({ 'system.equipped_right' :  false });
-				item.update({ 'system.equipped_left' :  false });
+			const isLeft = (item._id === this.actor.system.weapons.weaponL) ? true : false;
+			if (isLeft) {
+				this.actor.update({"system.weapons.weaponL": ''});
+			} else {
+				this.actor.update({"system.weapons.weaponR": ''});
 			}
 		});
 
@@ -167,7 +227,8 @@ export class TrespasserActorSheet extends ActorSheet {
 		});
 
 		html.on('click', '.armor-unequip', (ev) =>{
-			const item = this.actor.items.get($(ev.currentTarget).data('itemId'));
+			const li = $(ev.currentTarget).parents('.armorslot');
+			const item = this.actor.items.get(li.data('itemId'));
 			if (item) {
 				item.update({ 'system.equipped' :  false });
 			}
@@ -184,7 +245,7 @@ export class TrespasserActorSheet extends ActorSheet {
 
     html.on('click', '.effect-control', (ev) => {
       const row = ev.currentTarget.closest('li');
-      //const document =
+      //const document =,
         row.dataset.parentId === this.actor.id
           ? this.actor
           : this.actor.items.get(row.dataset.parentId);
@@ -202,9 +263,15 @@ export class TrespasserActorSheet extends ActorSheet {
       });
     }
 
-		html.on('click', '.action-roll', this._createActionRoll.bind(this));
-		html.on('click', '.action-hit', this._createActionHit.bind(this));
-		html.on('click', '.action-solid', this._createActionSolid.bind(this));
+		html.on('click', '.deed-roll', this._createdeedRoll.bind(this));
+
+		html.on('click', '.deed-start', this._deedStart.bind(this));
+		html.on('click', '.deed-base', this._deedBase.bind(this));
+		html.on('click', '.deed-hit', this._deedHit.bind(this));
+		html.on('click', '.deed-spark', this._deedSpark.bind(this));
+		html.on('click', '.deed-after', this._deedAfter.bind(this));
+
+
 		html.on('click', '.expand-header', (ev) => {
 			let li = $(ev.currentTarget.parentNode).find('.expand');
 			if (li.is(':hidden')) {
@@ -213,17 +280,63 @@ export class TrespasserActorSheet extends ActorSheet {
 				li.slideUp();
 			}
 		});
-		html.on('click', '.reset-actions', (ev) => {
-			let items = Object.values(Object.values(this.actor.items)[4]);
-			items.forEach((item, i) => {
-			let action = this.actor.items.get(item._id);
-				if(action.type == 'action') {
-					action.update({"system.increaseCount": 0});
-					action.update({"system.currentEffortCost": 0});
-				}
-			});
+
+		html.on('click', '.armordie', (ev) => {
+
 		});
 
+		html.on('click', '.recollect', (ev) => {
+
+		});
+
+		html.on('click', '.keyattribute', (ev) => {
+
+		});
+
+		html.on('click', '.longrest', (ev) => {
+			let d = new Dialog({
+ 			title: "Long Rest",
+ 			content: "<p>Take a long rest?</p>",
+ 			buttons: {
+  		one: {
+   		icon: '<i class="fas fa-check"></i>',
+   		label: "Rest",
+			   callback: () =>
+					{
+
+					}
+			  },
+			  	two: {
+			   icon: '<i class="fas fa-times"></i>',
+			   label: "No",
+					  }
+					 },
+					 default: "two",
+					});
+					d.render(true);
+
+		});
+
+		html.on('click', '.recover', (ev) => {
+			let recovery = this.actor.system.recovery.current;
+			let potency_dice = this.actor.system.potency_dice;
+			let health = this.actor.system.combat.hit_points.current;
+			let maxhp = this.actor.system.combat.hit_points.max;
+			if (recovery > 0) {
+				const roll = new Roll(
+					"d@potency",
+					{
+						potency:potency_dice
+					});
+				roll.toMessage({
+					flavor:'Recovery',
+					speaker: ChatMessage.getSpeaker({ actor: this.actor }),
+					rollMode: game.settings.get('core', 'rollMode'),
+				});
+				recovery = recovery -1;
+				this.actor.update({"system.recovery.current": recovery});
+			}
+		});
   }
 	//Not working yet
 	async _onItemCreate(event) {
@@ -235,22 +348,13 @@ export class TrespasserActorSheet extends ActorSheet {
 
 		const data = {...header.dataset};
 
-		if (type == 'simple_item') {
-			data['type'] = `${header.dataset.itemType}`;
-		}
-
 		let name = `New ${type.capitalize()}`;
-
-		if (type == 'simple_item') {
-			name = `New ${game.i18n.localize(CONFIG.TRESPASSER.SimpleItemTypes[data.type])}`;
-		}
 
 		const itemData = {
 			name: name,
 			type: type,
 			system: data,
 		};
-
 
 		return await Item.create(itemData, { parent: this.actor });
 	}
@@ -305,158 +409,166 @@ export class TrespasserActorSheet extends ActorSheet {
 		};
 	}
 
-	async _createActionRoll(event) {
-		const li = $(event.currentTarget).parents('.action');
-		const action = this.actor.items.get(li.data('itemId'));
-		const ability_bonus = this.actor.system.ability_mods[action.system.skill];
-		console.log(action.system.currentEffortCost);
+	async _createdeedRoll(event) {
+		console.log(event.currentTarget);
+		const li = $(event.currentTarget).parents('.deed');
+		const deed = this.actor.items.get(li.data('itemId'));
 
-		//This is where we can increase the roll information too.
-		//this is just disgusting, ew
-		if(action.system.tier != 'basic') {
-			const increase = action.system.tier === 'special' ? 1 : 2;
-			if(action.currentEffortCost == 0) {
-				action.update({"system.currentEffortCost": increase});
-				increase += increase;
+		//base cost is calculated by the tier.
+		//Increase Count is added when used, unless it is a light deed.
+		const focusCost = deed.system.current_cost;
+
+		if (this.actor.system.effort < focusCost) {
+			return ui.notifications.warn("You do not have enough focus.");
+		}
+		if (deed.system.type == "missile") {
+			if (this.actor.system.range.missile == 0) {
+				return ui.notifications.warn("This is a missile deed. You have no missile weapons equipped.");
 			}
-			if((this.actor.system.effort - action.system.currentEffortCost) >= 0) {
-				this.actor.update({"system.effort": this.actor.system.effort - action.system.currentEffortCost});
-				if(action.system.increaseCount != 3) {
-					action.update({"system.currentEffortCost": action.system.currentEffortCost + increase});
-					action.update({"system.increaseCount": action.system.increaseCount + 1});
-				}
+		}
+
+		let DC = 0;
+
+		if (deed.system.isattack) {
+			if (Array.from(game.user.targets).length > 0) {
+				const target = Array.from(game.user.targets)[0].actor.system;
+				//If we target guard, set dc to guard, otherwise use resist.
+				DC = deed.system.targetguard ? target.guard : target.resist
 			} else {
-				return ui.notifications.warn("You do not have enough effort.");
+				//if nothing is targeted, use DC -1
+				DC = -1;
 			}
+		} else {
+			//Support deeds have dc of 10
+			DC = 10;
 		}
 
-
-		let sFlavor = action.name;
-		const roll = new Roll(
-			"d20 + @abilityBonus + @skilledBonus",
+		const roll = new TrespasserRoll(
+			"d20 + @accuracy",
+			DC,
 			{
-				abilityBonus: ability_bonus,
-				skilledBonus: this.actor.system.skill_bonus
-			});
-		//If we are going with support. We just have DC 10.
+				accuracy: this.actor.system.accuracy
+			},
+		);
 
-		let hasDC = false;
-		let succeedDC = false;
-		// if(action.system.is_support) {
-		// 	hasDC = true;
-		// 	if (result > 10) {
-		// 		succeedDC = true;
-		// 	}
-		// }// else {
-		// 	//DC is going to be the opponent's AC.
-		// 	let targets = game.user.targets;
-		// 	if(targets.values().next().value?.actor) {
-		// 		console.log(targets.values().next().value?.actor._source.system.base_armor_class);
-		// 		hasDC = true;
-		// 		if(result > targets.values().next().value?.actor._source.system.base_armor_class()){
-		// 			succeedDC = true;
-		// 		}
-		// 	} else {
-		// 		hasDC = false;
-		// 	}
-		// }
+		let sFlavor = deed.name;
 
+		const evaluationData = await roll.evaluate();
 
-		if (hasDC) {
-			if (succeedDC) {
-				sFlavor = sFlavor.concat(" : ", "Success");
-			}
-			else {
-				sFlavor = sFlavor.concat(" : ", "Failure");
-			}
-		}
-		roll.toMessage({
+		roll.deedMessage({
 			flavor:sFlavor,
 			speaker: ChatMessage.getSpeaker({ actor: this.actor }),
 			rollMode: game.settings.get('core', 'rollMode'),
 		});
-	}
 
-	async _createActionHit(event) {
-		const li = $(event.currentTarget).parents('.action');
-		const action = this.actor.items.get(li.data('itemId'));
-		if (action.system.hit_weapon || action.system.hit_potency  || action.system.uses_bonus) {
-			const items = this.actor.items;
-			let weapon_dice = 4;
-			let weapon_effect = "";
-			items.forEach((item, i) => {
-					if (item.type == 'weapon') {
-						const weapon = item.system;
-						if (weapon.equipped_left || weapon.equipped_right) {
-							if (weapon.damage > weapon_dice) {weapon_dice = weapon.damage;}
-								weapon_effect = `${weapon_effect} | ${weapon.details}`;
-						}
-				}
-			});
-			let bonus = 0;
-			if (action.system.uses_bonus) {
-				bonus = this.actor.system.ability_mods[action.system.skill];
-			}
-			const rollEval = `${action.system.hit_weapon}d${weapon_dice} + ${action.system.hit_potency}d${this.actor.system.potency_dice} + ${bonus}`;
-
-
-
-			const roll = new Roll(
-				rollEval,
-				{
-					weapon_amount: action.hit_weapon,
-					weapon_dice: weapon_dice,
-					potency_amount: action.hit_potency,
-					potency_dice: this.actor.system.potency_dice,
-				});
-				let sFlavor = `${action.name} | Hit`
-				roll.toMessage({
-					flavor:sFlavor,
-					speaker: ChatMessage.getSpeaker({ actor: this.actor }),
-					rollMode: game.settings.get('core', 'rollMode'),
-				});
+		//Light deeds will not change in cost. but they increase focus by skill
+		if (deed.system.tier != 'light') {
+			this.actor.update({"system.effort": this.actor.system.effort - focusCost});
+			deed.update({"system.increaseCount": deed.system.increaseCount + 1});
+		}
+		else {
+			this.actor.update({"system.effort": this.actor.system.effort + this.actor.system.skill_bonus});
 		}
 	}
-
-	async _createActionSolid(event) {
-		const li = $(event.currentTarget).parents('.action');
-		const action = this.actor.items.get(li.data('itemId'));
-		if (action.system.solid_hit_weapon || action.system.solid_hit_potency || action.system.hit_weapon || action.system.hit_potency || action.system.uses_bonus) {
-			const items = this.actor.items;
-			let weapon_dice = 4;
-			let weapon_effect = "";
-			items.forEach((item, i) => {
-					if (item.type == 'weapon') {
-						const weapon = item.system;
-						if (weapon.equipped_left || weapon.equipped_right) {
-							if (weapon.damage > weapon_dice) {weapon_dice = weapon.damage;}
-								weapon_effect = `${weapon_effect} | ${weapon.details}`;
-						}
-				}
-			});
-			const weaponAmount = action.system.hit_weapon + action.system.solid_hit_weapon;
-			const potencyAmount = action.system.hit_potency + action.system.solid_hit_potency;
-			let bonus = 0;
-			if (action.system.uses_bonus) {
-				bonus = this.actor.system.ability_mods[action.system.skill];
-			}
-			const chat = action.system.hit + "<br>" + action.system.solid_hit;
-
-			const rollEval = `${weaponAmount}d${weapon_dice} + ${potencyAmount}d${this.actor.system.potency_dice} + ${bonus}`
-			const roll = new Roll(
-				rollEval,
-				{
-					weapon_amount: action.hit_weapon,
-					weapon_dice: weapon_dice,
-					potency_amount: action.hit_potency,
-					potency_dice: this.actor.system.potency_dice,
-				});
-				let sFlavor = `${action.name} | Solid Hit`
-				roll.toMessage({
-					flavor:sFlavor,
-					speaker: ChatMessage.getSpeaker({ actor: this.actor }),
-					rollMode: game.settings.get('core', 'rollMode')
-				});
+	async _deedStart(event){
+		const li = $(event.currentTarget).parents('.deed');
+		const deed = this.actor.items.get(li.data('itemId'));
+		await this._rollDeedDamage(deed,'start');
+	}
+	async _deedBase(event){
+		const li = $(event.currentTarget).parents('.deed');
+		const deed = this.actor.items.get(li.data('itemId'));
+		await this._rollDeedDamage(deed,'base');
+	}
+	async _deedHit(event){
+		const li = $(event.currentTarget).parents('.deed');
+		const deed = this.actor.items.get(li.data('itemId'));
+		await this._rollDeedDamage(deed,'hit');
+	}
+	async _deedSpark(event){
+		const li = $(event.currentTarget).parents('.deed');
+		const deed = this.actor.items.get(li.data('itemId'));
+		await this._rollDeedDamage(deed,'spark');
+	}
+	async _deedAfter(event){
+		const li = $(event.currentTarget).parents('.deed');
+		const deed = this.actor.items.get(li.data('itemId'));
+		await this._rollDeedDamage(deed,'after');
+	}
+	async _rollDeedDamage(deed, type){
+		const messageDeedAdditions = {message:'',name:'',type:'',roll:true};
+		messageDeedAdditions.roll = true;
+		messageDeedAdditions.name = deed.name;
+		messageDeedAdditions.type = type.toUpperCase();
+		let diceCount = 0;
+		let message = '';
+		switch (type) {
+			case 'start':
+				messageDeedAdditions.message = deed.system.start;
+				break;
+			case 'base':
+				messageDeedAdditions.message = deed.system.base.text;
+				diceCount = deed.system.base.damage;
+				break;
+			case 'hit':
+				messageDeedAdditions.message = deed.system.hit.text;
+				diceCount = deed.system.hit.damage;
+				break;
+			case 'spark':
+				messageDeedAdditions.message = deed.system.spark.text;
+				diceCount = deed.system.spark.damage;
+				break;
+			case 'after':
+				messageDeedAdditions.message = deed.system.after;
+				break;
 		}
-  }
+
+
+		//potency dice by default, if its weapon damage, we do logic to overwrite it.
+		let diceType = this.actor.system.potency_dice;
+
+		//if its weapon, we have to check which weapons use the right range and shit dawg
+		//// ['innate', 'spell', 'missile', 'item', 'melee', 'unarmed', 'versatile'],
+		if (deed.system.damagetype) {
+			if (deed.system.type == "missile") {
+				if (this.actor.system.range.missile == 0) {
+					return ui.notifications.warn("This is a missile deed. You have no missile weapons equipped.");
+				}
+			}
+			//If its weapon damage, this will be true, and we need to choose the highest damage weapon
+			const weaponRDamage = parseInt(this.actor.items.get(this.actor.system.weapons.weaponR)?.system.damage);
+			const weaponLDamage = parseInt(this.actor.items.get(this.actor.system.weapons.weaponL)?.system.damage);
+			const weaponRDam_NaN = isNaN(weaponRDamage) ? 0 : weaponRDamage;
+			const weaponLDam_NaN = isNaN(weaponLDamage) ? 0 : weaponLDamage;
+			//if they both return nothing, WE USE UNARMED DAMAGE IF ITS MELEE
+			if (isNaN(weaponRDamage) && isNaN(weaponLDamage)) {
+				diceType = 4;
+			} else diceType = (weaponRDam_NaN > weaponLDam_NaN) ? weaponRDam_NaN : weaponLDam_NaN;
+
+		}
+
+		//Basically if we have 0 dice, we dont want to post 0d10 or something, so we just ignore making the roll, and post
+		//A chat message with the relevant details.
+		if(diceCount == 0) {
+			messageDeedAdditions.roll = false;
+			const message_details = await renderTemplate('systems/trespasser/templates/chat/deed-result.hbs', messageDeedAdditions)
+				ChatMessage.create({user: game.user._id, content: message_details});
+		} else {
+
+			const rollFormula = `${diceCount}d${diceType}`;
+
+			const roll = new TrespasserRoll(rollFormula);
+
+			let sFlavor = deed.name + ' | ' + type.toUpperCase();
+
+			roll.toMessage({
+				flavor:sFlavor,
+				speaker: ChatMessage.getSpeaker({ actor: this.actor }),
+				rollMode: game.settings.get('core', 'rollMode'),
+			},
+			{},
+			await renderTemplate('systems/trespasser/templates/chat/deed-result.hbs', messageDeedAdditions)
+			);
+		}
+	}
 }

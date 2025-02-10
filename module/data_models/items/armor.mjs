@@ -34,6 +34,10 @@ export class ArmorData extends BaseItemData {
 				options: ['d6', 'd8', 'd10'],
 				blank: true
 			}),
+			die_used: new fields.BooleanField({
+				required: true,
+				initial: false
+			}),
 		};
 	}
 }

@@ -1,53 +1,144 @@
-  <div class="flexcol spaced">
+<div class="flexrow">
+  <div class="flexcol flex1 spaced">
     <div class="flexrow">
       <div class="section">
         <div class="flexrow">
-          <h2>{{localize "TRESPASSER.MenuLabels.general"}}</h2>
+          <h2>{{localize "TRESPASSER.MenuLabels.combatval"}}</h2>
         </div>
-				<div class='item-controls'>
-					<a
-						class='item-control item-create'
-						title='{{localize "DOCUMENT.Create" type='simple_item'}}'
-						data-type='simple_item'
-						data-item-type='feature'
-					>
-						<i class='fas fa-plus'></i>
-						{{localize 'DOCUMENT.New' type='Item'}}
-					</a>
-				</div>
-        <div class="flex-container">
-          {{#each context.features as |feature id|}}
-          {{> "systems/trespasser/templates/actor/adventurer/items/list-simple.hbs" feature}}
-          {{/each}}
-          {{#each context.talents as |talent id|}}
-          {{> "systems/trespasser/templates/actor/adventurer/items/list-simple.hbs" talent}}
-          {{/each}}
-          {{#each context.otherAbilities as |ability id|}}
-          {{> "systems/trespasser/templates/actor/adventurer/items/list-simple.hbs" ability}}
-          {{/each}}
+        <div class="flexrow">
+  				<span><h4>{{localize 'TRESPASSER.CombatLabels.initiative'}}</h4>
+          <h6>{{localize 'TRESPASSER.Ability.agility'}} + {{localize 'TRESPASSER.CombatLabels.skillbonus'}}</h6></span>
+  				<p class="fakeinput">{{system.initiative}}</p>
+        </div>
+        <div class="flexrow">
+  				<span><h4>{{localize 'TRESPASSER.CombatLabels.accuracy'}}</h4>
+          <h6>{{system.keyattr}} + {{localize 'TRESPASSER.CombatLabels.skillbonus'}}</h6></span>
+  				<p class="fakeinput">{{system.accuracy}}</p>
+        </div>
+        <div class="flexrow">
+  				<span><h4>{{localize 'TRESPASSER.CombatLabels.guard'}}</h4>
+          <h6>{{localize 'TRESPASSER.Ability.agility'}} + {{localize 'TRESPASSER.EquipLabels.armor'}}</h6></span>
+  				<p class="fakeinput">{{context.AC}}</p>
+        </div>
+        <div class="flexrow">
+  				<span><h4>{{localize 'TRESPASSER.CombatLabels.resist'}}</h4>
+          <h6>{{localize 'TRESPASSER.Ability.spirit'}} + {{localize 'TRESPASSER.CombatLabels.skillbonus'}}</h6></span>
+  				<p class="fakeinput">{{system.resist}}</p>
+        </div>
+        <div class="flexrow">
+  				<span><h4>{{localize 'TRESPASSER.CombatLabels.prevail'}}</h4>
+          <h6>{{localize 'TRESPASSER.Ability.intellect'}} + {{localize 'TRESPASSER.CombatLabels.skillbonus'}}</h6></span>
+  				<p class="fakeinput">{{system.prevail}}</p>
+        </div>
+        <div class="flexrow">
+  				<span><h4>{{localize 'TRESPASSER.CombatLabels.tenacity'}}</h4>
+          <h6>{{localize 'TRESPASSER.Ability.might'}} + {{localize 'TRESPASSER.Ability.spirit'}}</h6></span>
+  				<p class="fakeinput">{{system.tenacity}}</p>
+        </div>
+        <hr/>
+        <div class="flexrow">
+          <span class="flex1"><h4>{{localize 'TRESPASSER.CombatLabels.speed'}}</h4>
+            <p class="fakeinput">{{system.totalspeed}}</p></span>
+          <span><h4>{{localize 'TRESPASSER.CombatLabels.resolve'}}</h4>
+          <input name="system.resolve" type="text" value="{{system.resolve}}"  data-dtype="Number"/></span>
+        </div>
+        <hr/>
+        <div class="flexrow">
+          <h2>{{localize 'TRESPASSER.CombatLabels.ranges'}}</h2>
+        </div>
+        <div class="flexrow">
+          <span>
+            <h5>{{localize 'TRESPASSER.CombatLabels.melee'}}</h5>
+            <p class="fakeinput">{{context.melee}}</p></span>
+          </span>
+          <span>
+            <h5>{{localize 'TRESPASSER.CombatLabels.missile'}}</h5>
+            <p class="fakeinput">{{context.missile}}</p></span>
+          </span>
+          <span>
+            <h5>{{localize 'TRESPASSER.CombatLabels.spell'}}</h5>
+            <p class="fakeinput">{{context.spell}}</p></span>
+          </span>
         </div>
       </div>
     </div>
     <div class="flexrow">
       <div class="section">
         <div class="flexrow">
-          <h2 class="reset-actions">{{localize "TRESPASSER.MenuLabels.actions"}}</h2>
+          <h2>{{localize 'TRESPASSER.CombatLabels.sparks'}}</h2>
         </div>
-				<div class='item-controls'>
-					<a
-						class='item-control item-create'
-						title='{{localize "DOCUMENT.Create" type='action'}}'
-						data-type='action'
-					>
-						<i class='fas fa-plus'></i>
-						{{localize 'DOCUMENT.New' type='action'}}
-					</a>
-				</div>
+        <div class="flexrow box">
+          <div class="flexcol flex1">
+            <h5>{{localize 'TRESPASSER.CombatLabels.deed'}}</h5>
+          </div>
+          <div class="flexcol flex3">
+            <p class="small">{{localize 'TRESPASSER.CombatLabels.deeddesc'}}<br/></p>
+          </div>
+        </div>
+        <div class="flexrow box">
+          <div class="flexcol flex1">
+            <h5>{{localize 'TRESPASSER.CombatLabels.impact'}}</h5>
+          </div>
+          <div class="flexcol flex3">
+            <p class="small">{{localize 'TRESPASSER.CombatLabels.impactdesc'}}<br/></p>
+          </div>
+        </div>
+        <div class="flexrow box">
+          <div class="flexcol flex1">
+            <h5>{{localize 'TRESPASSER.CombatLabels.potency'}}</h5>
+          </div>
+          <div class="flexcol flex3">
+            <p class="small">{{localize 'TRESPASSER.CombatLabels.potencydesc'}}<br/></p>
+          </div>
+        </div>
+        <div class="flexrow box">
+          <div class="flexcol flex1">
+            <h5>{{localize 'TRESPASSER.CombatLabels.power'}}</h5>
+          </div>
+          <div class="flexcol flex3">
+            <p class="small">{{localize 'TRESPASSER.CombatLabels.powerdesc'}}<br/></p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="flexcol flex2 spaced">
+    <div class="flexrow">
+      <div class="section">
+        <div class="flexrow">
+          <h2 class="flex5">{{localize "TRESPASSER.MenuLabels.deeds"}}</h2>
+        </div>
+        <div class='item-controls'>
+          <a
+            class='item-control item-create'
+            title='{{localize "DOCUMENT.Create" type='deed'}}'
+            data-type='deed'
+          >
+            <i class='fas fa-plus'></i>
+            {{localize 'DOCUMENT.New' type='deed'}}
+          </a>
+        </div>
         <div class="flex-container">
-          {{#each context.actions as |action id|}}
-          {{> "systems/trespasser/templates/actor/adventurer/items/list-action.hbs" action=action id=id}}
+          {{#each context.lightdeeds as |deed id|}}
+          {{> "systems/trespasser/templates/actor/adventurer/items/list-deed.hbs" deed=deed id=id}}
+          {{/each}}
+        </div>
+        <div class="flex-container">
+          {{#each context.heavydeeds as |deed id|}}
+          {{> "systems/trespasser/templates/actor/adventurer/items/list-deed.hbs" deed=deed id=id}}
+          {{/each}}
+        </div>
+        <div class="flex-container">
+          {{#each context.mightydeeds as |deed id|}}
+          {{> "systems/trespasser/templates/actor/adventurer/items/list-deed.hbs" deed=deed id=id}}
+          {{/each}}
+        </div>
+        <div class="flex-container">
+          {{#each context.specialdeeds as |deed id|}}
+          {{> "systems/trespasser/templates/actor/adventurer/items/list-deed.hbs" deed=deed id=id}}
           {{/each}}
         </div>
       </div>
     </div>
   </div>
+</div>

@@ -1,0 +1,110 @@
+<div class="deed item" data-item-id='{{deed._id}}'>
+  <div class="flexrow spaced">
+		<a class='deed-roll flexrow'>
+		<i class="fa-solid fa-dice-d20"></i><h4 class="flex3">{{name}}</h4>
+    </a>
+		<h5 class="flex1 small">{{system.tier}} | {{#if (eq system.tier 'light')}} +{{localize 'TRESPASSER.CombatLabels.skillbonus'}}{{else}}{{system.current_cost}}{{/if}}</h5>
+
+    <a
+			class='item-control item-edit flex0'
+			title='{{localize "DOCUMENT.Update" type='Item'}}'
+		>
+			<i class='fas fa-edit'></i>
+		</a>
+		<a
+			class='item-control item-delete flex0'
+			title='{{localize "DOCUMENT.Delete" type='Item'}}'
+		>
+			<i class='fas fa-trash'></i>
+		</a>
+  </div>
+  <div class="table">
+    <h5>{{system.type}}
+    {{#if system.isattack}}
+    {{localize "TRESPASSER.ItemLabels.attack"}} {{localize "TRESPASSER.CombatLabels.vs"}}
+      {{#if system.targetguard}}{{localize "TRESPASSER.CombatLabels.guard"}}
+      {{else}}{{localize "TRESPASSER.CombatLabels.resist"}}
+      {{/if}}
+    {{else}}
+    {{localize "TRESPASSER.ItemLabels.support"}} {{localize "TRESPASSER.CombatLabels.vs"}} 10
+    {{/if}}
+     | {{system.targetspec}} {{system.target}} {{system.targetnum}}
+   </h5>
+   <a class="deed-start flex-row">
+   {{#if system.start}}
+   <hr>
+
+      <p>
+        <b> {{localize "TRESPASSER.ItemLabels.start"}}: </b>
+        {{{system.start}}}
+      </p>
+
+    {{/if}}
+        </a>
+    {{#if (hasDeedContent system.base)}}
+    <hr>
+     <a class="deed-base flex-row">
+       <p>
+         <b> {{localize "TRESPASSER.ItemLabels.base"}}: </b>
+         {{#if system.base.damage}}
+           {{localize "TRESPASSER.ItemLabels.deal"}}
+           <span class="rollvalue">{{system.base.damage}}
+             {{#if system.damagetype}}<i class="fa-solid fa-sword"></i>
+             {{else}}<i class="fa-solid fa-dice-six"></i>
+             {{/if}}</span>
+             <br>
+         {{/if}}
+
+         {{{system.base.text}}}
+       </p>
+     </a>
+     {{/if}}
+
+      {{#if (hasDeedContent system.hit)}}
+      <hr>
+       <a class="deed-hit flex-row">
+         <p>
+           <b> {{localize "TRESPASSER.ItemLabels.hit"}}: </b>
+           {{#if system.hit.damage}}
+             {{localize "TRESPASSER.ItemLabels.deal"}}
+             <span class="rollvalue">{{system.hit.damage}}
+               {{#if system.damagetype}}<i class="fa-solid fa-sword"></i>
+               {{else}}<i class="fa-solid fa-dice-six"></i>
+               {{/if}}</span>
+               <br>
+           {{/if}}
+
+           {{{system.hit.text}}}
+         </p>
+       </a>
+       {{/if}}
+
+        {{#if (hasDeedContent system.spark)}}
+        <hr>
+         <a class="deed-spark flex-row">
+           <p>
+             <b> {{localize "TRESPASSER.ItemLabels.spark"}}: </b>
+             {{#if system.spark.damage}}
+               {{localize "TRESPASSER.ItemLabels.deal"}}
+               <span class="rollvalue">{{system.spark.damage}}
+                 {{#if system.damagetype}}<i class="fa-solid fa-sword"></i>
+                 {{else}}<i class="fa-solid fa-dice-six"></i>
+                 {{/if}}</span>
+                 <br>
+             {{/if}}
+
+             {{{system.spark.text}}}
+           </p>
+         </a>
+         {{/if}}
+         {{#if system.after}}
+         <hr>
+          <a class="deed-after flex-row">
+            <p>
+              <b> {{localize "TRESPASSER.ItemLabels.after"}}: </b>
+              {{{system.after}}}
+            </p>
+          </a>
+          {{/if}}
+  </div>
+</div>
