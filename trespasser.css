@@ -176,7 +176,7 @@ h1 {
   border-style: outset;
   border-width: 1px;
 }
-.trespasser h2, .trespasser .tabs {
+h2, .trespasser .tabs {
   font-family: "Boucherie", sans-serif;
   border-bottom: none;
   margin: 0 0 0.25rem;
@@ -195,10 +195,10 @@ h1 {
   font-size: 0.8em;
   text-transform: initial;
 }
-.trespasser h3,
-.trespasser h4,
-.trespasser h5,
-.trespasser h6,.trespasser p b  {
+h3,
+h4,
+h5,
+h6, p b  {
   font-family: "Gotham", sans-serif;
   border-bottom: none;
   margin: auto;

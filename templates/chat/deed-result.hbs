@@ -1,8 +1,17 @@
 <div class="message-text flexcol">
-  <hr>
-  <h3>{{name}} | {{type}}</h3>
-  <div class="boxed">
+  {{#if roll}}
+  {{else}}
+  <br>
+  <div>
+      <h5>{{name}} | {{type}}</h5>
+  </div>
+  {{/if}}
+  {{#if message}}
+  <div>
+    <hr>
+  </div>
+  <div class="">
     <p>{{message}}</p>
   </div>
-
+  {{/if}}
 </div>

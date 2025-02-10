@@ -496,7 +496,8 @@ export class TrespasserActorSheet extends ActorSheet {
 		await this._rollDeedDamage(deed,'after');
 	}
 	async _rollDeedDamage(deed, type){
-		const messageDeedAdditions = {message:'',name:'',type:''};
+		const messageDeedAdditions = {message:'',name:'',type:'',roll:true};
+		messageDeedAdditions.roll = true;
 		messageDeedAdditions.name = deed.name;
 		messageDeedAdditions.type = type.toUpperCase();
 		let diceCount = 0;
@@ -549,7 +550,7 @@ export class TrespasserActorSheet extends ActorSheet {
 		//Basically if we have 0 dice, we dont want to post 0d10 or something, so we just ignore making the roll, and post
 		//A chat message with the relevant details.
 		if(diceCount == 0) {
-
+			messageDeedAdditions.roll = false;
 			const message_details = await renderTemplate('systems/trespasser/templates/chat/deed-result.hbs', messageDeedAdditions)
 				ChatMessage.create({user: game.user._id, content: message_details});
 		} else {

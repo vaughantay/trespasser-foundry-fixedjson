@@ -124,29 +124,15 @@ export class AdventurerData extends CharacterBaseData {
 				min: 0,
 				max: 1000
 			}),
-			recovery: new fields.SchemaField({
-				current: new fields.NumberField({
-					required: true,
-					initial: 0,
-					min: 0
-				}),
-				max: new fields.NumberField({
-					required: true,
-					initial: 0,
-					min: 0
-				})
+			recovery: new fields.NumberField({
+				required: true,
+				initial: 0,
+				min: 0
 			}),
-			endurance: new fields.SchemaField({
-				current: new fields.NumberField({
-					required: true,
-					initial: 0,
-					min: 0
-				}),
-				max: new fields.NumberField({
-					required: true,
-					initial: 0,
-					min: 0
-				})
+			endurance: new fields.NumberField({
+				required: true,
+				initial: 0,
+				min: 0
 			}),
 			keyattribute: new fields.SchemaField({
 				might: new fields.BooleanField({
@@ -175,6 +161,44 @@ export class AdventurerData extends CharacterBaseData {
 				required: true,
 				initial: 0,
 				min: 0
+			}),
+			alignment: new fields.SchemaField({
+				a: new fields.SchemaField({
+					name: new fields.StringField({
+						required: true,
+						initial: '',
+						blank: true
+					}),
+					affirm: new fields.NumberField({
+						required: true,
+						initial: 0,
+						min: 0
+					}),
+					deny: new fields.NumberField({
+						required: true,
+						initial: 0,
+						min: 0
+					})
+				}),
+				b: new fields.SchemaField({
+					name: new fields.StringField({
+						required: true,
+						initial: '',
+						blank: true
+					}),
+					affirm: new fields.NumberField({
+						required: true,
+						initial: 0,
+						min: 0,
+						max: 3
+					}),
+					deny: new fields.NumberField({
+						required: true,
+						initial: 0,
+						min: 0,
+						max: 3
+					})
+				})
 			}),
 			weapons: new fields.SchemaField({
 				weaponL: new fields.StringField({
@@ -287,6 +311,11 @@ export class AdventurerData extends CharacterBaseData {
 	}
 	get tenacity(){
 		return this.attributes.might + this.attributes.spirit;
+	}
+
+	//set to this on haven rest
+	get max_endurance(){
+		return this.attributes.spirit + 10;
 	}
 
 	//Base because this gets modified by armor, which will be items.
