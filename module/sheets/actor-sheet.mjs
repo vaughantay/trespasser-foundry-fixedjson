@@ -162,6 +162,7 @@ export class TrespasserActorSheet extends ActorSheet {
 			context.talents = talents;
 			context.spells = spells;
 			context.inventory = inventory;
+
 		} else if (this.actor.type == 'monster') {
 			const deeds=[];
 			let items = Object.values(Object.values(this.actor.items)[4]);
@@ -174,6 +175,8 @@ export class TrespasserActorSheet extends ActorSheet {
 				}
 			});
 			context.deeds = deeds;
+
+
 		}
 		context.features = features;
 

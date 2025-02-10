@@ -124,15 +124,19 @@ export class AdventurerData extends CharacterBaseData {
 				min: 0,
 				max: 1000
 			}),
-			recovery: new fields.NumberField({
-				required: true,
-				initial: 0,
-				min: 0
+			recovery: new fields.SchemaField({
+				current: new fields.NumberField({
+					required: true,
+					initial: 0,
+					min: 0
+				})
 			}),
-			endurance: new fields.NumberField({
-				required: true,
-				initial: 0,
-				min: 0
+			endurance: new fields.SchemaField({
+				current: new fields.NumberField({
+					required: true,
+					initial: 0,
+					min: 0
+				})
 			}),
 			keyattribute: new fields.SchemaField({
 				might: new fields.BooleanField({

@@ -36,14 +36,29 @@
 		</div>
 	</div>
 	<div class="flexcol main">
-			<div class="flexrow section">
+			<div class="section">
+				<h3>{{localize 'TRESPASSER.MenuLabels.featurepage'}}</h3>
+				<hr>
+				<div class='item-controls'>
+					<a
+						class='item-control item-create'
+						title='{{localize "DOCUMENT.Create" type='feature'}}'
+						data-type='feature'
+						data-item-type='feature'
+					>
+						<i class='fas fa-plus'></i>
+						{{localize 'DOCUMENT.New' type='Feature'}}
+					</a>
+				</div>
 				<div class="flex-container">
           {{#each context.features as |feature id|}}
           {{> "systems/trespasser/templates/actor/adventurer/items/list-simple.hbs" feature}}
           {{/each}}
         </div>
 			</div>
-			<div class="flexrow section">
+			<div class="section">
+				<h3>{{localize 'TRESPASSER.MenuLabels.deeds'}}</h3>
+				<hr>
 				<div class="flex-container">
           {{#each context.deeds as |deed id|}}
           {{> "systems/trespasser/templates/actor/adventurer/items/list-deed.hbs" deed=deed id=id}}

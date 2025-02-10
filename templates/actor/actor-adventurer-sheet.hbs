@@ -6,23 +6,22 @@
 				<h1 >Trespasser</h1>
 			</div>
 			<div class="flexrow">
-				<h4 class="flex3">{{localize 'TRESPASSER.DetailsLabels.name'}}</h4>
-				<h4 class="flex2">{{localize 'TRESPASSER.DetailsLabels.lineage'}}</h4>
+				<h4 class="flex6">{{localize 'TRESPASSER.DetailsLabels.name'}}</h4>
+				<h4 class="flex2">{{localize 'TRESPASSER.CombatLabels.focus'}}</h4>
 			</div>
 			<div class="flexrow">
-				<input class="flex3" name="name" type="text" value="{{actor.name}}" placeholder="Name"/>
-				<input class="flex2" name="system.text_details.lineage" type="text" value="{{system.text_details.lineage}}" placeholder="Lineage" data-dtype="text"/>
-			</div>
-			<div class="flexrow">
-				<h4 class="flex5">{{localize 'TRESPASSER.DetailsLabels.words'}}</h4>
-				<h5 class="flex2">{{localize 'TRESPASSER.CombatLabels.focus'}}</h5>
-				<h5 class="flex2">{{localize 'TRESPASSER.CombatLabels.hitpoints'}}</h5>
-			</div>
-			<div class="flexrow">
-				<input class="flex5" name="system.text_details.words" type="text" value="{{system.text_details.words}}" placeholder="Words To Live By" data-dtype="text"/>
+				<input class="flex6" name="name" type="text" value="{{actor.name}}" placeholder="Name"/>
 				<input class="flex2" name="system.effort" type="text" value="{{system.effort}}" data-dtype="Number"/>
-				<p class="flex1 fakeinput">{{system.combat.hit_points.value}}</p>
-				<p class="flex1 fakeinput">{{system.combat.hit_points.max}}</p>
+			</div>
+			<div class="flexrow">
+				<h4 class="flex3">{{localize 'TRESPASSER.DetailsLabels.words'}}</h4>
+				<h5 class="flex2">{{localize 'TRESPASSER.DetailsLabels.lineage'}}</h5>
+			</div>
+			<div class="flexrow">
+				<input class="flex3" name="system.text_details.words" type="text" value="{{system.text_details.words}}" placeholder="Words To Live By" data-dtype="text"/>
+				<input class="flex2" name="system.text_details.lineage" type="text" value="{{system.text_details.lineage}}" placeholder="Lineage" data-dtype="text"/>
+
+
 			</div>
 		</div>
 	</div>

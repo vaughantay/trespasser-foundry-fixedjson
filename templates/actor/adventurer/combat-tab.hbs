@@ -120,22 +120,22 @@
         </div>
         <div class="flex-container">
           {{#each context.lightdeeds as |deed id|}}
-          {{> "systems/trespasser/templates/actor/adventurer/items/list-deed.hbs" deed=deed id=id}}
+          {{> "systems/trespasser/templates/actor/adventurer/items/list-deed.hbs" deed=deed id=id player=true}}
           {{/each}}
         </div>
         <div class="flex-container">
           {{#each context.heavydeeds as |deed id|}}
-          {{> "systems/trespasser/templates/actor/adventurer/items/list-deed.hbs" deed=deed id=id}}
+          {{> "systems/trespasser/templates/actor/adventurer/items/list-deed.hbs" deed=deed id=id player=true}}
           {{/each}}
         </div>
         <div class="flex-container">
           {{#each context.mightydeeds as |deed id|}}
-          {{> "systems/trespasser/templates/actor/adventurer/items/list-deed.hbs" deed=deed id=id}}
+          {{> "systems/trespasser/templates/actor/adventurer/items/list-deed.hbs" deed=deed id=id player=true}}
           {{/each}}
         </div>
         <div class="flex-container">
           {{#each context.specialdeeds as |deed id|}}
-          {{> "systems/trespasser/templates/actor/adventurer/items/list-deed.hbs" deed=deed id=id}}
+          {{> "systems/trespasser/templates/actor/adventurer/items/list-deed.hbs" deed=deed id=id player=true}}
           {{/each}}
         </div>
       </div>
