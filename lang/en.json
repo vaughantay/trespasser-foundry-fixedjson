@@ -109,7 +109,9 @@
 			"delete":"Delete",
 			"advancement":"Advancement",
 			"combatval":"Combat Values",
-			"health":"Health & Healing"
+			"health":"Health & Healing",
+			"longrest": "Night's Rest",
+			"weekrest": "Week's Rest"
 		},
 
 		"EquipLabels":{

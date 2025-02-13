@@ -147,6 +147,7 @@ h1 {
 }
 .trespasser .box {
   padding: 2px;
+  width: 80%;
 }
 .boxed{
   border-width: thin;
