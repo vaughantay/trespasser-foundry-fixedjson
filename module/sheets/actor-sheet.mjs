@@ -284,30 +284,49 @@ export class TrespasserActorSheet extends ActorSheet {
 			}
 		});
 
-		html.on('click', '.armordie', (ev) => {
+		html.on('click', '.armordie', this._spendArmorDie.bind(this));
 
-		});
-
-		html.on('click', '.recollect', (ev) => {
-
-		});
 
 		html.on('click', '.keyattribute', (ev) => {
 
 		});
 
-		html.on('click', '.longrest', (ev) => {
+		html.on('click', '.recollect', (ev) => {
 			let d = new Dialog({
- 			title: "Long Rest",
- 			content: "<p>Take a long rest?</p>",
- 			buttons: {
-  		one: {
-   		icon: '<i class="fas fa-check"></i>',
-   		label: "Rest",
-			   callback: () =>
-					{
-
-					}
+ 				title: "Moment's Rest",
+ 				content: "<p>Spend a moment(±10 minutes) resting?</p>",
+ 				buttons: {
+  			one: {
+   			icon: '<i class="fas fa-check"></i>',
+   			label: "Rest",
+			  callback: () =>
+				{
+					this.actor.update({"system.effort": this.actor.system.attributes.intellect})
+					let items = this.actor.items;
+					items.forEach((item, i) => {
+						if (item.type == 'armor') {
+							if (item.system.equipped) {
+								item.update({'system.die_used' : false})
+							}
+						}
+					});
+					const message = {header:'',text:''}
+					message.header = this.actor.name + " takes a moment's rest."
+					message.text = "- Spend any number of your available recovery dice, regaining hit points equal to the maximum value for each die. <br>"
+					+ "- You may erase two checkmarks from their focus costs. <br>"
+					+ "- Your armor dice have been repaired."
+					const message_details = `<div class='message-text flexcol'>
+					<br>
+					<h5>${message.header}</h5>
+						<div class='box'>
+							<hr>
+						<p class='small'>
+						${message.text}
+						</p>
+						</div>
+					</div>`
+					ChatMessage.create({user: game.user._id, content: message_details});
+				}
 			  },
 			  	two: {
 			   icon: '<i class="fas fa-times"></i>',
@@ -317,7 +336,107 @@ export class TrespasserActorSheet extends ActorSheet {
 					 default: "two",
 					});
 					d.render(true);
+		});
 
+		html.on('click', '.longrest', (ev) => {
+			let d = new Dialog({
+ 			title: "Night's Rest",
+ 			content: "<p>Spend a night resting?</p>",
+ 			buttons: {
+  		one: {
+   		icon: '<i class="fas fa-check"></i>',
+   		label: "Rest",
+			   callback: () =>
+				 {
+					 this.actor.update({"system.effort": this.actor.system.attributes.intellect, "system.combat.hit_points.value": this.actor.system.combat.hit_points.max, "system.recovery": this.actor.system.endurance})
+					 let items = this.actor.items;
+					 items.forEach((item, i) => {
+						 if (item.type == 'armor') {
+							 if (item.system.equipped) {
+								 item.update({'system.die_used' : false})
+							 }
+						 } else if (item.type == 'deed') {
+							 item.update({'system.increaseCount':0});
+						 }
+					 });
+					 const message = {header:'',text:''}
+					 message.header = this.actor.name + " takes a night's rest."
+					 message.text = "- Recovery Dice Reset <br>"
+					 + "- Hit Points Regained <br>"
+					 + "- Focus Costs Reset <br>"
+					 + "- Armor Dice Repaired";
+					 const message_details = `<div class='message-text flexcol'>
+					 <br>
+					 <h5>${message.header}</h5>
+						 <div class='box'>
+							 <hr>
+						 <p class='small'>
+						 ${message.text}
+						 </p>
+						 </div>
+					 </div>`
+					 ChatMessage.create({user: game.user._id, content: message_details});
+				 }
+			  },
+			  	two: {
+			   icon: '<i class="fas fa-times"></i>',
+			   label: "No",
+					  }
+					 },
+					 default: "two",
+					});
+					d.render(true);
+		});
+
+		html.on('click', '.weekrest', (ev) => {
+			let d = new Dialog({
+ 			title: "Week's Rest",
+ 			content: "<p>Spend a week resting?</p>",
+ 			buttons: {
+  		one: {
+   		icon: '<i class="fas fa-check"></i>',
+   		label: "Rest",
+			   callback: () =>
+				{
+					this.actor.update({"system.endurance.current":this.actor.system.max_endurance})
+					this.actor.update({"system.effort": this.actor.system.attributes.intellect, "system.combat.hit_points.value": this.actor.system.combat.hit_points.max, "system.recovery": this.actor.system.endurance})
+					let items = this.actor.items;
+					items.forEach((item, i) => {
+						if (item.type == 'armor') {
+							if (item.system.equipped) {
+								item.update({'system.die_used' : false})
+							}
+						} else if (item.type == 'deed') {
+							item.update({'system.increaseCount':0});
+						}
+					});
+					const message = {header:'',text:''}
+					message.header = this.actor.name + " takes a week's rest."
+					message.text = "- Advance one injury clock by 1<br>"
+					+ "- Endurance Reset  <br>"
+					+ "- Focus Costs Reset <br>"
+					+ "- Armor Dice Repaired";
+					const message_details = `<div class='message-text flexcol'>
+					<br>
+					<h5>${message.header}</h5>
+						<div class='box'>
+							<hr>
+						<p class='small'>
+						${message.text}
+						</p>
+						</div>
+					</div>`
+					ChatMessage.create({user: game.user._id, content: message_details});
+				}
+			  },
+			  	two: {
+			   icon: '<i class="fas fa-times"></i>',
+			   label: "No",
+					  }
+					 },
+					 default: "two",
+					});
+					d.render(true);
 		});
 
 		html.on('click', '.recover', (ev) => {
@@ -340,6 +459,8 @@ export class TrespasserActorSheet extends ActorSheet {
 				this.actor.update({"system.recovery.current": recovery});
 			}
 		});
+
+
   }
 	//Not working yet
 	async _onItemCreate(event) {
@@ -370,7 +491,7 @@ export class TrespasserActorSheet extends ActorSheet {
 			{
 				abilities: {...CONFIG.TRESPASSER.AbilitiesLong},
 				skills: {...CONFIG.TRESPASSER.PlayerSkills},
-				selectedAbility: "agi",
+				selectedAbility: "Agility",
 				selectedSkill: "acrobatics"
 			},
 			'systems/trespasser/templates/dialogs/roll.hbs',
@@ -411,7 +532,45 @@ export class TrespasserActorSheet extends ActorSheet {
 			skilledOverride: form.skilled_override.checked
 		};
 	}
+	async _spendArmorDie(event) {
+		let diceCount = 1;
+		const li = $(event.currentTarget).parents('.armorslot');
+		const item = this.actor.items.get(li.data('itemId'));
+		if (item) {
+			let name = item.name;
+			let d = new Dialog({
+				title: "Armour Die",
+				content: `<p>Spend your ${name}'s armour die'?</p>`,
+				buttons: {
+				one: {
+				icon: '<i class="fas fa-check"></i>',
+				label: "Yes",
+				callback: () =>
+				{
+					let diceType = item.system.armor_die;
+					item.update({ 'system.die_used' :  true });
+					const rollFormula = `${diceCount}d${diceType}`;
+					const roll = new TrespasserRoll(rollFormula);
+					let sFlavor = item.name ;
 
+					roll.toMessage({
+						flavor:sFlavor,
+						speaker: ChatMessage.getSpeaker({ actor: this.actor }),
+						rollMode: game.settings.get('core', 'rollMode'),
+					}
+					);
+				}
+				},
+					two: {
+				 icon: '<i class="fas fa-times"></i>',
+				 label: "No",
+						}
+					 },
+					 default: "two",
+					});
+					d.render(true);
+		}
+	}
 	async _createdeedRoll(event) {
 		console.log(event.currentTarget);
 		const li = $(event.currentTarget).parents('.deed');
@@ -473,6 +632,12 @@ export class TrespasserActorSheet extends ActorSheet {
 			this.actor.update({"system.effort": this.actor.system.effort + this.actor.system.skill_bonus});
 		}
 	}
+
+	async postMessage(message){
+		console.log('daoin');
+
+	}
+
 	async _deedStart(event){
 		const li = $(event.currentTarget).parents('.deed');
 		const deed = this.actor.items.get(li.data('itemId'));
@@ -555,7 +720,8 @@ export class TrespasserActorSheet extends ActorSheet {
 		if(diceCount == 0) {
 			messageDeedAdditions.roll = false;
 			const message_details = await renderTemplate('systems/trespasser/templates/chat/deed-result.hbs', messageDeedAdditions)
-				ChatMessage.create({user: game.user._id, content: message_details});
+			console.log(message_details);
+			ChatMessage.create({user: game.user._id, content: message_details});
 		} else {
 
 			const rollFormula = `${diceCount}d${diceType}`;
