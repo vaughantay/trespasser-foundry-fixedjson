@@ -239,12 +239,8 @@ export class TrespasserActorSheet extends ActorSheet {
 
     html.on('click', '.item-create', this._onItemCreate.bind(this));
 
-    html.on('click', '.item-delete', (ev) => {
-      const li = $(ev.currentTarget).parents('.item');
-      const item = this.actor.items.get(li.data('itemId'));
-      item.delete();
-      li.slideUp(200, () => this.render(false));
-    });
+    html.on('click', '.item-delete', this._onItemDelete.bind(this));
+
 
     html.on('click', '.effect-control', (ev) => {
       const row = ev.currentTarget.closest('li');
@@ -348,7 +344,7 @@ export class TrespasserActorSheet extends ActorSheet {
    		label: "Rest",
 			   callback: () =>
 				 {
-					 this.actor.update({"system.effort": this.actor.system.attributes.intellect, "system.combat.hit_points.value": this.actor.system.combat.hit_points.max, "system.recovery": this.actor.system.endurance})
+					 this.actor.update({"system.effort": this.actor.system.attributes.intellect, "system.combat.hit_points.value": this.actor.system.combat.hit_points.max, "system.recovery.current": this.actor.system.endurance.current})
 					 let items = this.actor.items;
 					 items.forEach((item, i) => {
 						 if (item.type == 'armor') {
@@ -399,7 +395,7 @@ export class TrespasserActorSheet extends ActorSheet {
 			   callback: () =>
 				{
 					this.actor.update({"system.endurance.current":this.actor.system.max_endurance})
-					this.actor.update({"system.effort": this.actor.system.attributes.intellect, "system.combat.hit_points.value": this.actor.system.combat.hit_points.max, "system.recovery": this.actor.system.endurance})
+					this.actor.update({"system.effort": this.actor.system.attributes.intellect, "system.combat.hit_points.value": this.actor.system.combat.hit_points.max, "system.recovery.current": this.actor.system.endurance.current})
 					let items = this.actor.items;
 					items.forEach((item, i) => {
 						if (item.type == 'armor') {
@@ -481,6 +477,14 @@ export class TrespasserActorSheet extends ActorSheet {
 		};
 
 		return await Item.create(itemData, { parent: this.actor });
+	}
+
+	async _onItemDelete(event){
+		const li = $(event.currentTarget).parents('.item');
+		const item = this.actor.items.get(li.data('itemId'));
+		console.log(li);
+		item.delete();
+		li.slideUp(200, () => this.render(false));
 	}
 
 	async _createRoll(event) {
