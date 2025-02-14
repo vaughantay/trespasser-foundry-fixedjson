@@ -17,6 +17,17 @@
 			<i class='fas fa-trash'></i>
 		</a>
   </div>
+  <a class="increase-checks flex-row">
+  {{#if (eq system.increaseCount 0)}}
+  <i class="fa-regular fa-square"></i> <i class="fa-regular fa-square"></i> <i class="fa-regular fa-square"></i>
+  {{else if (eq system.increaseCount 1)}}
+  <i class="fa-solid fa-square"></i> <i class="fa-regular fa-square"></i> <i class="fa-regular fa-square"></i>
+  {{else if (eq system.increaseCount 2)}}
+  <i class="fa-solid fa-square"></i> <i class="fa-solid fa-square"></i> <i class="fa-regular fa-square"></i>
+  {{else}}
+  <i class="fa-solid fa-square"></i> <i class="fa-solid fa-square"></i> <i class="fa-solid fa-square"></i>
+  {{/if}}
+  </a>
   <div class="table">
     <h5>{{system.type}}
     {{#if system.isattack}}

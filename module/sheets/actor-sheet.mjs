@@ -455,6 +455,16 @@ export class TrespasserActorSheet extends ActorSheet {
 				this.actor.update({"system.recovery.current": recovery});
 			}
 		});
+		html.on('click', '.increase-checks', (ev) => {
+			const li = $(ev.currentTarget).parents('.deed');
+			const item = this.actor.items.get($(li).data('itemId'));
+			item.update({"system.increaseCount": item.system.increaseCount + 1});
+		});
+		html.on('contextmenu', '.increase-checks', (ev) => {
+			const li = $(ev.currentTarget).parents('.deed');
+			const item = this.actor.items.get($(li).data('itemId'));
+			item.update({"system.increaseCount": item.system.increaseCount - 1});
+		});
 
 
   }
