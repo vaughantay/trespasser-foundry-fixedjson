@@ -37,10 +37,10 @@ TRESPASSER.DeedTypes = {
 };
 
 TRESPASSER.Attributes = {
-	"agility": "TRESPASSER.Ability.Agi.agility",
-	"might": "TRESPASSER.Ability.Str.might",
-	"intellect": "TRESPASSER.Ability.Vig.intellect",
-	"spirit": "TRESPASSER.Ability.Knw.spirit",
+	"agility": "TRESPASSER.Ability.agility",
+	"might": "TRESPASSER.Ability.might",
+	"intellect": "TRESPASSER.Ability.intellect",
+	"spirit": "TRESPASSER.Ability.spirit",
 };
 
 TRESPASSER.PlayerSkills = {

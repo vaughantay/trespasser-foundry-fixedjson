@@ -490,43 +490,95 @@ export class TrespasserActorSheet extends ActorSheet {
 	}
 
 	async _createRoll(event) {
+		const a = event.currentTarget;
+		const act = a.dataset.action;
+		let DC = -1;
+		if (act == "skill") {
+			const data = await renderDialog(
+				game.i18n.localize('TRESPASSER.DialogLabels.skillRoll'),
+				this._processRollDialog,
+				{
+					abilities: {...CONFIG.TRESPASSER.Attributes},
+					skills: {...CONFIG.TRESPASSER.PlayerSkills},
+					selectedAbility: "Agility",
+					selectedSkill: "acrobatics"
+				},
+				'systems/trespasser/templates/dialogs/roll.hbs',
+			);
 
-		const data = await renderDialog(
-			game.i18n.localize('TRESPASSER.Dialogs.roll'),
-			this._processRollDialog,
-			{
-				abilities: {...CONFIG.TRESPASSER.AbilitiesLong},
-				skills: {...CONFIG.TRESPASSER.PlayerSkills},
-				selectedAbility: "Agility",
-				selectedSkill: "acrobatics"
-			},
-			'systems/trespasser/templates/dialogs/roll.hbs',
-		);
+			//If cancelled button is clicked, just dont make a roll.
+			if(data.cancelled == true) {
+				return;
+			}
 
-		//If cancelled button is clicked, just dont make a roll.
-		if(data.cancelled == true) {
-			return;
-		}
+			//If we override the skilled trait, we can just choose true, otherwise get the skill status of the skill selected.
+			const skilled = data.skilledOverride ? true : this.actor.system.skills[data.skill];
+			const skilled_bonus = skilled ? this.actor.system.skill_bonus : 0;
+			const ability_bonus = this.actor.system.attributes[data.ability];
+			if (data.dc > 0) {
+				DC = data.dc;
+			}
+			const roll = new TrespasserRoll(
+				"d20 + @abilityBonus + @skilledBonus",
+				DC,
+				{
+					abilityBonus: ability_bonus,
+					skilledBonus: skilled_bonus
+				});
 
-		//If we override the skilled trait, we can just choose true, otherwise get the skill status of the skill selected.
-		const skilled = data.skilledOverride ? true : this.actor.system.skills[data.skill];
+			//Now we can create an updated roll chat card, and plug the data in here.
+			//Make that the content of the actual thing.
+			let sFlavor = ''
+			roll.toMessage({
+				flavor:sFlavor,
+				speaker: ChatMessage.getSpeaker({ actor: this.actor }),
+				rollMode: game.settings.get('core', 'rollMode'),
+			});
+		} else {
+			let bonus = 0;
+			switch (act) {
+				case "initiative":
+					bonus = this.actor.system.initiative;
+					console.log("init");
+					break;
+				case "accuracy":
+					bonus = this.actor.system.accuracy;
+					break;
+				case "guard":
+					bonus = a.dataset.value;
+					break;
+				case "resist":
+					bonus = this.actor.system.resist;
+					break;
+				case "prevail":
+					bonus = this.actor.system.prevail;
+					break;
+				case "tenacity":
+					bonus = this.actor.system.tenacity;
+					break;
+				default:
+			}
 
-		const skilled_bonus = skilled ? this.actor.system.skill_bonus : 0;
-		const ability_bonus = this.actor.system.ability_mods[data.ability];
-		let roll = new Roll(
-			"d20 + @abilityBonus + @skilledBonus",
-			{
-				abilityBonus: ability_bonus,
-				skilledBonus: skilled_bonus
+			const roll = new TrespasserRoll(
+				"d20 + @bonus",
+				DC,
+				{
+					bonus: bonus
+				},
+			);
+
+			let sFlavor = act;
+
+			const evaluationData = await roll.evaluate();
+
+			roll.toMessage({
+				flavor:sFlavor,
+				speaker: ChatMessage.getSpeaker({ actor: this.actor }),
+				rollMode: game.settings.get('core', 'rollMode'),
 			});
 
-		//Now we can create an updated roll chat card, and plug the data in here.
-		//Make that the content of the actual thing.
+		}
 
-		roll.toMessage({
-			speaker: ChatMessage.getSpeaker({ actor: this.actor }),
-			rollMode: game.settings.get('core', 'rollMode'),
-		});
 	}
 
 	_processRollDialog(html) {
@@ -535,9 +587,12 @@ export class TrespasserActorSheet extends ActorSheet {
 		return {
 			ability: form.ability.value,
 			skill: form.skill.value,
-			skilledOverride: form.skilled_override.checked
+			skilledOverride: form.skilled_override.checked,
+			dc:form.dc.value
 		};
 	}
+
+
 	async _spendArmorDie(event) {
 		let diceCount = 1;
 		const li = $(event.currentTarget).parents('.armorslot');
@@ -577,6 +632,8 @@ export class TrespasserActorSheet extends ActorSheet {
 					d.render(true);
 		}
 	}
+
+
 	async _createdeedRoll(event) {
 		console.log(event.currentTarget);
 		const li = $(event.currentTarget).parents('.deed');
@@ -656,6 +713,14 @@ export class TrespasserActorSheet extends ActorSheet {
 		const a = event.currentTarget;
 		const li = $(a).parents('.status');
 		const status = this.actor.effects.get(li.data('itemId'));
+		if (a.dataset.action == "create") {
+				return this.actor.createEmbeddedDocuments("ActiveEffect", [{
+					label:'New Status',
+					icon: "icons/svg/aura.svg",
+					origin: this.actor,
+					system:{level:1}
+				}])
+		}
 		let level = status.system.level;
 		switch (a.dataset.action) {
 			case "inc":

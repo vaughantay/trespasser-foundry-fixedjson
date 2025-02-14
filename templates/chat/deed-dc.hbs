@@ -1,12 +1,14 @@
 <div>
 	{{#if success}}
-		<h2>{{localize 'TRESPASSER.ChatCards.overcome-dc-roll'}} {{DC}}</h2>
+		<h4>{{localize 'TRESPASSER.ChatCards.overcome-dc-roll'}} {{DC}}</h4>
 	{{else}}
-		<h2>{{localize 'TRESPASSER.ChatCards.failure-dc-roll'}} {{DC}}</h2>
+		<h4>{{localize 'TRESPASSER.ChatCards.failure-dc-roll'}} {{DC}}</h4>
 	{{/if}}
 	{{#if (ne successValue 0) includeZero=true}}
-		{{#if (gt successValue 0) includeZero=true}}
-			<h2>{{localize 'TRESPASSER.ChatCards.sparks'}} {{successValue}}</h2>
-		{{/if}}
+	{{#if (gt successValue 0) includeZero=true}}
+		<h5>{{localize 'TRESPASSER.ChatCards.sparks'}} {{successValue}}</h5>
+	{{else}}
+		<h5>{{localize 'TRESPASSER.ChatCards.shadows'}} {{successValue}}<h5>
+	{{/if}}
 	{{/if}}
 </div>

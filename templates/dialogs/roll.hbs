@@ -1,5 +1,11 @@
-<form class="trespasser">
+<form class="trespasser flexcol spaced">
 	{{> "systems/trespasser/templates/fields/select-field.hbs" field="ability" label="TRESPASSER.DialogLabels.ability" options=abilities localizeOptions=true value=selectedAbility}}
 	{{> "systems/trespasser/templates/fields/select-field.hbs" field="skill" label="TRESPASSER.DialogLabels.skill" options=skills localizeOptions=true value=selectedSkill includeEmpty=true}}
-	{{> "systems/trespasser/templates/fields/bool-field.hbs" field="skilled_override" label="TRESPASSER.DialogLabels.skill-override" value="false"}}
+	<span> <hr> </span>
+	<div class="flexrow spaced">
+		{{> 'systems/trespasser/templates/fields/number-field.hbs' label='TRESPASSER.DialogLabels.dc' field="dc" value=0 min=0}}
+		{{> "systems/trespasser/templates/fields/bool-field.hbs" field="skilled_override" label="TRESPASSER.DialogLabels.skill-override" value="false"}}
+	</div>
+	<p class="small">DC 0 for none.</p>
+	<span> <hr> </span>
 </form>
