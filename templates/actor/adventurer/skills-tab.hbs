@@ -1,58 +1,41 @@
 <div class="flexrow spaced">
   <div class="flexcol spaced">
     <div class="section">
-			<a class="roll">
-				<i class="fa-solid fa-dice-d20"></i>
-			</a>
       <div class="flexrow">
-        <div class="flex2"><h2>Attributes</h2></div>
-        <div class="flex1"><h4>Score</h4></div>
-        <div class="flex1"><h4>Mod</h4></div>
-        <div class="flex1"><h4>Skilled</h4></div>
+        <h2>Attributes & Skills</h2>
       </div>
       <div class="flexrow">
-        <h4 class="flex2">{{localize 'TRESPASSER.Ability.Str.long'}}</h4><br>
-        <input class="flex1" name="system.attributes.str" type="text" value="{{system.attributes.str}}" data-dtype="Number"/>
-        <p class="flex1 fakeinput">{{system.ability_mods.str}}</p>
-        <p class="flex1 fakeinput">{{system.skilled_mods.str}}</p>
+        <h4 class="flex3">{{localize 'TRESPASSER.Ability.might'}}</h4><br>
+        <input class="flex1 keyattribute" name="system.keyattribute.might" type="checkbox" {{checked system.keyattribute.might}} data-dtype="boolean"/>
+        <input class="flex2" name="system.attributes.might" type="text" value="{{system.attributes.might}}" data-dtype="Number"/>
       </div>
       <div class="flexrow">
-        <h4 class="flex2">{{localize 'TRESPASSER.Ability.Agi.long'}}</h4>
-        <input class="flex1" name="system.attributes.agi" type="text" value="{{system.attributes.agi}}" data-dtype="Number"/>
-        <p class="flex1 fakeinput">{{system.ability_mods.agi}}</p>
-        <p class="flex1 fakeinput">{{system.skilled_mods.agi}}</p>
+        <h4 class="flex3">{{localize 'TRESPASSER.Ability.agility'}}</h4>
+        <input class="flex1 keyattribute" name="system.keyattribute.agility" type="checkbox" {{checked system.keyattribute.agility}} data-dtype="boolean"/>
+        <input class="flex2" name="system.attributes.agility" type="text" value="{{system.attributes.agility}}" data-dtype="Number"/>
       </div>
       <div class="flexrow">
-        <h4 class="flex2">{{localize 'TRESPASSER.Ability.Vig.long'}}</h4>
-        <input class="flex1" name="system.attributes.vig" type="text" value="{{system.attributes.vig}}" data-dtype="Number"/>
-        <p class="flex1 fakeinput">{{system.ability_mods.vig}}</p>
-        <p class="flex1 fakeinput">{{system.skilled_mods.vig}}</p>
+        <h4 class="flex3">{{localize 'TRESPASSER.Ability.intellect'}}</h4>
+        <input class="flex1 keyattribute" name="system.keyattribute.intellect" type="checkbox" {{checked system.keyattribute.intellect}} data-dtype="boolean"/>
+        <input class="flex2" name="system.attributes.intellect" type="text" value="{{system.attributes.intellect}}" data-dtype="Number"/>
       </div>
       <div class="flexrow">
-        <h4 class="flex2">{{localize 'TRESPASSER.Ability.Knw.long'}}</h4>
-        <input class="flex1" name="system.attributes.knw" type="text" value="{{system.attributes.knw}}" data-dtype="Number"/>
-        <p class="flex1 fakeinput">{{system.ability_mods.knw}}</p>
-        <p class="flex1 fakeinput">{{system.skilled_mods.knw}}</p>
+        <h4 class="flex3">{{localize 'TRESPASSER.Ability.spirit'}}</h4>
+        <input class="flex1 keyattribute" name="system.keyattribute.spirit" type="checkbox" {{checked system.keyattribute.spirit}} data-dtype="boolean"/>
+        <input class="flex2" name="system.attributes.spirit" type="text" value="{{system.attributes.spirit}}" data-dtype="Number"/>
       </div>
-      <div class="flexrow">
-        <h4 class="flex2">{{localize 'TRESPASSER.Ability.Cng.long'}}</h4>
-        <input class="flex1" name="system.attributes.cng" type="text" value="{{system.attributes.cng}}" data-dtype="Number"/>
-        <p class="flex1 fakeinput">{{system.ability_mods.cng}}</p>
-        <p class="flex1 fakeinput">{{system.skilled_mods.cng}}</p>
-      </div>
-      <div class="flexrow">
-        <h4 class="flex2">{{localize 'TRESPASSER.Ability.Res.long'}}</h4>
-        <input class="flex1" name="system.attributes.res" type="text" value="{{system.attributes.res}}" data-dtype="Number"/>
-        <p class="flex1 fakeinput">{{system.ability_mods.res}}</p>
-        <p class="flex1 fakeinput">{{system.skilled_mods.res}}</p>
-      </div>
-    </div>
-  </div>
-  <div class="flexcol spaced">
-    <div class="section">
-      <div class="flexrow">
-        <h2>Skills</h2>
-      </div>
+      <hr/>
+      <div class="flexrow spaced">
+				<div class="flex2 box">
+					<h5>{{localize 'TRESPASSER.CombatLabels.skillbonus'}}</h5>
+					<p class="fakeinput">{{system.skill_bonus}}</p>
+				</div>
+				<div class="flex2 box">
+					<h5>{{localize 'TRESPASSER.CombatLabels.potency'}}</h5>
+					<p class="fakeinput">d{{system.potency_dice}}</p>
+				</div>
+			</div>
+
       <div class="flexrow spaced skills">
         <div class="flexcol box spaced">
           <div class="flexrow">
@@ -60,8 +43,16 @@
             <input class="flex1" name="system.skills.acrobatics" type="checkbox" {{checked system.skills.acrobatics}} data-dtype="boolean"/>
           </div>
           <div class="flexrow">
+            <h5 class="flex2">{{localize 'TRESPASSER.Skills.alchemy'}}</h5>
+            <input class="flex1" name="system.skills.alchemy" type="checkbox" {{checked system.skills.alchemy}} data-dtype="boolean"/>
+          </div>
+          <div class="flexrow">
             <h5 class="flex2">{{localize 'TRESPASSER.Skills.athletics'}}</h5>
             <input class="flex1" name="system.skills.athletics" type="checkbox" {{checked system.skills.athletics}} data-dtype="boolean"/>
+          </div>
+          <div class="flexrow">
+            <h5 class="flex2">{{localize 'TRESPASSER.Skills.crafting'}}</h5>
+            <input class="flex1" name="system.skills.crafting" type="checkbox" {{checked system.skills.crafting}} data-dtype="boolean"/>
           </div>
           <div class="flexrow">
             <h5 class="flex2">{{localize 'TRESPASSER.Skills.folklore'}}</h5>
@@ -71,12 +62,12 @@
             <h5 class="flex2">{{localize 'TRESPASSER.Skills.letters'}}</h5>
             <input class="flex1" name="system.skills.letters" type="checkbox" {{checked system.skills.letters}} data-dtype="boolean"/>
           </div>
-          <div class="flexrow">
-            <h5 class="flex2">{{localize 'TRESPASSER.Skills.mystery'}}</h5>
-            <input class="flex1" name="system.skills.mystery" type="checkbox" {{checked system.skills.mystery}} data-dtype="boolean"/>
-          </div>
         </div>
         <div class="flexcol box spaced">
+          <div class="flexrow">
+            <h5 class="flex2">{{localize 'TRESPASSER.Skills.magic'}}</h5>
+            <input class="flex1" name="system.skills.magic" type="checkbox" {{checked system.skills.magic}} data-dtype="boolean"/>
+          </div>
           <div class="flexrow">
             <h5 class="flex2">{{localize 'TRESPASSER.Skills.nature'}}</h5>
             <input class="flex1" name="system.skills.nature" type="checkbox" {{checked system.skills.nature}} data-dtype="checkbox"/>
@@ -99,6 +90,86 @@
           </div>
         </div>
       </div>
+    </div>
+  </div>
+  <div class="flexcol spaced">
+    <div class="section">
+      <div class="flexrow">
+        <h2>{{localize 'TRESPASSER.MenuLabels.health'}}</h2>
+      </div>
+      <div class="flexrow">
+        <h5>{{localize 'TRESPASSER.CombatLabels.hitpoints'}}</h5>
+      </div>
+      <div class="flexrow">
+        <input name="system.combat.hit_points.value" type="text" value="{{system.combat.hit_points.value}}" data-dtype="Number" class="flex2"/>
+        <input name="system.combat.hit_points.max" type="text" value="{{system.combat.hit_points.max}}" data-dtype="Number" class="flex2"/>
+      </div>
+      <div class="flexrow">
+        <h5>{{localize 'TRESPASSER.CombatLabels.recovery'}}</h5>
+      </div>
+      <div class="flexrow">
+        <input name="system.recovery.current" type="text" value="{{system.recovery.current}}" data-dtype="Number" class="flex3"/>
+        <div class="button flex1 recover">
+          <i class="fas fa-bandage"></i>
+        </div>
+      </div>
+      <div class="flexrow">
+        <h5>{{localize 'TRESPASSER.CombatLabels.endurance'}}</h5>
+      </div>
+      <div class="flexrow">
+        <input name="system.endurance.current" type="text" value="{{system.endurance.current}}" data-dtype="Number" class="flex2"/>
+      </div>
+      <hr>
+      <div class="">
+        <div class="button recollect">
+					<h5><i class="fas fa-rotate-left"></i> {{localize 'TRESPASSER.MenuLabels.moments'}} </h5>
+				</div>
+      </div>
+      <div class="flexrow">
+        <div class="button longrest">
+					<h5> <i class="fas fa-bed"></i> {{localize 'TRESPASSER.MenuLabels.longrest'}}</h5>
+				</div>
+        <div class="button weekrest">
+					<h5> <i class="fas fa-house"></i> {{localize 'TRESPASSER.MenuLabels.weekrest'}}</h5>
+				</div>
+      </div>
+      <hr/>
+      <div class="flexrow">
+        <h4>{{localize 'TRESPASSER.CombatLabels.injuries'}}</h4>
+      </div>
+      <div class="flexrow">
+        <div class="description">
+  				{{editor enrichedDetails target="system.injury" button=true owner=owner editable=editable}}
+  			</div>
+      </div>
+    </div>
+  </div>
+  <div class="flexcol spaced">
+    <div class="section">
+      <div class="flexrow">
+        <h2>{{localize 'TRESPASSER.MenuLabels.advancement'}}</h2>
+      </div>
+      <div class="flexrow">
+				<span class="flex1"><h5>Level</h5>
+        <input name="system.level" type="text" value="{{system.level}}" data-dtype="Number" />
+				<span class="flex2"><h5>XP</h5>
+				<input name="system.xp" type="number" value="{{system.xp}}" data-dtype="number"/></span>
+			</div>
+      <div class="flexrow">
+        <span class="flex1"><h5>{{localize 'TRESPASSER.DetailsLabels.class'}}</h5>
+        <input name="system.text_details.class_name" type="text" value="{{system.text_details.class_name}}" placeholder="Calling" data-dtype="text"/></span>
+        <span><h5>{{localize 'TRESPASSER.DetailsLabels.profession'}}</h5>
+        <input name="system.text_details.profession" type="text" value="{{system.text_details.profession}}" placeholder="Past Life" data-dtype="text"/></span>
+      </div>
+      <div class="flexrow">
+        <span><h5>{{localize 'TRESPASSER.DetailsLabels.themes'}}</h5>
+        <input name="system.text_details.themes" type="text" value="{{system.text_details.themes}}" placeholder="Crafts" data-dtype="text"/></span>
+      </div>
+      <div class="flexrow">
+        <span><h2>{{localize 'TRESPASSER.DetailsLabels.alignment'}}</h2>
+        <input name="system.text_details.alignment" type="text" value="{{system.text_details.alignment}}" placeholder="Alignment" data-dtype="text"/></span>
+      </div>
+
     </div>
   </div>
 </div>

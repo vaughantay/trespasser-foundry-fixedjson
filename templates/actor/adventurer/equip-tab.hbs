@@ -3,6 +3,7 @@
     <div class="flexrow">
       <h2>{{localize 'TRESPASSER.EquipLabels.weapons'}}</h2>
     </div>
+    {{#if context.equippedWeapons.left}}
     <div class="flexrow">
       <h5 class="flex3">{{localize 'TRESPASSER.EquipLabels.weapon'}}</h5>
       <h5 class="flex1">{{localize 'TRESPASSER.EquipLabels.damage'}}</h5>
@@ -15,10 +16,24 @@
     <div class="flexrow weaponL" data-item-id='{{context.equippedWeapons.left._id}}'>
       <p class="fakeinput flex3">{{context.equippedWeapons.left.name}}</p>
       <p class="fakeinput flex1">d{{context.equippedWeapons.left.system.damage}}</p>
-      <p class="fakeinput flex3">{{context.equippedWeapons.left.system.keywords}}</p>
-      <p class="fakeinput flex3"><span>{{{context.equippedWeapons.left.system.details}}}</span></p>
+      <p class="fakeinput flex3">
+        {{#if context.equippedWeapons.left.system.range.melee}}
+        {{localize 'TRESPASSER.WeaponTypes.melee'}}
+        <b>{{context.equippedWeapons.left.system.range.melee}}</b>
+        {{/if}}
+        {{#if context.equippedWeapons.left.system.range.missile}}
+        {{localize 'TRESPASSER.WeaponTypes.missile'}}
+        {{context.equippedWeapons.left.system.range.missile}}
+        {{/if}}
+        {{#if context.equippedWeapons.left.system.range.spell}}
+        {{localize 'TRESPASSER.WeaponTypes.spell'}}
+        {{context.equippedWeapons.left.system.range.spell}}
+        {{/if}}</p>
+      <span class="fakeinput flex3">{{{context.equippedWeapons.left.system.details}}}</span>
 
     </div>
+    {{/if}}
+    {{#if context.equippedWeapons.right}}
     <div class="flexrow">
       <h5 class="flex3">{{localize 'TRESPASSER.EquipLabels.weapon'}}</h5>
       <h5 class="flex1">{{localize 'TRESPASSER.EquipLabels.damage'}}</h5>
@@ -31,9 +46,22 @@
     <div class="flexrow weaponR" data-item-id='{{context.equippedWeapons.right._id}}'>
       <p class="fakeinput flex3">{{context.equippedWeapons.right.name}}</p>
       <p class="fakeinput flex1">d{{context.equippedWeapons.right.system.damage}}</p>
-      <p class="fakeinput flex3">{{context.equippedWeapons.right.system.keywords}}</p>
-      <p class="fakeinput flex3">{{{context.equippedWeapons.right.system.details}}}</p>
+      <p class="fakeinput flex3">
+        {{#if context.equippedWeapons.right.system.range.melee}}
+        {{localize 'TRESPASSER.WeaponTypes.melee'}}
+        <b>{{context.equippedWeapons.right.system.range.melee}}</b>
+        {{/if}}
+        {{#if context.equippedWeapons.right.system.range.missile}}
+        {{localize 'TRESPASSER.WeaponTypes.missile'}}
+        <b>{{context.equippedWeapons.right.system.range.missile}}</b>
+        {{/if}}
+        {{#if context.equippedWeapons.right.system.range.spell}}
+        {{localize 'TRESPASSER.WeaponTypes.spell'}}
+        <b>{{context.equippedWeapons.right.system.range.spell}}</b>
+        {{/if}}</p>
+      <span class="fakeinput flex3">{{{context.equippedWeapons.right.system.details}}}</span>
     </div>
+    {{/if}}
   </div>
 </div>
 <div class="flexrow spaced">
@@ -44,17 +72,17 @@
       </div>
       <div class="flexrow">
         <h5 class="flex3"></h5>
-        <h5 class="flex4">{{localize 'TRESPASSER.EquipLabels.armor'}}</h5>
+        <h5 class="flex5">{{localize 'TRESPASSER.EquipLabels.armor'}}</h5>
         <h5 class="flex2">{{localize 'TRESPASSER.EquipLabels.weight'}}</h5>
-        <h5 class="flex1">{{localize 'TRESPASSER.EquipLabels.armorclass'}}</h5>
-        <h5 class="flex2">{{localize 'TRESPASSER.EquipLabels.die'}}</h5>
+        <h5 class="flex1">{{localize 'TRESPASSER.EquipLabels.guard'}}</h5>
+        <h5 class="flex1">{{localize 'TRESPASSER.EquipLabels.die'}}</h5>
       </div>
-			{{> 'systems/trespasser/templates/actor/adventurer/items/armor-slot.hbs' context.equippedArmor.head location='head'}}
-			{{> 'systems/trespasser/templates/actor/adventurer/items/armor-slot.hbs' context.equippedArmor.body location='body'}}
-			{{> 'systems/trespasser/templates/actor/adventurer/items/armor-slot.hbs' context.equippedArmor.arms location='arms'}}
-			{{> 'systems/trespasser/templates/actor/adventurer/items/armor-slot.hbs' context.equippedArmor.legs location='legs'}}
-			{{> 'systems/trespasser/templates/actor/adventurer/items/armor-slot.hbs' context.equippedArmor.outer location='outer'}}
-			{{> 'systems/trespasser/templates/actor/adventurer/items/armor-slot.hbs' context.equippedArmor.shield location='shield'}}
+			{{> 'systems/trespasser/templates/actor/adventurer/items/armor-slot.hbs' context.equippedArmor.head id=context.equippedArmor.head.id location='head'}}
+			{{> 'systems/trespasser/templates/actor/adventurer/items/armor-slot.hbs' context.equippedArmor.body id=context.equippedArmor.body.id location='body'}}
+			{{> 'systems/trespasser/templates/actor/adventurer/items/armor-slot.hbs' context.equippedArmor.arms id=context.equippedArmor.arms.id location='arms'}}
+			{{> 'systems/trespasser/templates/actor/adventurer/items/armor-slot.hbs' context.equippedArmor.legs id=context.equippedArmor.legs.id location='legs'}}
+			{{> 'systems/trespasser/templates/actor/adventurer/items/armor-slot.hbs' context.equippedArmor.outer id=context.equippedArmor.outer.id location='outer'}}
+			{{> 'systems/trespasser/templates/actor/adventurer/items/armor-slot.hbs' context.equippedArmor.shield id=context.equippedArmor.shield.id location='shield'}}
     </div>
   </div>
   <div class="flexcol spaced " data-group='primary' data-tab='items'>
@@ -85,12 +113,12 @@
 			<div class='item-controls'>
 				<a
 					class='item-control item-create'
-					title='{{localize "DOCUMENT.Create" type='simple_item'}}'
-					data-type='simple_item'
-					data-item-type='inventory-item'
+					title='{{localize "DOCUMENT.Create" type='object'}}'
+					data-type='object'
+					data-item-type='object'
 				>
 					<i class='fas fa-plus'></i>
-					{{localize 'DOCUMENT.New' type='equipment'}}
+					{{localize 'DOCUMENT.New' type='item'}}
 				</a>
 			</div>
       {{#each context.inventory as |item id|}}

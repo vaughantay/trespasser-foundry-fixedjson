@@ -45,17 +45,15 @@ export class TrespasserItemSheet extends ItemSheet {
 		if(this.item.type == 'weapon') {
 			context.Weight = CONFIG.TRESPASSER.Weights;
 			context.Damage = CONFIG.TRESPASSER.DamageDiceSelections;
+      context.Type = CONFIG.TRESPASSER.WeaponTypes;
 		}
 
-		if(this.item.type == 'simple_item') {
-			context.ItemTypes = CONFIG.TRESPASSER.SimpleItemTypes;
-		}
-
-		if(this.item.type == 'action') {
-			context.ActionTypes = CONFIG.TRESPASSER.ActionTypes;
-			context.Skills = CONFIG.TRESPASSER.Skills;
-			context.enrichedHit = await TextEditor.enrichHTML(this.item.system.hit, {async: true});
-			context.enrichedSolid = await TextEditor.enrichHTML(this.item.system.solid_hit, {async: true});
+		if(this.item.type == 'deed') {
+			context.DeedTiers = CONFIG.TRESPASSER.DeedTiers;
+			context.TargetTypes = CONFIG.TRESPASSER.TargetTypes;
+      context.TargetSpecs = CONFIG.TRESPASSER.TargetSpecs;
+			context.DeedCost = this.item.system.base_cost + this.item.system.increaseCount;
+			context.DeedTypes = CONFIG.TRESPASSER.DeedTypes;
 		}
 
 		return context;

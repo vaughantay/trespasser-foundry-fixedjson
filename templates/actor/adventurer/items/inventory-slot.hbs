@@ -1,5 +1,5 @@
 <div>
-	<div class="expand-header flexrow item inventory-slot" data-item-id='{{_id}}'>
+	<div class="expand-header flexrow item inventory-slot" data-item-id='{{item._id}}'>
 		{{#if (eq type 'weapon')}}
 		<p class="fakeinput flex3">{{name}}</p>
 		<div class="flexrow flex4 item-controls">
@@ -59,8 +59,9 @@
 			</a>
 		</div>
 		{{/if}}
-		{{#if (eq type 'simple_item')}}
+		{{#if (eq type 'object')}}
 		<p class="fakeinput flex5">{{name}}</p>
+		<p class="flex1 fakeinput">{{system.quantity}}</p>
 		<div class="flexrow flex2 item-controls">
 			<a
 				class='item-control item-edit'
@@ -79,5 +80,5 @@
 		</div>
 		{{/if}}
 	</div>
-	<div class="expand">{{{system.details}}}</div> 
+	<div class="expand">{{{system.details}}}</div>
 </div>

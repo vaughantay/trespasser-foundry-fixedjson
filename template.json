@@ -1,15 +1,17 @@
 {
   "Actor": {
-    "types": ["adventurer"],
-		"adventurer": {}
+    "types": ["adventurer", "monster"],
+		"adventurer": {},
+    "monster":{}
   },
   "Item": {
-    "types": ["spell", "armor", "simple_item", "action", "weapon"],
+    "types": ["spell", "armor", "feature", "talent", "object",  "deed", "weapon"],
 		"spell": {},
 		"armor": {},
 		"base_item": {},
-		"action": {},
-		"weapon": {}
+		"deed": {},
+		"weapon": {},
+    "feature":{}
   }
 
 }

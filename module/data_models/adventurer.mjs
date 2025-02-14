@@ -10,8 +10,36 @@ export class AdventurerData extends CharacterBaseData {
 			//This does the characterBaseData
 			...super.defineSchema(),
 
-			//Attributes will be a schema with numbers inside.
-			//Buncha text fields.
+			attributes: new fields.SchemaField({
+				might: new fields.NumberField({
+					required: true,
+					initial: 1,
+					integer: true,
+					min: 0,
+					max: 5
+				}),
+				agility: new fields.NumberField({
+					required: true,
+					initial: 1,
+					integer: true,
+					min: 0,
+					max: 5
+				}),
+				intellect: new fields.NumberField({
+					required: true,
+					initial: 1,
+					integer: true,
+					min: 0,
+					max: 5
+				}),
+				spirit: new fields.NumberField({
+					required: true,
+					initial: 1,
+					integer: true,
+					min: 0,
+					max: 5
+				})
+			}),
 			text_details: new fields.SchemaField({
 				lineage: new fields.StringField({
 					required: true,
@@ -34,24 +62,26 @@ export class AdventurerData extends CharacterBaseData {
 					initial: '',
 					blank: true
 				}),
-				alignment: new fields.StringField({
+				words: new fields.StringField({
 					required: true,
 					initial: '',
 					blank: true
 				}),
 			}),
-			xp: new fields.NumberField({
-				initial: 0,
-				min: 0,
-				max: 40000
-			}),
-			//Skills are yes or no.
 			skills: new fields.SchemaField({
 				acrobatics: new fields.BooleanField({
 					required: true,
 					initial: false
 				}),
+				alchemy: new fields.BooleanField({
+					required: true,
+					initial: false
+				}),
 				athletics: new fields.BooleanField({
+					required: true,
+					initial: false
+				}),
+				crafting: new fields.BooleanField({
 					required: true,
 					initial: false
 				}),
@@ -63,7 +93,7 @@ export class AdventurerData extends CharacterBaseData {
 					required: true,
 					initial: false
 				}),
-				mystery: new fields.BooleanField({
+				magic: new fields.BooleanField({
 					required: true,
 					initial: false
 				}),
@@ -86,83 +116,216 @@ export class AdventurerData extends CharacterBaseData {
 				tinkering: new fields.BooleanField({
 					required: true,
 					initial: false
-				}),
+				})
 			}),
-			//Dont have a better place for this unfortunately.
 			effort: new fields.NumberField({
 				required: true,
-				initial: 4,
+				initial: 0,
 				min: 0,
-				max: 8
+				max: 1000
+			}),
+			recovery: new fields.SchemaField({
+				current: new fields.NumberField({
+					required: true,
+					initial: 0,
+					min: 0
+				})
+			}),
+			endurance: new fields.SchemaField({
+				current: new fields.NumberField({
+					required: true,
+					initial: 0,
+					min: 0
+				})
+			}),
+			keyattribute: new fields.SchemaField({
+				might: new fields.BooleanField({
+					required: true,
+					initial: false
+				}),
+				agility: new fields.BooleanField({
+					required: true,
+					initial: false
+				}),
+				intellect: new fields.BooleanField({
+					required: true,
+					initial: false
+				}),
+				spirit: new fields.BooleanField({
+					required: true,
+					initial: false
+				}),
+				value: new fields.NumberField({
+					required: true,
+					initial: 0,
+					min: 0
+				})
+			}),
+			xp: new fields.NumberField({
+				required: true,
+				initial: 0,
+				min: 0
+			}),
+			alignment: new fields.SchemaField({
+				a: new fields.SchemaField({
+					name: new fields.StringField({
+						required: true,
+						initial: '',
+						blank: true
+					}),
+					affirm: new fields.NumberField({
+						required: true,
+						initial: 0,
+						min: 0
+					}),
+					deny: new fields.NumberField({
+						required: true,
+						initial: 0,
+						min: 0
+					})
+				}),
+				b: new fields.SchemaField({
+					name: new fields.StringField({
+						required: true,
+						initial: '',
+						blank: true
+					}),
+					affirm: new fields.NumberField({
+						required: true,
+						initial: 0,
+						min: 0,
+						max: 3
+					}),
+					deny: new fields.NumberField({
+						required: true,
+						initial: 0,
+						min: 0,
+						max: 3
+					})
+				})
+			}),
+			weapons: new fields.SchemaField({
+				weaponL: new fields.StringField({
+					required: true,
+					initial: '',
+					blank: true
+				}),
+				weaponR: new fields.StringField({
+					required: true,
+					initial: '',
+					blank: true
+				})
+			}),
+			range: new fields.SchemaField({
+				melee: new fields.NumberField({
+					required: true,
+					initial: 0,
+					min: 0
+				}),
+				missile: new fields.NumberField({
+					required: true,
+					initial: 0,
+					min: 0
+				}),
+				spell: new fields.NumberField({
+					required: true,
+					initial: 0,
+					min: 0
+				})
+			}),
+			injury: new fields.HTMLField({
+					required: true,
+					initial: '',
+					blank: true
+			}),
+			resolve: new fields.NumberField({
+				required: true,
+				initial: 0,
+				min: 0
+			}),
+			level: new fields.NumberField({
+				required: true,
+				initial: 1,
+				min: 0
 			})
 		}
-	}
-	//Returns level based on xp
-	get level() {
-		let level = 0;
-
-		if (this.xp >= 30000) {
-			level = 9;
-		} else if (this.xp >= 24000) {
-			level = 8;
-		} else if (this.xp >= 18000) {
-			level = 7;
-		} else if (this.xp >= 14000) {
-			level = 6;
-		} else if (this.xp >= 10000) {
-			level = 5;
-		} else if (this.xp >= 7000) {
-			level = 4;
-		} else if (this.xp >= 4000) {
-			level = 3;
-		} else if (this.xp >= 2000) {
-			level = 2;
-		} else if (this.xp >= 100) {
-			level = 1;
-		}
-
-		return level;
 	}
 
 	get skill_bonus() {
 		const level = this.level;
 
-		if (level <= 3) {
+		if (level <= 2) {
+			return 1;
+		} else if (level <= 4) {
 			return 2;
 		} else if (level <= 6) {
 			return 3;
-		} else {
+		} else if (level <= 8) {
 			return 4;
+		} else {
+			return 5;
 		}
 	}
 
-	//Skilled modifier is just the regular mod plus the skill bonus based on level.
-	get skilled_mods() {
-		const mods = {...this.ability_mods};
-		const skillBonus = this.skill_bonus;
-
-		return {
-			str: mods.str + skillBonus,
-			agi: mods.agi + skillBonus,
-			vig: mods.vig + skillBonus,
-			knw: mods.knw + skillBonus,
-			cng: mods.cng + skillBonus,
-			res: mods.res + skillBonus
-		};
-	}
-
 	get is_peasant() {
-		return (level == 0) ? true : false;
+		return (level == 1) ? true : false;
 	}
 
 	get initiative() {
-		return this.skilled_mods.cng;
+		return this.attributes.agility + this.skill_bonus;
+	}
+	get accuracy() {
+		let keyval = 0;
+		if (this.keyattribute.might) {
+			keyval = this.attributes.might;
+		}
+		else if (this.keyattribute.agility) {
+			keyval = this.attributes.agility;
+		}
+		else if (this.keyattribute.intellect) {
+			keyval = this.attributes.intellect;
+		}
+		else if (this.keyattribute.spirit) {
+			keyval = this.attributes.spirit;
+		}
+		return keyval + this.skill_bonus;
+	}
+	get keyattr(){
+			let keystring = 'None';
+			if (this.keyattribute.might) {
+				keystring='Might';
+			}
+			else if (this.keyattribute.agility) {
+				keystring='Agility';
+			}
+			else if (this.keyattribute.intellect) {
+				keystring='Intellect';
+			}
+			else if (this.keyattribute.spirit) {
+				keystring='Spirit';
+			}
+			return keystring;
+	}
+
+	get resist() {
+		return this.attributes.spirit + this.skill_bonus;
+	}
+	get prevail() {
+		return this.attributes.intellect + this.skill_bonus;
+	}
+	get tenacity(){
+		return this.attributes.might + this.attributes.spirit;
+	}
+
+	//set to this on haven rest
+	get max_endurance(){
+		return this.attributes.spirit + 10;
 	}
 
 	//Base because this gets modified by armor, which will be items.
 	//Should be able to handle it in a sheet no problem.
 	get base_armor_class() {
-		return 10 + this.ability_mods.agi;
+		return this.attributes.agility;
 	}
 
 	get potency_dice() {
@@ -178,12 +341,16 @@ export class AdventurerData extends CharacterBaseData {
 		return potency;
 	}
 
-	//4 + level / 2. It seems to round down, can work with this for now.
-	//Effort changes all combat, so we have a field for current effort. Base effort is just a display field basically
+	get totalspeed(){
+		return 5 + this.attributes.agility + this.combat.speed;
+	}
+
 	get base_effort() {
-		return 4 + Math.floor(this.level / 2);
+		return this.attributes.intellect;
 	}
+
 	get inventory_max() {
-		return this.attributes.str;
+		return (this.attributes.might * 2);
 	}
+
 }

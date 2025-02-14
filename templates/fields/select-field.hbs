@@ -4,12 +4,10 @@
 	{{/if}}
   <div class="form-fields flex3">
     <select name="{{field}}">
-      {{#select value}}
-        {{#if includeEmpty}}
-          <option value="">&mdash;</option>
-        {{/if}}
-				{{selectOptions options selected=selected localize=localizeOptions}}
-      {{/select}}
+			{{#if includeEmpty}}
+				<option value="">&mdash;</option>
+			{{/if}}
+			{{selectOptions options selected=selected localize=localizeOptions}}
     </select>
   </div>
 </div>

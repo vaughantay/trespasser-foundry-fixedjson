@@ -17,7 +17,11 @@ export class WeaponData extends BaseItemData {
 				required: true,
 				initial: false
 			}),
-			two_handed: new fields.BooleanField({
+			twohanded: new fields.BooleanField({
+				required: true,
+				initial: false
+			}),
+			thrown: new fields.BooleanField({
 				required: true,
 				initial: false
 			}),
@@ -31,6 +35,31 @@ export class WeaponData extends BaseItemData {
 				required: false,
 				initial: '',
 				blank: true
+			}),
+
+			range: new fields.SchemaField({
+				melee: new fields.NumberField({
+					require: true,
+					initial: 1,
+					min: 0,
+					max:3
+				}),
+				missile: new fields.NumberField({
+					require: true,
+					initial: 0,
+					min: 0,
+				}),
+				spell: new fields.NumberField({
+					require: true,
+					initial: 0,
+					min: 0,
+				}),
+				unarmed: new fields.NumberField({
+					require: true,
+					initial: 0,
+					min: 0,
+					max:1
+				})
 			})
 		};
 	}
