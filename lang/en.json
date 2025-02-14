@@ -65,7 +65,9 @@
 			"impactdesc":"Increase the distance of a forced movement by +2",
 			"potencydesc":"Increase intensity of a state or created effect by +1",
 			"powerdesc":"Add skill die damage or increase recovery by +1",
-			"vs":"vs."
+			"vs":"vs.",
+			"states":"States",
+			"state":"State"
 		},
 
 		"DetailsLabels":{
@@ -111,7 +113,9 @@
 			"combatval":"Combat Values",
 			"health":"Health & Healing",
 			"longrest": "Night's Rest",
-			"weekrest": "Week's Rest"
+			"weekrest": "Week's Rest",
+			"edit":"Edit",
+			"delete":"Delete"
 		},
 
 		"EquipLabels":{

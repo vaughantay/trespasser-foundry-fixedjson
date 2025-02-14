@@ -64,6 +64,20 @@
     </div>
     <div class="flexrow">
       <div class="section">
+        <h2>{{localize 'TRESPASSER.CombatLabels.states'}}</h2>
+        <table class="item-list effects">
+          <tr>
+            <th>{{localize 'TRESPASSER.CombatLabels.state'}}</th>
+            <th> <a class='effect-control' data-action='create'><i class="fas fa-plus"></i></a> </th>
+          </tr>
+          {{#each context.effects as |effect id|}}
+          {{> "systems/trespasser/templates/actor/adventurer/items/table-effect.hbs" effect=effect id=id player=true}}
+          {{/each}}
+        </table>
+      </div>
+    </div>
+    <div class="flexrow">
+      <div class="section">
         <div class="flexrow">
           <h2>{{localize 'TRESPASSER.CombatLabels.sparks'}}</h2>
         </div>

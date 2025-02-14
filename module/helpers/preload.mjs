@@ -11,6 +11,7 @@ export const loadHandlebarsPartials = () => {
     "systems/trespasser/templates/actor/adventurer/items/inventory-slot.hbs",
     'systems/trespasser/templates/actor/adventurer/items/list-spell.hbs',
     'systems/trespasser/templates/actor/adventurer/items/list-simple.hbs',
+    'systems/trespasser/templates/actor/adventurer/items/table-effect.hbs',
     'systems/trespasser/templates/actor/adventurer/items/list-deed.hbs',
 		'systems/trespasser/templates/actor/actor-adventurer-sheet.hbs',
 		'systems/trespasser/templates/fields/text-field.hbs',

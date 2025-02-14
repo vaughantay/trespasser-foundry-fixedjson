@@ -3,6 +3,7 @@ import { TrespasserActor } from './actor/actor.mjs';
 import { TrespasserActorSheet } from './sheets/actor-sheet.mjs';
 import { TrespasserItem } from './item/item.mjs';
 import { TrespasserItemSheet } from './sheets/item-sheet.mjs';
+import { BaseAEModel } from './data_models/effects/base_effect.mjs';
 import { SpellData } from './data_models/items/spell.mjs';
 import { ArmorData } from './data_models/items/armor.mjs';
 import { DeedData } from './data_models/items/deed.mjs';
@@ -41,7 +42,7 @@ Hooks.once('init', function () {
 	status.forEach((stat, i) => {
 		CONFIG.statusEffects.push(stat);
 	});
-
+	CONFIG.ActiveEffect.dataModels.base = BaseAEModel
 	CONFIG.canvasTextStyle.fontFamily='Lusitana';
 	CONFIG.defaultFontFamily='Lusitana';
 
