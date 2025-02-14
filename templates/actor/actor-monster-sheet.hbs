@@ -36,25 +36,39 @@
 		</div>
 	</div>
 	<div class="flexcol main">
-			<div class="section">
-				<h3>{{localize 'TRESPASSER.MenuLabels.featurepage'}}</h3>
-				<hr>
-				<div class='item-controls'>
-					<a
-						class='item-control item-create'
-						title='{{localize "DOCUMENT.Create" type='feature'}}'
-						data-type='feature'
-						data-item-type='feature'
-					>
-						<i class='fas fa-plus'></i>
-						{{localize 'DOCUMENT.New' type='Feature'}}
-					</a>
+			<div class="flexrow">
+				<div class="section">
+					<h3>{{localize 'TRESPASSER.MenuLabels.featurepage'}}</h3>
+					<hr>
+					<div class='item-controls'>
+						<a
+							class='item-control item-create'
+							title='{{localize "DOCUMENT.Create" type='feature'}}'
+							data-type='feature'
+							data-item-type='feature'
+						>
+							<i class='fas fa-plus'></i>
+							{{localize 'DOCUMENT.New' type='Feature'}}
+						</a>
+					</div>
+					<div class="flex-container">
+	          {{#each context.features as |feature id|}}
+	          {{> "systems/trespasser/templates/actor/adventurer/items/list-simple.hbs" feature}}
+	          {{/each}}
+	        </div>
 				</div>
-				<div class="flex-container">
-          {{#each context.features as |feature id|}}
-          {{> "systems/trespasser/templates/actor/adventurer/items/list-simple.hbs" feature}}
-          {{/each}}
-        </div>
+				<div class="section">
+	        <h3>{{localize 'TRESPASSER.CombatLabels.states'}}</h3>
+	        <table class="item-list effects">
+	          <tr>
+	            <th>{{localize 'TRESPASSER.CombatLabels.state'}}</th>
+	            <th> <a class='effect-control' data-action='create'><i class="fas fa-plus"></i></a> </th>
+	          </tr>
+	          {{#each context.effects as |effect id|}}
+	          {{> "systems/trespasser/templates/actor/adventurer/items/table-effect.hbs" effect=effect id=id player=true}}
+	          {{/each}}
+	        </table>
+	      </div>
 			</div>
 			<div class="section">
 				<h3>{{localize 'TRESPASSER.MenuLabels.deeds'}}</h3>

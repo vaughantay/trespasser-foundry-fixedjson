@@ -179,8 +179,7 @@ export class TrespasserActorSheet extends ActorSheet {
 
 		}
 		context.features = features;
-
-
+		context.effects = this.actor.getEmbeddedCollection("ActiveEffect").contents;
 		return {
 			'context': context,
 			actor: this.actor,
@@ -242,14 +241,7 @@ export class TrespasserActorSheet extends ActorSheet {
     html.on('click', '.item-delete', this._onItemDelete.bind(this));
 
 
-    html.on('click', '.effect-control', (ev) => {
-      const row = ev.currentTarget.closest('li');
-      //const document =,
-        row.dataset.parentId === this.actor.id
-          ? this.actor
-          : this.actor.items.get(row.dataset.parentId);
-      onManageActiveEffect(ev, document);
-    });
+    html.on('click', '.effect-control', this._onEffectControl.bind(this));
 
 		html.on('click', '.roll', this._createRoll.bind(this));
 
@@ -587,10 +579,23 @@ export class TrespasserActorSheet extends ActorSheet {
 		if (this.actor.system.effort < focusCost) {
 			return ui.notifications.warn("You do not have enough focus.");
 		}
-		if (deed.system.type == "missile") {
-			if (this.actor.system.range.missile == 0) {
-				return ui.notifications.warn("This is a missile deed. You have no missile weapons equipped.");
-			}
+		switch (deed.system.type) {
+			case "missile":
+				if (this.actor.system.range.missile == 0) {
+					return ui.notifications.warn("This is a missile deed. Your missile range is 0.");
+				}
+				break;
+			case "melee":
+				if (this.actor.system.range.melee == 0) {
+					return ui.notifications.warn("This is a melee deed. Your melee range is 0 and you have no free hands.");
+				}
+				break;
+			case "spell":
+				if (this.actor.system.range.spell == 0) {
+					return ui.notifications.warn("This is a spell deed. Your spell range is 0 and you have no free hands.");
+				}
+				break;
+			default:
 		}
 
 		let DC = 0;
@@ -637,10 +642,30 @@ export class TrespasserActorSheet extends ActorSheet {
 		}
 	}
 
-	async postMessage(message){
-		console.log('daoin');
+	async _onEffectControl(event){
+		const a = event.currentTarget;
+		const li = $(a).parents('.status');
+		const status = this.actor.effects.get(li.data('itemId'));
+		let level = status.system.level;
+		switch (a.dataset.action) {
+			case "inc":
+				level = level + 1;
+				status.update({"system.level": level})
+				break;
+			case "dec":
+				level = level - 1;
+				if (level == 0) {
+					return status.delete();
+				} else
+				status.update({"system.level": level})
+				break;
+			case "edit":
+				return status.sheet.render(true);
+			case "delete":
+				return status.delete();
+		}
+		}
 
-	}
 
 	async _deedStart(event){
 		const li = $(event.currentTarget).parents('.deed');
@@ -702,11 +727,25 @@ export class TrespasserActorSheet extends ActorSheet {
 		//if its weapon, we have to check which weapons use the right range and shit dawg
 		//// ['innate', 'spell', 'missile', 'item', 'melee', 'unarmed', 'versatile'],
 		if (deed.system.damagetype) {
-			if (deed.system.type == "missile") {
-				if (this.actor.system.range.missile == 0) {
-					return ui.notifications.warn("This is a missile deed. You have no missile weapons equipped.");
-				}
+			switch (deed.system.type) {
+				case "missile":
+					if (this.actor.system.range.missile == 0) {
+						return ui.notifications.warn("This is a missile deed. Your missile range is 0.");
+					}
+					break;
+				case "melee":
+					if (this.actor.system.range.melee == 0) {
+						return ui.notifications.warn("This is a melee deed. Your melee range is 0 and you have no free hands.");
+					}
+					break;
+				case "spell":
+					if (this.actor.system.range.spell == 0) {
+						return ui.notifications.warn("This is a spell deed. Your spell range is 0 and you have no free hands.");
+					}
+					break;
+				default:
 			}
+
 			//If its weapon damage, this will be true, and we need to choose the highest damage weapon
 			const weaponRDamage = parseInt(this.actor.items.get(this.actor.system.weapons.weaponR)?.system.damage);
 			const weaponLDamage = parseInt(this.actor.items.get(this.actor.system.weapons.weaponL)?.system.damage);
