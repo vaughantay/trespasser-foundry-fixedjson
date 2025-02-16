@@ -166,11 +166,15 @@
         <span><h5>{{localize 'TRESPASSER.DetailsLabels.themes'}}</h5>
         <input name="system.text_details.themes" type="text" value="{{system.text_details.themes}}" placeholder="Crafts" data-dtype="text"/></span>
       </div>
-      <div class="flexrow">
-        <span><h2>{{localize 'TRESPASSER.DetailsLabels.alignment'}}</h2>
-        <input name="system.text_details.alignment" type="text" value="{{system.text_details.alignment}}" placeholder="Alignment" data-dtype="text"/></span>
+      <div class="">
+        <h2>{{localize 'TRESPASSER.DetailsLabels.alignment'}}</h2>
+        <div class="flexrow">
+          <input name="system.alignment.a.name" type="text" value="{{system.alignment.a.name}}" placeholder="Alignment" data-dtype="text"/>
+        </div>
+        <div class="flexrow">
+          <input name="system.alignment.b.name" type="text" value="{{system.alignment.b.name}}" placeholder="Alignment" data-dtype="text"/>
+        </div>
       </div>
-
     </div>
   </div>
 </div>

@@ -1,7 +1,3 @@
-import {
-	onManageActiveEffect,
-	prepareActiveEffectCategories,
-} from '../helpers/effects.mjs'
 import { renderDialog } from '../helpers/dialog.mjs';
 import { TrespasserRoll } from '../roll/trespasser-roll.mjs';
 
@@ -33,7 +29,7 @@ export class TrespasserActorSheet extends ActorSheet {
 		//deeds and features are shared between monster and adventurer. So we will leave them out of the if statement.
 
 		const features = [];
-
+		context.edit = false;
 		if(this.actor.type === 'adventurer') {
 			//We will add to this based on which armor pieces are equipped.
 			let calculatedAC = this.actor.system.base_armor_class;
@@ -241,7 +237,7 @@ export class TrespasserActorSheet extends ActorSheet {
     html.on('click', '.item-delete', this._onItemDelete.bind(this));
 
 
-    html.on('click', '.effect-control', this._onEffectControl.bind(this));
+    html.on('click', '.effect-control', this._onSheetEffectControl.bind(this));
 
 		html.on('click', '.roll', this._createRoll.bind(this));
 
@@ -484,7 +480,6 @@ export class TrespasserActorSheet extends ActorSheet {
 	async _onItemDelete(event){
 		const li = $(event.currentTarget).parents('.item');
 		const item = this.actor.items.get(li.data('itemId'));
-		console.log(li);
 		item.delete();
 		li.slideUp(200, () => this.render(false));
 	}
@@ -539,7 +534,6 @@ export class TrespasserActorSheet extends ActorSheet {
 			switch (act) {
 				case "initiative":
 					bonus = this.actor.system.initiative;
-					console.log("init");
 					break;
 				case "accuracy":
 					bonus = this.actor.system.accuracy;
@@ -635,7 +629,6 @@ export class TrespasserActorSheet extends ActorSheet {
 
 
 	async _createdeedRoll(event) {
-		console.log(event.currentTarget);
 		const li = $(event.currentTarget).parents('.deed');
 		const deed = this.actor.items.get(li.data('itemId'));
 
@@ -692,7 +685,7 @@ export class TrespasserActorSheet extends ActorSheet {
 		}
 	}
 
-	async _onEffectControl(event){
+	async _onSheetEffectControl(event){
 		const a = event.currentTarget;
 		const li = $(a).parents('.status');
 		const status = this.actor.effects.get(li.data('itemId'));
@@ -803,7 +796,6 @@ export class TrespasserActorSheet extends ActorSheet {
 		if(diceCount == 0) {
 			messageDeedAdditions.roll = false;
 			const message_details = await renderTemplate('systems/trespasser/templates/chat/deed-result.hbs', messageDeedAdditions)
-			console.log(message_details);
 			ChatMessage.create({user: game.user._id, content: message_details});
 		} else {
 

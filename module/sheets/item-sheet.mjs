@@ -1,9 +1,3 @@
-import {
-  onManageActiveEffect,
-  prepareActiveEffectCategories,
-} from '../helpers/effects.mjs';
-
-
 export class TrespasserItemSheet extends ItemSheet {
   static get defaultOptions() {
     return foundry.utils.mergeObject(super.defaultOptions, {
@@ -64,8 +58,5 @@ export class TrespasserItemSheet extends ItemSheet {
 
     if (!this.isEditable) return;
 
-    html.on('click', '.effect-control', (ev) =>
-      onManageActiveEffect(ev, this.item)
-    );
   }
 }

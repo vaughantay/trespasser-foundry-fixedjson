@@ -89,6 +89,11 @@ TRESPASSER.ArmorDiceSelections = {
 
 TRESPASSER.statusEffects = [
 	{
+    "id": "dead",
+    "name": "Dead",
+    "img": "icons/magic/death/grave-tombstone-glow-teal.webp"
+	},
+	{
     "id": "accurate",
     "name": "Accurate",
     "img": "icons/magic/perception/eye-ringed-glow-angry-small-teal.webp"
@@ -192,5 +197,31 @@ TRESPASSER.statusEffects = [
     "id": "sleeping",
     "name": "Sleeping",
     "img": "icons/magic/control/sleep-bubble-purple.webp"
-	}
+	},
+	{
+    "id": "aiming",
+    "name": "Aiming",
+    "img": "icons/skills/targeting/crosshair-ringed-gray.webp"
+	},
+	{
+    "id": "covered",
+    "name": "Covered",
+    "img": "icons/environment/wilderness/terrain-rocks-brown.webp"
+	},
+	{
+    "id": "flanked",
+    "name": "Flanked",
+    "img": "icons/environment/people/infantry-army.webp"
+	},
+	{
+    "id": "shadowy",
+    "name": "Shadowy",
+    "img": "icons/magic/perception/shadow-stealth-eyes-purple.webp"
+	},
+	{
+    "id": "tenacious",
+    "name": "Tenacious",
+    "img": "icons/magic/unholy/strike-body-explode-disintegrate.webp"
+	},
+
 ];
