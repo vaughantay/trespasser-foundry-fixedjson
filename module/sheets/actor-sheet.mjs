@@ -490,43 +490,95 @@ export class TrespasserActorSheet extends ActorSheet {
 	}
 
 	async _createRoll(event) {
+		const a = event.currentTarget;
+		const act = a.dataset.action;
+		let DC = -1;
+		if (act == "skill") {
+			const data = await renderDialog(
+				game.i18n.localize('TRESPASSER.DialogLabels.skillRoll'),
+				this._processRollDialog,
+				{
+					abilities: {...CONFIG.TRESPASSER.Attributes},
+					skills: {...CONFIG.TRESPASSER.PlayerSkills},
+					selectedAbility: "Agility",
+					selectedSkill: "acrobatics"
+				},
+				'systems/trespasser/templates/dialogs/roll.hbs',
+			);
 
-		const data = await renderDialog(
-			game.i18n.localize('TRESPASSER.Dialogs.roll'),
-			this._processRollDialog,
-			{
-				abilities: {...CONFIG.TRESPASSER.AbilitiesLong},
-				skills: {...CONFIG.TRESPASSER.PlayerSkills},
-				selectedAbility: "Agility",
-				selectedSkill: "acrobatics"
-			},
-			'systems/trespasser/templates/dialogs/roll.hbs',
-		);
+			//If cancelled button is clicked, just dont make a roll.
+			if(data.cancelled == true) {
+				return;
+			}
 
-		//If cancelled button is clicked, just dont make a roll.
-		if(data.cancelled == true) {
-			return;
-		}
+			//If we override the skilled trait, we can just choose true, otherwise get the skill status of the skill selected.
+			const skilled = data.skilledOverride ? true : this.actor.system.skills[data.skill];
+			const skilled_bonus = skilled ? this.actor.system.skill_bonus : 0;
+			const ability_bonus = this.actor.system.attributes[data.ability];
+			if (data.dc > 0) {
+				DC = data.dc;
+			}
+			const roll = new TrespasserRoll(
+				"d20 + @abilityBonus + @skilledBonus",
+				DC,
+				{
+					abilityBonus: ability_bonus,
+					skilledBonus: skilled_bonus
+				});
 
-		//If we override the skilled trait, we can just choose true, otherwise get the skill status of the skill selected.
-		const skilled = data.skilledOverride ? true : this.actor.system.skills[data.skill];
+			//Now we can create an updated roll chat card, and plug the data in here.
+			//Make that the content of the actual thing.
+			let sFlavor = ''
+			roll.toMessage({
+				flavor:sFlavor,
+				speaker: ChatMessage.getSpeaker({ actor: this.actor }),
+				rollMode: game.settings.get('core', 'rollMode'),
+			});
+		} else {
+			let bonus = 0;
+			switch (act) {
+				case "initiative":
+					bonus = this.actor.system.initiative;
+					console.log("init");
+					break;
+				case "accuracy":
+					bonus = this.actor.system.accuracy;
+					break;
+				case "guard":
+					bonus = a.dataset.value;
+					break;
+				case "resist":
+					bonus = this.actor.system.resist;
+					break;
+				case "prevail":
+					bonus = this.actor.system.prevail;
+					break;
+				case "tenacity":
+					bonus = this.actor.system.tenacity;
+					break;
+				default:
+			}
 
-		const skilled_bonus = skilled ? this.actor.system.skill_bonus : 0;
-		const ability_bonus = this.actor.system.ability_mods[data.ability];
-		let roll = new Roll(
-			"d20 + @abilityBonus + @skilledBonus",
-			{
-				abilityBonus: ability_bonus,
-				skilledBonus: skilled_bonus
+			const roll = new TrespasserRoll(
+				"d20 + @bonus",
+				DC,
+				{
+					bonus: bonus
+				},
+			);
+
+			let sFlavor = act;
+
+			const evaluationData = await roll.evaluate();
+
+			roll.toMessage({
+				flavor:sFlavor,
+				speaker: ChatMessage.getSpeaker({ actor: this.actor }),
+				rollMode: game.settings.get('core', 'rollMode'),
 			});
 
-		//Now we can create an updated roll chat card, and plug the data in here.
-		//Make that the content of the actual thing.
+		}
 
-		roll.toMessage({
-			speaker: ChatMessage.getSpeaker({ actor: this.actor }),
-			rollMode: game.settings.get('core', 'rollMode'),
-		});
 	}
 
 	_processRollDialog(html) {
@@ -535,9 +587,12 @@ export class TrespasserActorSheet extends ActorSheet {
 		return {
 			ability: form.ability.value,
 			skill: form.skill.value,
-			skilledOverride: form.skilled_override.checked
+			skilledOverride: form.skilled_override.checked,
+			dc:form.dc.value
 		};
 	}
+
+
 	async _spendArmorDie(event) {
 		let diceCount = 1;
 		const li = $(event.currentTarget).parents('.armorslot');
@@ -577,6 +632,8 @@ export class TrespasserActorSheet extends ActorSheet {
 					d.render(true);
 		}
 	}
+
+
 	async _createdeedRoll(event) {
 		console.log(event.currentTarget);
 		const li = $(event.currentTarget).parents('.deed');
@@ -589,24 +646,7 @@ export class TrespasserActorSheet extends ActorSheet {
 		if (this.actor.system.effort < focusCost) {
 			return ui.notifications.warn("You do not have enough focus.");
 		}
-		switch (deed.system.type) {
-			case "missile":
-				if (this.actor.system.range.missile == 0) {
-					return ui.notifications.warn("This is a missile deed. Your missile range is 0.");
-				}
-				break;
-			case "melee":
-				if (this.actor.system.range.melee == 0) {
-					return ui.notifications.warn("This is a melee deed. Your melee range is 0 and you have no free hands.");
-				}
-				break;
-			case "spell":
-				if (this.actor.system.range.spell == 0) {
-					return ui.notifications.warn("This is a spell deed. Your spell range is 0 and you have no free hands.");
-				}
-				break;
-			default:
-		}
+
 
 		let DC = 0;
 
@@ -656,6 +696,14 @@ export class TrespasserActorSheet extends ActorSheet {
 		const a = event.currentTarget;
 		const li = $(a).parents('.status');
 		const status = this.actor.effects.get(li.data('itemId'));
+		if (a.dataset.action == "create") {
+				return this.actor.createEmbeddedDocuments("ActiveEffect", [{
+					label:'New Status',
+					icon: "icons/svg/aura.svg",
+					origin: this.actor,
+					system:{level:1}
+				}])
+		}
 		let level = status.system.level;
 		switch (a.dataset.action) {
 			case "inc":
@@ -737,24 +785,7 @@ export class TrespasserActorSheet extends ActorSheet {
 		//if its weapon, we have to check which weapons use the right range and shit dawg
 		//// ['innate', 'spell', 'missile', 'item', 'melee', 'unarmed', 'versatile'],
 		if (deed.system.damagetype) {
-			switch (deed.system.type) {
-				case "missile":
-					if (this.actor.system.range.missile == 0) {
-						return ui.notifications.warn("This is a missile deed. Your missile range is 0.");
-					}
-					break;
-				case "melee":
-					if (this.actor.system.range.melee == 0) {
-						return ui.notifications.warn("This is a melee deed. Your melee range is 0 and you have no free hands.");
-					}
-					break;
-				case "spell":
-					if (this.actor.system.range.spell == 0) {
-						return ui.notifications.warn("This is a spell deed. Your spell range is 0 and you have no free hands.");
-					}
-					break;
-				default:
-			}
+
 
 			//If its weapon damage, this will be true, and we need to choose the highest damage weapon
 			const weaponRDamage = parseInt(this.actor.items.get(this.actor.system.weapons.weaponR)?.system.damage);
@@ -768,8 +799,7 @@ export class TrespasserActorSheet extends ActorSheet {
 
 		}
 
-		//Basically if we have 0 dice, we dont want to post 0d10 or something, so we just ignore making the roll, and post
-		//A chat message with the relevant details.
+		//with 0 dice we just post the message
 		if(diceCount == 0) {
 			messageDeedAdditions.roll = false;
 			const message_details = await renderTemplate('systems/trespasser/templates/chat/deed-result.hbs', messageDeedAdditions)

@@ -109,7 +109,6 @@ td{
 
 .trespasser, body {
   font-family: "Lusitana", serif;
-  background-color: #444444;
 }
 .trespasser .section {
   padding: 10px 3px;
@@ -150,7 +149,6 @@ td{
 }
 .trespasser .box {
   padding: 2px;
-  width: 80%;
 }
 .boxed{
   border-width: thin;

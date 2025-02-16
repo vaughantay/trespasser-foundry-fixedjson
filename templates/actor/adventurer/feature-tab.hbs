@@ -17,7 +17,7 @@
 				</div>
         <div class="flex-container">
           {{#each context.features as |feature id|}}
-          {{> "systems/trespasser/templates/actor/adventurer/items/list-simple.hbs" feature}}
+          {{> "systems/trespasser/templates/actor/adventurer/items/list-simple.hbs" item=feature id=id}}
           {{/each}}
         </div>
       </div>
@@ -40,7 +40,7 @@
 				</div>
         <div class="flex-container">
           {{#each context.talents as |talent id|}}
-          {{> "systems/trespasser/templates/actor/adventurer/items/list-simple.hbs" talent}}
+          {{> "systems/trespasser/templates/actor/adventurer/items/list-simple.hbs" item=talent id=id}}
           {{/each}}
         </div>
       </div>

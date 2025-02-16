@@ -8,31 +8,37 @@
         <div class="flexrow">
   				<span><h4>{{localize 'TRESPASSER.CombatLabels.initiative'}}</h4>
           <h6>{{localize 'TRESPASSER.Ability.agility'}} + {{localize 'TRESPASSER.CombatLabels.skillbonus'}}</h6></span>
+          <a class="roll flex0" data-action="initiative"> <i class="fa-solid fa-dice-d20"></i></a>
   				<p class="fakeinput">{{system.initiative}}</p>
         </div>
         <div class="flexrow">
   				<span><h4>{{localize 'TRESPASSER.CombatLabels.accuracy'}}</h4>
           <h6>{{system.keyattr}} + {{localize 'TRESPASSER.CombatLabels.skillbonus'}}</h6></span>
+          <a class="roll flex0" data-action="accuracy"> <i class="fa-solid fa-dice-d20"></i></a>
   				<p class="fakeinput">{{system.accuracy}}</p>
         </div>
         <div class="flexrow">
   				<span><h4>{{localize 'TRESPASSER.CombatLabels.guard'}}</h4>
           <h6>{{localize 'TRESPASSER.Ability.agility'}} + {{localize 'TRESPASSER.EquipLabels.armor'}}</h6></span>
+          <a class="roll flex0" data-action="guard" data-value="{{context.AC}}"> <i class="fa-solid fa-dice-d20"></i></a>
   				<p class="fakeinput">{{context.AC}}</p>
         </div>
         <div class="flexrow">
   				<span><h4>{{localize 'TRESPASSER.CombatLabels.resist'}}</h4>
           <h6>{{localize 'TRESPASSER.Ability.spirit'}} + {{localize 'TRESPASSER.CombatLabels.skillbonus'}}</h6></span>
+          <a class="roll flex0" data-action="resist"> <i class="fa-solid fa-dice-d20"></i></a>
   				<p class="fakeinput">{{system.resist}}</p>
         </div>
         <div class="flexrow">
   				<span><h4>{{localize 'TRESPASSER.CombatLabels.prevail'}}</h4>
           <h6>{{localize 'TRESPASSER.Ability.intellect'}} + {{localize 'TRESPASSER.CombatLabels.skillbonus'}}</h6></span>
+          <a class="roll flex0" data-action="prevail"> <i class="fa-solid fa-dice-d20"></i></a>
   				<p class="fakeinput">{{system.prevail}}</p>
         </div>
         <div class="flexrow">
   				<span><h4>{{localize 'TRESPASSER.CombatLabels.tenacity'}}</h4>
           <h6>{{localize 'TRESPASSER.Ability.might'}} + {{localize 'TRESPASSER.Ability.spirit'}}</h6></span>
+          <a class="roll flex0" data-action="tenacity"> <i class="fa-solid fa-dice-d20"></i></a>
   				<p class="fakeinput">{{system.tenacity}}</p>
         </div>
         <hr/>

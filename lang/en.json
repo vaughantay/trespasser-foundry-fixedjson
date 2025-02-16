@@ -94,9 +94,11 @@
 		},
 
 		"DialogLabels": {
-			"ability": "Ability",
+			"ability": "Attribute",
 			"skill": "Skill",
-			"skill-override": "Skilled Override"
+			"skill-override": "Skilled",
+			"dc":"DC",
+			"skillRoll":"Roll"
 		},
 
 		"MenuLabels":{

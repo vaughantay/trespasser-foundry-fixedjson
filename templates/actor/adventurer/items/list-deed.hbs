@@ -1,9 +1,9 @@
 <div class="deed item" data-item-id='{{deed._id}}'>
   <div class="flexrow spaced">
 		<a class='deed-roll flexrow'>
-		<h4 class="flex3">{{name}}</h4>
+		<h4>{{name}}</h4>
     </a>
-		<h5 class="flex1 small">{{system.tier}} {{#if player}} | {{#if (eq system.tier 'light')}} +{{localize 'TRESPASSER.CombatLabels.skillbonus'}}{{else}}{{system.current_cost}}{{/if}}{{/if}}</h5>
+
     <a
 			class='item-control item-edit flex0'
 			title='{{localize "DOCUMENT.Update" type='Item'}}'
@@ -17,17 +17,24 @@
 			<i class='fas fa-trash'></i>
 		</a>
   </div>
-  <a class="increase-checks flex-row">
-  {{#if (eq system.increaseCount 0)}}
-  <i class="fa-regular fa-square"></i> <i class="fa-regular fa-square"></i> <i class="fa-regular fa-square"></i>
-  {{else if (eq system.increaseCount 1)}}
-  <i class="fa-solid fa-square"></i> <i class="fa-regular fa-square"></i> <i class="fa-regular fa-square"></i>
-  {{else if (eq system.increaseCount 2)}}
-  <i class="fa-solid fa-square"></i> <i class="fa-solid fa-square"></i> <i class="fa-regular fa-square"></i>
-  {{else}}
-  <i class="fa-solid fa-square"></i> <i class="fa-solid fa-square"></i> <i class="fa-solid fa-square"></i>
-  {{/if}}
-  </a>
+  <div class="costs flexrow ">
+    <h5 class="flex2 small">{{system.tier}} {{#if player}} | {{#if (eq system.tier 'light')}} +{{localize 'TRESPASSER.CombatLabels.skillbonus'}}{{else}}{{system.current_cost}}{{/if}}{{/if}}</h5>
+    {{#if (eq system.tier 'light')}}{{else}}
+    <a class="increase-checks">
+    {{#if (eq system.increaseCount 0)}}
+    <i class="fa-regular fa-square"></i> <i class="fa-regular fa-square"></i> <i class="fa-regular fa-square"></i>
+    {{else if (eq system.increaseCount 1)}}
+    <i class="fa-solid fa-square"></i> <i class="fa-regular fa-square"></i> <i class="fa-regular fa-square"></i>
+    {{else if (eq system.increaseCount 2)}}
+    <i class="fa-solid fa-square"></i> <i class="fa-solid fa-square"></i> <i class="fa-regular fa-square"></i>
+    {{else}}
+    <i class="fa-solid fa-square"></i> <i class="fa-solid fa-square"></i> <i class="fa-solid fa-square"></i>
+    {{/if}}
+    </a>
+    {{/if}}
+  </div>
+
+
   <div class="table">
     <h5>{{system.type}}
     {{#if system.isattack}}
