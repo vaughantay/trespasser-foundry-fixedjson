@@ -646,24 +646,7 @@ export class TrespasserActorSheet extends ActorSheet {
 		if (this.actor.system.effort < focusCost) {
 			return ui.notifications.warn("You do not have enough focus.");
 		}
-		switch (deed.system.type) {
-			case "missile":
-				if (this.actor.system.range.missile == 0) {
-					return ui.notifications.warn("This is a missile deed. Your missile range is 0.");
-				}
-				break;
-			case "melee":
-				if (this.actor.system.range.melee == 0) {
-					return ui.notifications.warn("This is a melee deed. Your melee range is 0 and you have no free hands.");
-				}
-				break;
-			case "spell":
-				if (this.actor.system.range.spell == 0) {
-					return ui.notifications.warn("This is a spell deed. Your spell range is 0 and you have no free hands.");
-				}
-				break;
-			default:
-		}
+
 
 		let DC = 0;
 
@@ -802,24 +785,7 @@ export class TrespasserActorSheet extends ActorSheet {
 		//if its weapon, we have to check which weapons use the right range and shit dawg
 		//// ['innate', 'spell', 'missile', 'item', 'melee', 'unarmed', 'versatile'],
 		if (deed.system.damagetype) {
-			switch (deed.system.type) {
-				case "missile":
-					if (this.actor.system.range.missile == 0) {
-						return ui.notifications.warn("This is a missile deed. Your missile range is 0.");
-					}
-					break;
-				case "melee":
-					if (this.actor.system.range.melee == 0) {
-						return ui.notifications.warn("This is a melee deed. Your melee range is 0 and you have no free hands.");
-					}
-					break;
-				case "spell":
-					if (this.actor.system.range.spell == 0) {
-						return ui.notifications.warn("This is a spell deed. Your spell range is 0 and you have no free hands.");
-					}
-					break;
-				default:
-			}
+
 
 			//If its weapon damage, this will be true, and we need to choose the highest damage weapon
 			const weaponRDamage = parseInt(this.actor.items.get(this.actor.system.weapons.weaponR)?.system.damage);
@@ -833,8 +799,7 @@ export class TrespasserActorSheet extends ActorSheet {
 
 		}
 
-		//Basically if we have 0 dice, we dont want to post 0d10 or something, so we just ignore making the roll, and post
-		//A chat message with the relevant details.
+		//with 0 dice we just post the message
 		if(diceCount == 0) {
 			messageDeedAdditions.roll = false;
 			const message_details = await renderTemplate('systems/trespasser/templates/chat/deed-result.hbs', messageDeedAdditions)
