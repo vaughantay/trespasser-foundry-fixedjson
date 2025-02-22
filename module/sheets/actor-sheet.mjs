@@ -1,6 +1,7 @@
 import { renderDialog } from '../helpers/dialog.mjs';
 import { TrespasserRoll } from '../roll/trespasser-roll.mjs';
-
+//one day I'll add more comments
+//no you won't
 export class TrespasserActorSheet extends ActorSheet {
 	static get defaultOptions() {
 
