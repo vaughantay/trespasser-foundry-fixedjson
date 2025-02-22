@@ -57,6 +57,9 @@ h1 {
 td{
   overflow: hidden;
 }
+.inactive{
+  color: grey;
+}
 .long{
   height:100px;
 }

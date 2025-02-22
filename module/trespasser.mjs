@@ -58,6 +58,9 @@ Hooks.once('init', function () {
 		label: 'TRESPASSER.SheetLabels.Item',
 	});
 	Handlebars.registerHelper('hasDeedContent', function(value){
+		if (value.custom) {
+			return true;
+		}
 		if (value.damage == 0 & value.text == '') {
 			return false;
 		} else return true;

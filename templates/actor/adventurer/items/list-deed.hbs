@@ -1,8 +1,9 @@
 <div class="deed item" data-item-id='{{deed._id}}'>
-  <div class="flexrow spaced">
-		<a class='deed-roll flexrow'>
+    <div class="flexrow spaced">
+		{{#if player}}<a class='deed-roll flexrow'>
 		<h4>{{name}}</h4>
     </a>
+    {{else}}<h4>{{name}}</h4>{{/if}}
 
     <a
 			class='item-control item-edit flex0'
@@ -19,6 +20,7 @@
   </div>
   <div class="costs flexrow ">
     <h5 class="flex2 small">{{system.tier}} {{#if player}} | {{#if (eq system.tier 'light')}} +{{localize 'TRESPASSER.CombatLabels.skillbonus'}}{{else}}{{system.current_cost}}{{/if}}{{/if}}</h5>
+    {{#if player}}
     {{#if (eq system.tier 'light')}}{{else}}
     <a class="increase-checks">
     {{#if (eq system.increaseCount 0)}}
@@ -31,6 +33,7 @@
     <i class="fa-solid fa-square"></i> <i class="fa-solid fa-square"></i> <i class="fa-solid fa-square"></i>
     {{/if}}
     </a>
+    {{/if}}
     {{/if}}
   </div>
 
@@ -63,6 +66,12 @@
      <a class="deed-base flex-row">
        <p>
          <b> {{localize "TRESPASSER.ItemLabels.base"}}: </b>
+         {{#if system.custom}}
+            {{#if system.base.custom}}
+            <span class="rollvalue">{{system.base.custom}}</span>
+              <br>
+            {{/if}}
+         {{else}}
          {{#if system.base.damage}}
            {{localize "TRESPASSER.ItemLabels.deal"}}
            <span class="rollvalue">{{system.base.damage}}
@@ -71,17 +80,22 @@
              {{/if}}</span>
              <br>
          {{/if}}
-
+         {{/if}}
          {{{system.base.text}}}
        </p>
      </a>
      {{/if}}
-
       {{#if (hasDeedContent system.hit)}}
       <hr>
        <a class="deed-hit flex-row">
          <p>
            <b> {{localize "TRESPASSER.ItemLabels.hit"}}: </b>
+           {{#if system.custom}}
+              {{#if system.hit.custom}}
+              <span class="rollvalue">{{system.hit.custom}}</span>
+                <br>
+              {{/if}}
+           {{else}}
            {{#if system.hit.damage}}
              {{localize "TRESPASSER.ItemLabels.deal"}}
              <span class="rollvalue">{{system.hit.damage}}
@@ -90,7 +104,7 @@
                {{/if}}</span>
                <br>
            {{/if}}
-
+           {{/if}}
            {{{system.hit.text}}}
          </p>
        </a>
@@ -101,6 +115,12 @@
          <a class="deed-spark flex-row">
            <p>
              <b> {{localize "TRESPASSER.ItemLabels.spark"}}: </b>
+             {{#if system.custom}}
+                {{#if system.spark.custom}}
+                <span class="rollvalue">{{system.spark.custom}}</span>
+                  <br>
+                {{/if}}
+             {{else}}
              {{#if system.spark.damage}}
                {{localize "TRESPASSER.ItemLabels.deal"}}
                <span class="rollvalue">{{system.spark.damage}}
@@ -109,7 +129,7 @@
                  {{/if}}</span>
                  <br>
              {{/if}}
-
+             {{/if}}
              {{{system.spark.text}}}
            </p>
          </a>

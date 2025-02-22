@@ -68,6 +68,11 @@ export class DeedData extends BaseItemData {
 					required: true,
 					initial:'',
 					empty: false
+				}),
+				custom: new fields.StringField({
+					required: true,
+					initial:'',
+					empty: false
 				})
 			}),
 			hit: new fields.SchemaField({
@@ -77,6 +82,11 @@ export class DeedData extends BaseItemData {
 					min: 0
 				}),
 				text: new fields.StringField({
+					required: true,
+					initial:'',
+					empty: false
+				}),
+				custom: new fields.StringField({
 					required: true,
 					initial:'',
 					empty: false
@@ -92,6 +102,11 @@ export class DeedData extends BaseItemData {
 					required: true,
 					initial:'',
 					empty: false
+				}),
+				custom: new fields.StringField({
+					required: true,
+					initial:'',
+					empty: false
 				})
 			}),
 			start: new fields.StringField({
@@ -103,6 +118,11 @@ export class DeedData extends BaseItemData {
 				required: true,
 				initial:'',
 				empty: false
+			}),
+			//to override weapon/skill dice for monsters mostly
+			custom: new fields.BooleanField({
+				required: true,
+				initial: false
 			}),
 			damagetype: new fields.BooleanField({
 				required: true,
