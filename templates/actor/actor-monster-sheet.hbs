@@ -85,7 +85,7 @@
 				<hr>
 				<div class="flex-container">
           {{#each context.deeds as |deed id|}}
-          {{> "systems/trespasser/templates/actor/adventurer/items/list-deed.hbs" deed=deed id=id}}
+          {{> "systems/trespasser/templates/actor/adventurer/items/list-deed.hbs" deed=deed id=id player=false}}
           {{/each}}
         </div>
 			</div>

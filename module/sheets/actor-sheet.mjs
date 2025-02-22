@@ -1,7 +1,3 @@
-import {
-	onManageActiveEffect,
-	prepareActiveEffectCategories,
-} from '../helpers/effects.mjs'
 import { renderDialog } from '../helpers/dialog.mjs';
 import { TrespasserRoll } from '../roll/trespasser-roll.mjs';
 
@@ -33,7 +29,7 @@ export class TrespasserActorSheet extends ActorSheet {
 		//deeds and features are shared between monster and adventurer. So we will leave them out of the if statement.
 
 		const features = [];
-
+		context.edit = false;
 		if(this.actor.type === 'adventurer') {
 			//We will add to this based on which armor pieces are equipped.
 			let calculatedAC = this.actor.system.base_armor_class;
@@ -241,7 +237,7 @@ export class TrespasserActorSheet extends ActorSheet {
     html.on('click', '.item-delete', this._onItemDelete.bind(this));
 
 
-    html.on('click', '.effect-control', this._onEffectControl.bind(this));
+    html.on('click', '.effect-control', this._onSheetEffectControl.bind(this));
 
 		html.on('click', '.roll', this._createRoll.bind(this));
 
@@ -484,7 +480,6 @@ export class TrespasserActorSheet extends ActorSheet {
 	async _onItemDelete(event){
 		const li = $(event.currentTarget).parents('.item');
 		const item = this.actor.items.get(li.data('itemId'));
-		console.log(li);
 		item.delete();
 		li.slideUp(200, () => this.render(false));
 	}
@@ -539,7 +534,6 @@ export class TrespasserActorSheet extends ActorSheet {
 			switch (act) {
 				case "initiative":
 					bonus = this.actor.system.initiative;
-					console.log("init");
 					break;
 				case "accuracy":
 					bonus = this.actor.system.accuracy;
@@ -599,43 +593,66 @@ export class TrespasserActorSheet extends ActorSheet {
 		const item = this.actor.items.get(li.data('itemId'));
 		if (item) {
 			let name = item.name;
-			let d = new Dialog({
-				title: "Armour Die",
-				content: `<p>Spend your ${name}'s armour die'?</p>`,
-				buttons: {
-				one: {
-				icon: '<i class="fas fa-check"></i>',
-				label: "Yes",
-				callback: () =>
-				{
-					let diceType = item.system.armor_die;
-					item.update({ 'system.die_used' :  true });
-					const rollFormula = `${diceCount}d${diceType}`;
-					const roll = new TrespasserRoll(rollFormula);
-					let sFlavor = item.name ;
-
-					roll.toMessage({
-						flavor:sFlavor,
-						speaker: ChatMessage.getSpeaker({ actor: this.actor }),
-						rollMode: game.settings.get('core', 'rollMode'),
+			if (item.system.die_used) {
+				let d = new Dialog({
+					title: "Undo Armor Die",
+					content: `<p>Undo your ${name}'s spent armor die'?</p>`,
+					buttons: {
+					one: {
+					icon: '<i class="fas fa-check"></i>',
+					label: "Yes",
+					callback: () =>
+					{
+						item.update({ 'system.die_used' :  false });
 					}
-					);
-				}
-				},
-					two: {
-				 icon: '<i class="fas fa-times"></i>',
-				 label: "No",
+					},
+						two: {
+					 icon: '<i class="fas fa-times"></i>',
+					 label: "No",
+							}
+						 },
+						 default: "two",
+						});
+						d.render(true);
+			}
+			else {
+				let d = new Dialog({
+					title: "armor Die",
+					content: `<p>Spend your ${name}'s armor die'?</p>`,
+					buttons: {
+					one: {
+					icon: '<i class="fas fa-check"></i>',
+					label: "Yes",
+					callback: () =>
+					{
+						let diceType = item.system.armor_die;
+						item.update({ 'system.die_used' :  true });
+						const rollFormula = `${diceCount}d${diceType}`;
+						const roll = new TrespasserRoll(rollFormula);
+						let sFlavor = item.name ;
+						roll.toMessage({
+							flavor:sFlavor,
+							speaker: ChatMessage.getSpeaker({ actor: this.actor }),
+							rollMode: game.settings.get('core', 'rollMode'),
 						}
-					 },
-					 default: "two",
-					});
-					d.render(true);
+						);
+					}
+					},
+						two: {
+					 icon: '<i class="fas fa-times"></i>',
+					 label: "No",
+							}
+						 },
+						 default: "two",
+						});
+						d.render(true);
+			}
+
 		}
 	}
 
 
 	async _createdeedRoll(event) {
-		console.log(event.currentTarget);
 		const li = $(event.currentTarget).parents('.deed');
 		const deed = this.actor.items.get(li.data('itemId'));
 
@@ -692,7 +709,7 @@ export class TrespasserActorSheet extends ActorSheet {
 		}
 	}
 
-	async _onEffectControl(event){
+	async _onSheetEffectControl(event){
 		const a = event.currentTarget;
 		const li = $(a).parents('.status');
 		const status = this.actor.effects.get(li.data('itemId'));
@@ -757,6 +774,7 @@ export class TrespasserActorSheet extends ActorSheet {
 		messageDeedAdditions.type = type.toUpperCase();
 		let diceCount = 0;
 		let message = '';
+		let custom = '';
 		switch (type) {
 			case 'start':
 				messageDeedAdditions.message = deed.system.start;
@@ -764,50 +782,26 @@ export class TrespasserActorSheet extends ActorSheet {
 			case 'base':
 				messageDeedAdditions.message = deed.system.base.text;
 				diceCount = deed.system.base.damage;
+				custom = deed.system.base.custom;
 				break;
 			case 'hit':
 				messageDeedAdditions.message = deed.system.hit.text;
 				diceCount = deed.system.hit.damage;
+				custom = deed.system.hit.custom;
 				break;
 			case 'spark':
 				messageDeedAdditions.message = deed.system.spark.text;
 				diceCount = deed.system.spark.damage;
+				custom = deed.system.spark.custom;
 				break;
 			case 'after':
 				messageDeedAdditions.message = deed.system.after;
 				break;
 		}
 
-
-		//potency dice by default, if its weapon damage, we do logic to overwrite it.
-		let diceType = this.actor.system.potency_dice;
-
-		//if its weapon, we have to check which weapons use the right range and shit dawg
-		//// ['innate', 'spell', 'missile', 'item', 'melee', 'unarmed', 'versatile'],
-		if (deed.system.damagetype) {
-
-
-			//If its weapon damage, this will be true, and we need to choose the highest damage weapon
-			const weaponRDamage = parseInt(this.actor.items.get(this.actor.system.weapons.weaponR)?.system.damage);
-			const weaponLDamage = parseInt(this.actor.items.get(this.actor.system.weapons.weaponL)?.system.damage);
-			const weaponRDam_NaN = isNaN(weaponRDamage) ? 0 : weaponRDamage;
-			const weaponLDam_NaN = isNaN(weaponLDamage) ? 0 : weaponLDamage;
-			//if they both return nothing, WE USE UNARMED DAMAGE IF ITS MELEE
-			if (isNaN(weaponRDamage) && isNaN(weaponLDamage)) {
-				diceType = 4;
-			} else diceType = (weaponRDam_NaN > weaponLDam_NaN) ? weaponRDam_NaN : weaponLDam_NaN;
-
-		}
-
-		//with 0 dice we just post the message
-		if(diceCount == 0) {
-			messageDeedAdditions.roll = false;
-			const message_details = await renderTemplate('systems/trespasser/templates/chat/deed-result.hbs', messageDeedAdditions)
-			console.log(message_details);
-			ChatMessage.create({user: game.user._id, content: message_details});
-		} else {
-
-			const rollFormula = `${diceCount}d${diceType}`;
+		if (deed.system.custom && custom) {
+			console.log();
+			const rollFormula = custom;
 
 			const roll = new TrespasserRoll(rollFormula);
 
@@ -821,6 +815,43 @@ export class TrespasserActorSheet extends ActorSheet {
 			{},
 			await renderTemplate('systems/trespasser/templates/chat/deed-result.hbs', messageDeedAdditions)
 			);
+		}
+		else if(diceCount == 0) {
+				messageDeedAdditions.roll = false;
+				const message_details = await renderTemplate('systems/trespasser/templates/chat/deed-result.hbs', messageDeedAdditions)
+				ChatMessage.create({user: game.user._id, content: message_details});
+			}
+		else {
+			let diceType = this.actor.system.potency_dice;
+			//if its weapon, we have to check which weapons use the right range and shit dawg
+			//// ['innate', 'spell', 'missile', 'item', 'melee', 'unarmed', 'versatile'],
+			if (deed.system.damagetype) {
+				//If its weapon damage, this will be true, and we need to choose the highest damage weapon
+				const weaponRDamage = parseInt(this.actor.items.get(this.actor.system.weapons.weaponR)?.system.damage);
+				const weaponLDamage = parseInt(this.actor.items.get(this.actor.system.weapons.weaponL)?.system.damage);
+				const weaponRDam_NaN = isNaN(weaponRDamage) ? 0 : weaponRDamage;
+				const weaponLDam_NaN = isNaN(weaponLDamage) ? 0 : weaponLDamage;
+				//if they both return nothing, WE USE UNARMED DAMAGE IF ITS MELEE
+				if (isNaN(weaponRDamage) && isNaN(weaponLDamage)) {
+					diceType = 4;
+				} else diceType = (weaponRDam_NaN > weaponLDam_NaN) ? weaponRDam_NaN : weaponLDam_NaN;
+
+			}
+
+				const rollFormula = `${diceCount}d${diceType}`;
+
+				const roll = new TrespasserRoll(rollFormula);
+
+				let sFlavor = deed.name + ' | ' + type.toUpperCase();
+
+				roll.toMessage({
+					flavor:sFlavor,
+					speaker: ChatMessage.getSpeaker({ actor: this.actor }),
+					rollMode: game.settings.get('core', 'rollMode'),
+				},
+				{},
+				await renderTemplate('systems/trespasser/templates/chat/deed-result.hbs', messageDeedAdditions)
+				);
 		}
 	}
 }

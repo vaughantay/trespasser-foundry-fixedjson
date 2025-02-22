@@ -176,12 +176,14 @@ export class AdventurerData extends CharacterBaseData {
 					affirm: new fields.NumberField({
 						required: true,
 						initial: 0,
-						min: 0
+						min: 0,
+						max: 3
 					}),
 					deny: new fields.NumberField({
 						required: true,
 						initial: 0,
-						min: 0
+						min: 0,
+						max:3
 					})
 				}),
 				b: new fields.SchemaField({
@@ -215,6 +217,12 @@ export class AdventurerData extends CharacterBaseData {
 					initial: '',
 					blank: true
 				})
+			}),
+			options: new fields.SchemaField({
+				useLineage: new fields.BooleanField({
+					required: true,
+					initial: false
+				}),
 			}),
 			range: new fields.SchemaField({
 				melee: new fields.NumberField({

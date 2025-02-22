@@ -4,45 +4,103 @@
       <div class="flexrow spaced">
         <div class="flexcol spaced">
           <input id="name" type="text" name="name" value="{{item.name}}" placeholder="{{localize "trespasser.name"}}" />
+          <div class="">
+              <hr>
+              <h4>Tier</h4>
+          </div>
+
 					<div class="right flexrow">
 						{{> 'systems/trespasser/templates/fields/select-field.hbs' label='' field='system.tier' options=DeedTiers selected=document.system.tier includeEmpty=false localizeOptions=true}}
 					</div>
+
+          <div class="">
+              <hr>
+              <h4>Type</h4>
+          </div>
           <div class="flexrow spaced">
             <span class='flex2 flexrow boxed'>{{> 'systems/trespasser/templates/fields/select-field.hbs' class='flex3' label='' field='system.type' options=DeedTypes selected=document.system.type includeEmpty=false localizeOptions=true}}</span>
             <span class='flex2 flexrow boxed'>{{#if document.system.isattack}}
-            <h5 class="flex2">{{localize "TRESPASSER.ItemLabels.attack"}}</h5>
+              <div class="">
+                <h4>{{localize "TRESPASSER.ItemLabels.attack"}}</h4><h5 class="inactive">{{localize "TRESPASSER.ItemLabels.support"}}</h5>
+              </div>
             {{else}}
-            <h5 class="flex2">{{localize "TRESPASSER.ItemLabels.support"}}</h5>
+            <div class="">
+              <h5 class="inactive">{{localize "TRESPASSER.ItemLabels.attack"}}</h5><h4>{{localize "TRESPASSER.ItemLabels.support"}}</h4>
+            </div>
             {{/if}}
             {{> 'systems/trespasser/templates/fields/bool-field.hbs' label='' class='flex1' field='system.isattack' isChecked=document.system.isattack}}
             </span>
             <span class='flex2 flexrow boxed'>
             {{#if document.system.isattack}}
-            <h5 class="flex3">vs.
-              {{#if document.system.targetguard}}{{localize 'TRESPASSER.CombatLabels.guard'}}
-              {{else}}{{localize 'TRESPASSER.CombatLabels.resist'}}{{/if}}</h5>
+              {{#if document.system.targetguard}}
+                <div class="flex2">
+                  <h4>vs.{{localize 'TRESPASSER.CombatLabels.guard'}}</h4>
+                  <h5 class="inactive">{{localize 'TRESPASSER.CombatLabels.resist'}}</h5>
+                </div>
+              {{else}}
+                <div class="flex2">
+                  <h5 class="inactive">{{localize 'TRESPASSER.CombatLabels.guard'}}</h5>
+                  <h4>vs.{{localize 'TRESPASSER.CombatLabels.resist'}}</h4>
+                </div>{{/if}}
               {{> 'systems/trespasser/templates/fields/bool-field.hbs' label='' class='flex1' field='system.targetguard' isChecked=document.system.targetguard}}
             {{else}}
-              <h5 class="flex3">vs. 10</h5>
+              <h4>vs. 10</h4>
             {{/if}}
           </span>
+          </div>
+
+          <div class="">
+              <hr>
+              <h4>Targeting</h4>
           </div>
           <div class="flexrow spaced">
               {{> 'systems/trespasser/templates/fields/select-field.hbs' label='' field='system.targetspec' options=TargetSpecs selected=document.system.targetspec includeEmpty=true localizeOptions=true}}
             	{{> 'systems/trespasser/templates/fields/select-field.hbs' label='' field='system.target' options=TargetTypes selected=document.system.target includeEmpty=false localizeOptions=true}}
               {{> 'systems/trespasser/templates/fields/number-field.hbs' label='' field="system.targetnum" value=document.system.targetnum min=0 max=1000}}
           </div>
-          <div class="flexrow">
-            <hr>
-          </div>
-          <h4>Results</h4>
+          <div class="">
+              <hr>
           {{#if document.system.isattack}}
-          <div class="flexrow">
-            <h4><u>
-              {{#if document.system.damagetype}}<i class="fa-solid fa-sword"></i> {{localize 'TRESPASSER.EquipLabels.weapondie'}}
-              {{else}}<i class="fa-solid fa-dice-six"></i> {{localize 'TRESPASSER.CombatLabels.potency'}}{{/if}} </u> {{localize 'TRESPASSER.ItemLabels.damage'}}</h4>
-              {{> 'systems/trespasser/templates/fields/bool-field.hbs' label='' class='flex1' field='system.damagetype' isChecked=document.system.damagetype}}
+          <h4>Damage</h4>
           </div>
+          <div class="flexrow">
+            {{#if document.system.custom}}
+            {{else}}
+            <div class="flex3">
+              {{#if document.system.damagetype}}
+                  <h4><i class="fa-solid fa-sword"></i>{{localize 'TRESPASSER.EquipLabels.weapondie'}}</h4>
+                  <h5 class="inactive"><i class="fa-solid fa-dice-six"></i> {{localize 'TRESPASSER.CombatLabels.potency'}}</h5>
+              {{else}}
+                <h5 class="inactive"><i class="fa-solid fa-sword"></i> {{localize 'TRESPASSER.EquipLabels.weapondie'}}</h5>
+                <h4><i class="fa-solid fa-dice-six"></i>{{localize 'TRESPASSER.CombatLabels.potency'}}</h4>
+              {{/if}}
+            </div>
+            {{> 'systems/trespasser/templates/fields/bool-field.hbs' label='' class='flex1' field='system.damagetype' isChecked=document.system.damagetype}}
+            {{/if}}
+            <div class="flex4 small">
+              {{#if document.system.custom}}
+              <h6 class="inactive">Player</h6>
+              <h5>NPC/Custom</h5>
+              {{else}}
+              <h5>Player</h5>
+              <h6 class="inactive">NPC/Custom</h6>
+              {{/if}}
+            </div>
+            {{> 'systems/trespasser/templates/fields/bool-field.hbs' label='' class='flex1' field='system.custom' isChecked=document.system.custom}}
+          </div>
+          {{#if document.system.custom}}
+          <div class="flexcol spaced">
+            <div class="boxed">
+              {{> 'systems/trespasser/templates/fields/text-field.hbs' label='Base Damage Formula' field='system.base.custom' value=document.system.base.custom placeholder="1d4"}}
+            </div>
+            <div class="boxed">
+              {{> 'systems/trespasser/templates/fields/text-field.hbs' label='Hit Damage Formula' field='system.hit.custom' value=document.system.hit.custom placeholder="1d4"}}
+            </div>
+            <div class="boxed">
+              {{> 'systems/trespasser/templates/fields/text-field.hbs' label='Spark Damage Formula' field='system.spark.custom' value=document.system.spark.custom placeholder="1d4"}}
+            </div>
+          </div>
+          {{else}}
           <div class="flexrow spaced">
             <span class="flex2 boxed">
             {{> 'systems/trespasser/templates/fields/number-field.hbs' label='TRESPASSER.ItemLabels.basedamage' field="system.base.damage" value=document.system.base.damage min=0 max=1000}}</span>
@@ -52,14 +110,18 @@
             {{> 'systems/trespasser/templates/fields/number-field.hbs' label='TRESPASSER.ItemLabels.sparkdamage' field="system.spark.damage" value=document.system.spark.damage min=0 max=1000}}</span>
           </div>
           {{/if}}
+          <div class="">
+            <br>
+          {{/if}}
+          <h4>Effect</h4>
+          </div>
+
+
           {{> 'systems/trespasser/templates/fields/text-field.hbs' label='TRESPASSER.ItemLabels.base' field='system.base.text' value=document.system.base.text}}
           {{> 'systems/trespasser/templates/fields/text-field.hbs' label='TRESPASSER.ItemLabels.hit' field='system.hit.text' value=document.system.hit.text}}
           {{> 'systems/trespasser/templates/fields/text-field.hbs' label='TRESPASSER.ItemLabels.spark' field='system.spark.text' value=document.system.spark.text}}
-          <div class="flexrow">
+          <div class="">
             <hr>
-          </div>
-          <div class="flexrow">
-            <h5>{{localize 'TRESPASSER.ItemLabels.advanced'}}</h5>
           </div>
           {{> 'systems/trespasser/templates/fields/text-field.hbs' label='TRESPASSER.ItemLabels.start' field='system.start' value=document.system.start}}
           {{> 'systems/trespasser/templates/fields/text-field.hbs' label='TRESPASSER.ItemLabels.after' field='system.after' value=document.system.after}}
