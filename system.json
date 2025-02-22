@@ -1,18 +1,19 @@
 {
   "id": "trespasser",
   "name": "trespasser",
-  "title": "Trespasser(Unofficial)",
-  "description": "An unoffical system for playing the playtest version of Trespasser RPG",
+  "title": "Trespasser (Unofficial)",
+  "description": "An unoffical system for playing the playtest version of Trespasser by Tundalus",
   "authors": [
+    {
+  	"name": "Olivia Botha",
+    "discord":"cuttle.fish"
+    },
     {
       "name": "Max Schreifels",
       "discord": "ShadowyXP"
-    },
-	{
-	"name": "Olivia Botha"
-	}
+    }
   ],
-  "version": "0.0.1",
+  "version": "0.5.0",
   "url": "https://github.com/ShadowyXP/trespasser-foundry",
   "manifest": "",
   "download": "",
