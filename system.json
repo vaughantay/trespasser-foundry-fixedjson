@@ -1,5 +1,5 @@
 {
-  "id": "trespasser-foundry",
+  "id": "trespasser-foundry-1.0",
   "name": "trespasser",
   "title": "Trespasser (Unofficial)",
   "description": "An unoffical system for playing the playtest version of Trespasser by Tundalus",
@@ -17,7 +17,6 @@
   "url": "https://github.com/ShadowyXP/trespasser-foundry",
   "manifest": "https://github.com/ShadowyXP/trespasser-foundry/blob/master/system.json",
   "download": "https://github.com/ShadowyXP/trespasser-foundry/archive/refs/tags/v1.0.zip",
-
   "compatibility": {
     "minimum": "11",
     "verified": "12",
