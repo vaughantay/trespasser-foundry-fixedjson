@@ -15,8 +15,8 @@
   ],
   "version": "1.0.0-beta",
   "url": "https://github.com/ShadowyXP/trespasser-foundry",
-  "manifest": "",
-  "download": "",
+  "manifest": "https://github.com/ShadowyXP/trespasser-foundry/blob/master/system.json",
+  "download": "https://github.com/ShadowyXP/trespasser-foundry/archive/refs/tags/v1.0.zip",
 
   "compatibility": {
     "minimum": "11",
